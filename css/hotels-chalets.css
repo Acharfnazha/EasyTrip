@@ -1,0 +1,504 @@
+/* ==========================================================================
+   Hotels & Chalets overview (hotels-chalets.php)
+   Every rule is scoped to "hc-" components. Colours, fonts, buttons and the
+   container come from the shared design system in css/styles.css.
+   ========================================================================== */
+
+/* Shared section pieces ---------------------------------------------------- */
+.hc-section {
+  padding-block: 88px;
+}
+
+.hc-section--tint {
+  background: #f3f8fb;
+}
+
+.hc-head {
+  max-width: 680px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.hc-title {
+  margin: 0;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+
+.hc-lead {
+  margin: 12px 0 0;
+  color: var(--et-muted);
+  font-size: 17px;
+}
+
+.hc-eyebrow {
+  margin: 0 0 12px;
+  color: var(--et-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 1. Hero ------------------------------------------------------------------ */
+.hc-hero {
+  padding-block: 64px 72px;
+  background: #f3f8fb;
+}
+
+.hc-hero__inner {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  align-items: center;
+  gap: 64px;
+}
+
+.hc-hero__title {
+  margin: 0 0 16px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(2.1rem, 1.2rem + 2.4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.hc-hero__text {
+  max-width: 44ch;
+  margin: 0 0 32px;
+  color: #3d4a60;
+  font-size: clamp(1.0625rem, 1rem + .3vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.hc-hero__shortcut {
+  margin: 20px 0 0;
+  color: var(--et-muted);
+  font-size: 15px;
+}
+
+.hc-hero__shortcut a {
+  color: var(--et-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hc-hero__shortcut a:hover {
+  color: var(--et-primary-hover);
+}
+
+/* Photo pair: a hotel room with a chalet inset over its lower corner. */
+.hc-hero__media {
+  position: relative;
+  padding-bottom: 32px;
+}
+
+.hc-hero__img {
+  object-fit: cover;
+}
+
+.hc-hero__img--main {
+  width: 74%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  margin-left: auto;
+  border-radius: 20px;
+}
+
+.hc-hero__img--inset {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 54%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  border: 6px solid #f3f8fb;
+  border-radius: 18px;
+  box-shadow: 0 18px 36px -24px rgba(0, 27, 72, .45);
+}
+
+/* The arrow points down to the options, so it nudges down, not sideways. */
+.et-btn:hover .hc-down {
+  transform: translateY(3px);
+}
+
+/* 2. Choose how you want to stay ------------------------------------------- */
+.hc-choose {
+  padding-top: 88px;
+}
+
+.hc-option__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 64px;
+}
+
+.hc-option__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.hc-option__title {
+  margin: 0 0 6px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(1.9rem, 1.5rem + 1.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.hc-option__tagline {
+  margin: 0 0 12px;
+  color: var(--et-primary);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.hc-option__text {
+  max-width: 46ch;
+  margin: 0;
+  color: #3d4a60;
+  font-size: 17px;
+}
+
+.hc-option__subhead {
+  margin: 24px 0 8px;
+  color: var(--et-ink);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.hc-option__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hc-option__list li {
+  position: relative;
+  padding-left: 18px;
+  color: #2c3850;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.hc-option__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--et-sky);
+}
+
+.hc-option__where {
+  max-width: 50ch;
+  margin: 20px 0 28px;
+  color: var(--et-muted);
+  font-size: 15px;
+}
+
+/* Hotels: bright and open, photo on the left. */
+.hc-option--hotels {
+  padding-block: 8px 88px;
+}
+
+/* Chalets: a darker, cosier band with the photo on the right. */
+.hc-option--chalets {
+  padding-block: 88px;
+  background: var(--et-navy);
+  color: #fff;
+}
+
+.hc-option--chalets .hc-option__inner {
+  grid-template-columns: 1fr 1.1fr;
+}
+
+.hc-option--chalets .hc-option__media {
+  order: 2;
+}
+
+.hc-option--chalets .hc-option__title {
+  color: #fff;
+}
+
+.hc-option--chalets .hc-option__tagline {
+  color: #9fdcf5;
+}
+
+.hc-option--chalets .hc-option__text,
+.hc-option--chalets .hc-option__list li {
+  color: #e3f1f8;
+}
+
+.hc-option--chalets .hc-option__subhead {
+  color: #fff;
+}
+
+.hc-option--chalets .hc-option__list li::before {
+  background: #9fdcf5;
+}
+
+.hc-option--chalets .hc-option__where {
+  color: #c3d9ea;
+}
+
+.hc-option--chalets :focus-visible {
+  outline-color: var(--et-focus-on-dark);
+}
+
+/* 3. Comparison table ------------------------------------------------------ */
+.hc-table {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--et-line);
+  border-radius: 16px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  table-layout: fixed;
+}
+
+.hc-table th,
+.hc-table td {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--et-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.hc-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.hc-table thead td {
+  width: 24%;
+}
+
+.hc-table thead th {
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: 19px;
+  font-weight: 700;
+  box-shadow: inset 0 4px 0 var(--et-primary);
+}
+
+.hc-table thead th + th {
+  box-shadow: inset 0 4px 0 var(--et-navy);
+}
+
+.hc-table tbody th {
+  color: var(--et-muted);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hc-table tbody td {
+  color: var(--et-ink);
+  font-size: 16.5px;
+}
+
+/* Tint the chalets column slightly so the two columns read apart. */
+.hc-table tr > :last-child {
+  background: #f8fbfd;
+}
+
+/* 4. Guidance -------------------------------------------------------------- */
+.hc-guide {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  align-items: center;
+  gap: 64px;
+}
+
+.hc-guide__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: 20px;
+}
+
+.hc-guide__list {
+  margin: 28px 0 0;
+}
+
+.hc-guide__list > div {
+  padding-block: 16px;
+  border-top: 1px solid var(--et-line);
+}
+
+.hc-guide__list dt {
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.hc-guide__list dd {
+  margin: 4px 0 0;
+  color: var(--et-muted);
+  font-size: 15.5px;
+}
+
+/* 5. Final action ---------------------------------------------------------- */
+.hc-cta {
+  max-width: 720px;
+  text-align: center;
+}
+
+.hc-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hc-cta__actions .et-btn {
+  min-width: 220px;
+}
+
+/* Responsive --------------------------------------------------------------- */
+/* Tablet: keep the side-by-side layouts, but give the copy more room. */
+@media (max-width: 60em) {
+  .hc-hero__inner,
+  .hc-option__inner,
+  .hc-option--chalets .hc-option__inner,
+  .hc-guide {
+    gap: 40px;
+  }
+
+  .hc-option__list {
+    grid-template-columns: 1fr;
+  }
+
+  .hc-hero__inner {
+    grid-template-columns: 1.25fr .75fr;
+  }
+
+  .hc-hero__img--main {
+    width: 88%;
+  }
+}
+
+@media (max-width: 47.99em) {
+  .hc-hero__inner,
+  .hc-option__inner,
+  .hc-option--chalets .hc-option__inner,
+  .hc-guide {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .hc-hero__media {
+    max-width: 560px;
+  }
+
+  .hc-hero__img--main {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-position: 50% 35%;
+  }
+
+  .hc-hero__img--inset {
+    left: auto;
+    right: 12px;
+    width: 46%;
+    border-width: 4px;
+  }
+
+  /* Photo first, then the text, for both options. */
+  .hc-option--chalets .hc-option__media {
+    order: 0;
+  }
+
+  .hc-option__img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .hc-guide__media {
+    order: 2;
+  }
+
+  .hc-guide__img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 40em) {
+  .hc-hero {
+    padding-block: 40px 56px;
+  }
+
+  .hc-hero .et-btn,
+  .hc-option .et-btn,
+  .hc-cta__actions .et-btn {
+    width: 100%;
+  }
+
+  .hc-section,
+  .hc-option--chalets {
+    padding-block: 64px;
+  }
+
+  .hc-choose {
+    padding-top: 64px;
+  }
+
+  .hc-option--hotels {
+    padding-bottom: 64px;
+  }
+
+  .hc-head {
+    margin-bottom: 32px;
+  }
+
+  .hc-option__list {
+    grid-template-columns: 1fr;
+  }
+
+  .hc-table th,
+  .hc-table td {
+    padding: 14px 12px;
+  }
+
+  .hc-table thead td {
+    width: 26%;
+  }
+
+  .hc-table thead th {
+    font-size: 17px;
+  }
+
+  .hc-table tbody th {
+    font-size: 14px;
+  }
+
+  .hc-table tbody td {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .et-btn:hover .hc-down {
+    transform: none;
+  }
+}

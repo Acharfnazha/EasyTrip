@@ -1,0 +1,824 @@
+/* ==========================================================================
+   Bus & train (bus-train.php)
+   A ground-travel planning prototype that follows the Flight page's system:
+   hero, one shared route form (bus or train), route summary, how-it-works steps,
+   an editorial section and a closing call to action.
+   Page sections use "ground-", the form uses "route-planner" and the result uses
+   "route-summary", so nothing here reaches the shared header, footer or other
+   pages. Colours, fonts, buttons and the container come from css/styles.css.
+   ========================================================================== */
+
+.ground-travel-page {
+  --ground-error: #b42318;      /* 6.6:1 on white */
+  --ground-surface: #f3f8fb;
+  --ground-bus: var(--et-primary);
+  --ground-train: #1d6b57;      /* same rail/ground green as the Tickets page: 6.4:1 on white */
+}
+
+/* Shared bits ------------------------------------------------------------------ */
+.ground-section-head {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.ground-section-head__title {
+  margin: 0 0 8px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(1.6rem, 1.2rem + 1.3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.ground-section-head__text {
+  margin: 0;
+  color: #3d4a60;
+  font-size: 17px;
+}
+
+.ground-text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--et-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ground-text-link:hover {
+  color: var(--et-primary-hover);
+}
+
+/* 1. Hero ------------------------------------------------------------------------ */
+.ground-hero {
+  padding-block: 40px 56px;
+  background: var(--ground-surface);
+}
+
+.ground-hero__inner {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.ground-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+}
+
+.ground-breadcrumb li + li::before {
+  content: "/";
+  margin-right: 4px;
+  color: var(--et-muted);
+}
+
+.ground-breadcrumb a {
+  color: var(--et-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ground-breadcrumb [aria-current="page"] {
+  color: var(--et-ink);
+  font-weight: 600;
+}
+
+.ground-hero__title {
+  max-width: 16ch;
+  margin: 0 0 14px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(2rem, 1.3rem + 2.4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+
+.ground-hero__text {
+  max-width: 46ch;
+  margin: 0 0 28px;
+  color: #3d4a60;
+  font-size: 18px;
+}
+
+.ground-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.ground-hero .et-btn:hover .ground-icon-down {
+  transform: translateY(3px);
+}
+
+.ground-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  object-position: 50% 70%;   /* keep the train in view */
+  border-radius: 20px;
+}
+
+/* 2. Route planner ---------------------------------------------------------------- */
+.route-planner-section {
+  padding-block: 56px 72px;
+}
+
+/* The accent follows the chosen mode: blue for bus, green for train. */
+.route-planner,
+.route-summary {
+  --route-accent: var(--ground-bus);
+}
+
+.route-planner[data-mode="train"],
+.route-summary[data-mode="train"] {
+  --route-accent: var(--ground-train);
+}
+
+.route-planner {
+  display: grid;
+  gap: 24px;
+  padding: 32px;
+  border: 1px solid var(--et-line);
+  border-top: 4px solid var(--route-accent);
+  border-radius: 20px;
+  background: #fff;
+  transition: border-color .2s ease;
+}
+
+.route-planner__required-note {
+  margin: 0;
+  color: var(--et-muted);
+  font-size: 14.5px;
+}
+
+.route-planner__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+}
+
+.route-planner__group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.route-planner__legend,
+.route-planner__label {
+  display: block;
+  margin-bottom: 6px;
+  padding: 0;
+  color: var(--et-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.route-planner__optional {
+  color: var(--et-muted);
+  font-weight: 500;
+}
+
+/* Transport type and trip type: real radio buttons styled as two-part switches */
+.route-planner__segments {
+  display: inline-flex;
+  padding: 4px;
+  border: 1px solid #7a8ca3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.route-planner__segment {
+  position: relative;
+}
+
+.route-planner__segment input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.route-planner__segment span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 8px;
+  color: var(--et-ink);
+  font-weight: 600;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.route-planner__segment svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route-planner__segment input:hover + span {
+  background: var(--et-ice);
+}
+
+.route-planner__segment input:checked + span {
+  background: var(--et-navy);
+  color: #fff;
+}
+
+.route-planner__segment input:focus-visible + span {
+  outline: 3px solid var(--et-focus);
+  outline-offset: 2px;
+}
+
+/* Rows of fields */
+.route-planner__route {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.route-planner__route:not(:has(.route-planner__swap:not([hidden]))) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.route-planner__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.route-planner__field {
+  min-width: 0;
+}
+
+.route-planner__field[hidden],
+.route-planner__check[hidden] {
+  display: none;
+}
+
+.route-planner__input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid #7a8ca3;   /* 3.4:1 against white */
+  border-radius: 10px;
+  background: #fff;
+  color: var(--et-ink);
+  font: 16px/1.2 var(--et-font);   /* 16px stops iOS zooming into the field */
+}
+
+.route-planner__input:hover {
+  border-color: var(--et-royal);
+}
+
+.route-planner__input::placeholder {
+  color: #6b778c;
+}
+
+.route-planner__input[aria-invalid="true"] {
+  border: 2px solid var(--ground-error);
+}
+
+.route-planner__swap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 48px;
+  height: 48px;
+  margin-top: 29px;   /* lines up with the inputs, below their labels */
+  padding: 0;
+  border: 1px solid #7a8ca3;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--et-navy);
+  font: 600 15px/1 var(--et-font);
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+
+.route-planner__swap[hidden] {
+  display: none;   /* needs JavaScript; stays hidden without it */
+}
+
+.route-planner__swap:hover {
+  border-color: var(--et-royal);
+  background: var(--et-ice);
+}
+
+.route-planner__swap svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The word "Swap" is shown only when the fields stack (see the 40em query). */
+.route-planner__swap-text {
+  display: none;
+}
+
+/* Error messages: text + icon, not colour alone */
+.route-planner__error {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 0;
+  color: var(--ground-error);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.route-planner__error::before {
+  content: "!";
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--ground-error);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.route-planner__error[hidden] {
+  display: none;
+}
+
+/* Optional preferences */
+.route-planner__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+}
+
+.route-planner__options .route-planner__legend {
+  width: 100%;
+}
+
+.route-planner__check {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--et-ink);
+  cursor: pointer;
+}
+
+.route-planner__check input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--et-primary);
+}
+
+.route-planner__hint {
+  width: 100%;
+  margin: 2px 0 0;
+  color: var(--et-muted);
+  font-size: 14.5px;
+}
+
+.route-planner__submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--et-line);
+}
+
+.route-planner__submit-note {
+  margin: 0;
+  color: var(--et-muted);
+  font-size: 15px;
+}
+
+.route-planner__submit-note--noscript {
+  width: 100%;
+  color: var(--et-ink);
+  font-weight: 600;
+}
+
+/* 3. Route summary ---------------------------------------------------------------- */
+.route-summary {
+  margin-top: 28px;
+  padding: 32px;
+  border: 1px solid var(--et-line);
+  border-top: 4px solid var(--route-accent);
+  border-radius: 20px;
+  background: #fff;   /* scrolling clears the sticky header via html's scroll-padding-top */
+}
+
+.route-summary[hidden] {
+  display: none;
+}
+
+.route-summary__title {
+  margin: 0 0 6px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.route-summary__title:focus {
+  outline: none;
+}
+
+.route-summary__title:focus-visible {
+  outline: 3px solid var(--et-focus);
+}
+
+.route-summary__route {
+  margin: 0 0 20px;
+  color: var(--et-ink);
+  font-size: 18px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.route-summary__details {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 20px;
+  overflow: hidden;
+  border: 1px solid var(--et-line);
+  border-radius: 12px;
+  background: var(--et-line);   /* shows through the 1px gaps as dividers */
+}
+
+.route-summary__details > div {
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.route-summary__details > div[hidden] {
+  display: none;
+}
+
+.route-summary__wide {
+  grid-column: 1 / -1;
+}
+
+.route-summary__details dt {
+  color: var(--et-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.route-summary__details dd {
+  margin: 2px 0 0;
+  color: var(--et-ink);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.route-summary__stale {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-left: 3px solid #b54708;
+  border-radius: 8px;
+  background: #fffaeb;
+  color: #7a2e0e;
+  font-weight: 600;
+}
+
+.route-summary__stale[hidden] {
+  display: none;
+}
+
+.route-summary__notice {
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--et-primary);
+  border-radius: 8px;
+  background: var(--et-ice);
+  color: var(--et-ink);
+  font-size: 15.5px;
+}
+
+.route-summary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+/* 4. How this planner works ------------------------------------------------------- */
+.ground-how {
+  padding-block: 64px 32px;
+  background: var(--ground-surface);
+}
+
+.ground-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ground-step;
+}
+
+.ground-steps__item {
+  position: relative;
+  padding-top: 56px;
+  counter-increment: ground-step;
+}
+
+/* Numbered markers joined by a line: an ordered sequence, not a card grid */
+.ground-steps__item::before {
+  content: counter(ground-step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--et-navy);
+  color: #fff;
+  font-family: var(--et-display);
+  font-weight: 700;
+}
+
+.ground-steps__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: -28px;
+  left: 52px;
+  height: 2px;
+  background: #c9d8e4;
+}
+
+.ground-steps__title {
+  margin: 0 0 6px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ground-steps__text {
+  margin: 0;
+  color: #3d4a60;
+}
+
+.ground-handoff {
+  max-width: 880px;
+  margin: 36px 0 32px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--et-ink);
+  font-size: 15.5px;
+}
+
+.ground-handoff strong {
+  color: var(--et-navy);
+}
+
+/* 5. Editorial ------------------------------------------------------------------ */
+.ground-editorial {
+  padding-block: 72px;
+}
+
+.ground-editorial__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 56px;
+}
+
+.ground-editorial__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+  background: var(--et-ice);
+}
+
+.ground-editorial__copy .ground-section-head__text {
+  max-width: 46ch;
+  margin-bottom: 24px;
+}
+
+/* 6. Closing call to action -------------------------------------------------------- */
+.ground-cta {
+  padding-bottom: 88px;
+}
+
+.ground-cta__panel {
+  padding: 56px 48px;
+  border-radius: 24px;
+  background: var(--et-navy);
+  color: #fff;
+  text-align: center;
+}
+
+.ground-cta__title {
+  margin: 0 0 10px;
+  font-family: var(--et-display);
+  font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ground-cta__text {
+  margin: 0 auto 28px;
+  color: #d6eaf6;
+  font-size: 17px;
+}
+
+.ground-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.ground-cta__actions .et-btn {
+  min-width: 15rem;
+}
+
+.ground-cta__more {
+  margin: 20px 0 0;
+}
+
+.ground-cta__more a {
+  display: inline-block;
+  padding-block: 12px;   /* 44px tap height on a one-line text link */
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ground-cta :focus-visible {
+  outline-color: var(--et-focus-on-dark);
+}
+
+/* Responsive ------------------------------------------------------------------- */
+@media (max-width: 63.99em) {
+  .route-summary__details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 47.99em) {
+  .ground-hero {
+    padding-block: 28px 36px;
+  }
+
+  .ground-hero__inner,
+  .ground-editorial__inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ground-hero__media {
+    order: -1;   /* photo first on small screens, like the other stacked heroes */
+  }
+
+  .ground-hero__img {
+    max-height: 240px;
+    aspect-ratio: 2 / 1;
+  }
+
+  .ground-breadcrumb ol {
+    margin-bottom: 12px;
+  }
+
+  .route-planner-section {
+    padding-block: 40px 56px;
+  }
+
+  .route-planner,
+  .route-summary {
+    padding: 24px 20px;
+  }
+
+  .ground-steps {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ground-steps__item {
+    padding: 4px 0 0 56px;
+  }
+
+  .ground-steps__item:not(:last-child)::after {
+    top: 48px;
+    right: auto;
+    bottom: -20px;
+    left: 19px;
+    width: 2px;
+    height: auto;
+  }
+
+  .ground-editorial {
+    padding-block: 48px;
+  }
+
+  .ground-cta__panel {
+    padding: 40px 24px;
+  }
+}
+
+@media (max-width: 40em) {
+  /* Stack From / Swap / To; the swap button shows its word and sits between them */
+  .route-planner__route,
+  .route-planner__route:not(:has(.route-planner__swap:not([hidden]))),
+  .route-planner__row {
+    grid-template-columns: 1fr;
+  }
+
+  .route-planner__route {
+    gap: 8px;
+  }
+
+  .route-planner__swap {
+    justify-self: end;
+    width: auto;
+    height: 44px;
+    margin: 0;
+    padding: 0 16px;
+  }
+
+  .route-planner__swap svg {
+    transform: rotate(90deg);   /* points up and down when the fields stack */
+  }
+
+  .route-planner__swap-text {
+    display: inline;
+  }
+
+  .route-planner__choices,
+  .route-planner__group {
+    width: 100%;
+  }
+
+  .route-planner__segments {
+    display: flex;
+  }
+
+  .route-planner__segment {
+    flex: 1;
+  }
+
+  .route-planner__segment span {
+    justify-content: center;
+  }
+
+  .route-summary__details {
+    grid-template-columns: 1fr;
+  }
+
+  .ground-hero__actions .et-btn,
+  .route-planner__submit .et-btn,
+  .route-summary__actions .et-btn,
+  .ground-editorial .et-btn,
+  .ground-cta__actions .et-btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ground-cta {
+    padding-bottom: 64px;
+  }
+}

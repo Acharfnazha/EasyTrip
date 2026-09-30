@@ -1,0 +1,63 @@
+# EasyTrip — files that stay on your computer and are not committed.
+# Everything the site needs (PHP, CSS, JS, images, videos, 3D models, the SQL schema
+# and the docs) IS committed.
+
+# Environment and local configuration (database passwords go here, never in the code)
+.env
+.env.*
+!.env.example
+*.local.php
+.htaccess.local
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Dependencies installed locally (none are needed today)
+vendor/
+node_modules/
+
+# Python caches / virtual environments (for the 3D icon script)
+__pycache__/
+*.pyc
+.venv*/
+
+# Local database files and backups with real data.
+# database/easytrip_db.sql (schema only) is committed.
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+database/backups/
+database/*backup*.sql
+database/local-*.sql
+
+# Runtime uploads and generated output
+uploads/
+cache/
+graphify-out/
+
+# Third-party design template (copyright Bedimcode). Kept locally for reference,
+# not redistributed in this repository.
+docs/template-reference/

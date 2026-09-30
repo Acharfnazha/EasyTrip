@@ -1,0 +1,482 @@
+/* ==========================================================================
+   Tickets overview (tickets.php)
+   A transport-choice page: hero, two transport panels, a quick comparison,
+   a prototype note and a closing call to action.
+   All classes start with "tkt-" so nothing here can affect the shared header,
+   footer or other pages. Colours, fonts, buttons and the container come from
+   css/styles.css.
+   ========================================================================== */
+
+.tickets-page {
+  --tkt-air: var(--et-primary);    /* flights accent */
+  --tkt-air-tint: #eef6fb;
+  --tkt-ground: #1d6b57;           /* bus & train accent: 6.4:1 on white */
+  --tkt-ground-tint: #eef5f1;
+}
+
+/* Shared bits ------------------------------------------------------------------ */
+.tkt-eyebrow {
+  margin: 0 0 10px;
+  color: var(--et-primary);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.tkt-section-head {
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+
+.tkt-section-head__title {
+  margin: 0 0 8px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(1.6rem, 1.2rem + 1.3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.tkt-section-head__text {
+  margin: 0;
+  color: #3d4a60;
+  font-size: 17px;
+}
+
+.tkt-text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--et-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tkt-text-link:hover {
+  color: var(--et-primary-hover);
+}
+
+/* 1. Hero ---------------------------------------------------------------------- */
+.tkt-hero {
+  padding-block: 48px 56px;
+  background: #f3f8fb;
+}
+
+.tkt-hero__inner {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.tkt-hero__title {
+  margin: 0 0 14px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(2rem, 1.3rem + 2.4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.tkt-hero__text {
+  max-width: 44ch;
+  margin: 0 0 28px;
+  color: #3d4a60;
+  font-size: 18px;
+}
+
+.tkt-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+
+.tkt-hero .et-btn:hover .tkt-icon-down {
+  transform: translateY(3px);   /* points where the link goes */
+}
+
+.tkt-hero__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* 2. Transport panels ------------------------------------------------------------ */
+.tkt-options {
+  padding-block: 72px 32px;
+}
+
+.tkt-modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.tkt-mode {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--et-line);
+  border-radius: 20px;
+  background: var(--tkt-tint);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.tkt-mode--air {
+  --tkt-accent: var(--tkt-air);
+  --tkt-tint: var(--tkt-air-tint);
+}
+
+.tkt-mode--ground {
+  --tkt-accent: var(--tkt-ground);
+  --tkt-tint: var(--tkt-ground-tint);
+}
+
+.tkt-mode:hover {
+  border-color: #b9d6e8;
+  box-shadow: 0 18px 36px -28px rgba(0, 27, 72, .5);
+}
+
+.tkt-mode__media {
+  overflow: hidden;
+}
+
+.tkt-mode__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--et-ice);
+  transition: transform .4s ease;
+}
+
+.tkt-mode:hover .tkt-mode__img {
+  transform: scale(1.03);
+}
+
+.tkt-mode__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px 32px 32px;
+}
+
+.tkt-mode__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: var(--tkt-accent);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.tkt-mode__eyebrow svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+.tkt-mode__title {
+  margin: 0 0 10px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: clamp(1.35rem, 1.15rem + .6vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tkt-mode__text {
+  margin: 0 0 20px;
+  color: #3d4a60;
+  font-size: 16.5px;
+}
+
+.tkt-mode__label {
+  margin: 0 0 8px;
+  color: var(--et-ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Plain dots rather than checkmarks: these are use cases, not product features. */
+.tkt-mode__uses {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+  color: var(--et-ink);
+}
+
+.tkt-mode__uses li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.tkt-mode__uses li::before {
+  content: "";
+  position: absolute;
+  top: .62em;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tkt-accent);
+}
+
+.tkt-mode__action {
+  margin-top: auto;
+}
+
+/* 3. Comparison ---------------------------------------------------------------- */
+.tkt-compare {
+  padding-block: 56px 80px;
+}
+
+.tkt-compare__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.tkt-compare__col {
+  padding: 24px 28px 8px;
+  border: 1px solid var(--et-line);
+  border-top: 4px solid var(--tkt-accent);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.tkt-compare__col--air {
+  --tkt-accent: var(--tkt-air);
+}
+
+.tkt-compare__col--ground {
+  --tkt-accent: var(--tkt-ground);
+}
+
+.tkt-compare__title {
+  margin: 0 0 8px;
+  color: var(--et-navy);
+  font-family: var(--et-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tkt-compare__list {
+  margin: 0;
+}
+
+.tkt-compare__row {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 4px 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--et-line);
+}
+
+.tkt-compare__row:first-child {
+  border-top: 0;
+}
+
+.tkt-compare__row dt {
+  color: var(--et-muted);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.tkt-compare__row dd {
+  margin: 0;
+  color: var(--et-ink);
+}
+
+.tkt-compare__row a {
+  color: var(--et-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tkt-compare__row a:hover {
+  color: var(--et-primary-hover);
+}
+
+/* 4. Prototype note ------------------------------------------------------------ */
+.tkt-notice {
+  display: flex;
+  gap: 14px;
+  max-width: 880px;
+  margin-top: 32px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--et-primary);
+  border-radius: 12px;
+  background: var(--et-ice);
+}
+
+.tkt-notice__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  fill: none;
+  stroke: var(--et-royal);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.tkt-notice__text {
+  margin: 0;
+  color: var(--et-ink);
+  font-size: 15.5px;
+}
+
+.tkt-notice__text strong {
+  color: var(--et-navy);
+}
+
+/* 5. Closing call to action ------------------------------------------------------- */
+.tkt-cta {
+  padding-bottom: 88px;
+}
+
+.tkt-cta__panel {
+  padding: 56px 48px;
+  border-radius: 24px;
+  background: var(--et-navy);
+  color: #fff;
+  text-align: center;
+}
+
+.tkt-cta__title {
+  margin: 0 0 10px;
+  font-family: var(--et-display);
+  font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tkt-cta__text {
+  max-width: 48ch;
+  margin: 0 auto 28px;
+  color: #d6eaf6;
+  font-size: 17px;
+}
+
+.tkt-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.tkt-cta__actions .et-btn {
+  min-width: 15rem;
+}
+
+.tkt-cta__help {
+  margin: 24px 0 0;
+  color: #d6eaf6;
+}
+
+.tkt-cta__help a {
+  display: inline-block;
+  padding-block: 12px;   /* 44px tap height on a one-line text link */
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tkt-cta :focus-visible {
+  outline-color: var(--et-focus-on-dark);
+}
+
+/* Responsive ------------------------------------------------------------------- */
+@media (max-width: 63.99em) {
+  .tkt-mode__body {
+    padding: 24px 24px 28px;
+  }
+
+  .tkt-compare__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 47.99em) {
+  .tkt-hero {
+    padding-block: 28px 36px;
+  }
+
+  .tkt-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .tkt-hero__img {
+    aspect-ratio: 2 / 1;
+  }
+
+  .tkt-options {
+    padding-top: 48px;
+  }
+
+  .tkt-modes,
+  .tkt-compare__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .tkt-mode__img {
+    aspect-ratio: 2 / 1;   /* stacked panels are full width, so keep them short */
+  }
+
+  .tkt-compare {
+    padding-block: 40px 64px;
+  }
+
+  .tkt-cta__panel {
+    padding: 40px 24px;
+  }
+}
+
+@media (max-width: 40em) {
+  .tkt-hero__actions .et-btn,
+  .tkt-mode__action,
+  .tkt-cta__actions .et-btn {
+    width: 100%;
+  }
+
+  .tkt-cta__actions .et-btn {
+    min-width: 0;
+  }
+
+  .tkt-compare__col {
+    padding: 20px 20px 4px;
+  }
+
+  .tkt-cta {
+    padding-bottom: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tkt-mode:hover .tkt-mode__img {
+    transform: none;
+  }
+}
