@@ -1,8 +1,3 @@
-<?php
-// Today's date (server time) is the earliest departure when JavaScript is off;
-// js/flight.js replaces it with the visitor's own local date.
-$today = date('Y-m-d');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +15,80 @@ $today = date('Y-m-d');
   <link rel="stylesheet" href="css/flight.css" />
 </head>
 <body class="flight-page">
-  <?php include __DIR__ . '/partials/header.php'; ?>
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              Destinations
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="destinations.html">All destinations</a></li>
+              <li><a class="et-nav__menu-link" href="winter.html">Winter destinations</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring destinations</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer destinations</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn destinations</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              Hotels &amp; Chalets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels-chalets.html">Hotels &amp; chalets overview</a></li>
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger is-current" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              Tickets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="tickets.html">All tickets</a></li>
+              <li><a class="et-nav__menu-link" href="flight.html" aria-current="page">Flight tickets</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train tickets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              About
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
 
   <main id="main" tabindex="-1">
-    <!-- 1. Compact hero: the photo's own night sky provides the dark background -->
     <section class="flight-hero" aria-labelledby="flight-hero-title">
       <picture class="flight-hero__media">
         <source type="image/webp" media="(max-width: 47.99em)" srcset="assets/images/tickets/flight-sky-800.webp" />
@@ -34,7 +99,7 @@ $today = date('Y-m-d');
       <div class="et-container flight-hero__inner">
         <nav class="flight-breadcrumb" aria-label="Breadcrumb">
           <ol>
-            <li><a href="tickets.php">Tickets</a></li>
+            <li><a href="tickets.html">Tickets</a></li>
             <li><span aria-current="page">Flights</span></li>
           </ol>
         </nav>
@@ -47,12 +112,11 @@ $today = date('Y-m-d');
             Start planning
             <svg class="et-btn__icon flight-icon-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
           </a>
-          <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.php">Other ticket options</a>
+          <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.html">Other ticket options</a>
         </div>
       </div>
     </section>
 
-    <!-- 2. Flight planner -->
     <section class="flight-planner-section" id="flight-planner" aria-labelledby="flight-planner-title">
       <div class="et-container">
         <header class="flight-section-head">
@@ -62,7 +126,7 @@ $today = date('Y-m-d');
           </p>
         </header>
 
-        <form class="flight-planner" action="flight.php#flight-planner" method="get" data-flight-planner>
+        <form class="flight-planner" action="flight.html#flight-planner" method="get" data-flight-planner>
           <p class="flight-planner__required-note">All fields are required unless marked optional.</p>
 
           <fieldset class="flight-planner__group flight-planner__trip">
@@ -86,7 +150,6 @@ $today = date('Y-m-d');
                      autocomplete="off" maxlength="80" placeholder="e.g. Beirut" aria-describedby="flight-from-error" data-field="from" />
               <p class="flight-planner__error" id="flight-from-error" hidden></p>
             </div>
-            <!-- Shown by js/flight.js -->
             <button class="flight-planner__swap" type="button" aria-label="Swap origin and destination" hidden data-swap>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>
             </button>
@@ -102,7 +165,7 @@ $today = date('Y-m-d');
             <div class="flight-planner__field">
               <label class="flight-planner__label" for="flight-depart">Departure date</label>
               <input class="flight-planner__input" type="date" id="flight-depart" name="depart" required
-                     min="<?= $today ?>" aria-describedby="flight-depart-error" data-field="depart" />
+                     aria-describedby="flight-depart-error" data-field="depart" />
               <p class="flight-planner__error" id="flight-depart-error" hidden></p>
             </div>
             <div class="flight-planner__field" data-return-field>
@@ -110,7 +173,7 @@ $today = date('Y-m-d');
                 Return date <span class="flight-planner__optional">(round trip only)</span>
               </label>
               <input class="flight-planner__input" type="date" id="flight-return" name="return"
-                     min="<?= $today ?>" aria-describedby="flight-return-error" data-field="return" />
+                     aria-describedby="flight-return-error" data-field="return" />
               <p class="flight-planner__error" id="flight-return-error" hidden></p>
             </div>
           </div>
@@ -120,9 +183,15 @@ $today = date('Y-m-d');
               <label class="flight-planner__label" for="flight-travelers">Travelers</label>
               <select class="flight-planner__input" id="flight-travelers" name="travelers" required
                       aria-describedby="flight-travelers-error" data-field="travelers">
-                <?php for ($n = 1; $n <= 9; $n++): ?>
-                  <option value="<?= $n ?>"><?= $n ?> traveler<?= $n === 1 ? '' : 's' ?></option>
-                <?php endfor; ?>
+                <option value="1">1 traveler</option>
+                <option value="2">2 travelers</option>
+                <option value="3">3 travelers</option>
+                <option value="4">4 travelers</option>
+                <option value="5">5 travelers</option>
+                <option value="6">6 travelers</option>
+                <option value="7">7 travelers</option>
+                <option value="8">8 travelers</option>
+                <option value="9">9 travelers</option>
               </select>
               <p class="flight-planner__error" id="flight-travelers-error" hidden></p>
             </div>
@@ -165,7 +234,6 @@ $today = date('Y-m-d');
           </div>
         </form>
 
-        <!-- 3. Search summary: filled in by js/flight.js with the visitor's own details -->
         <section class="flight-summary" aria-labelledby="flight-summary-title" hidden data-flight-summary>
           <h3 class="flight-summary__title" id="flight-summary-title" tabindex="-1">Your flight search is ready</h3>
           <p class="flight-summary__route" data-summary-route></p>
@@ -188,14 +256,13 @@ $today = date('Y-m-d');
           </p>
           <div class="flight-summary__actions">
             <button class="et-btn et-btn--primary" type="button" data-edit-search>Edit search</button>
-            <a class="et-btn et-btn--outline" href="contact.php?topic=flights">Ask about this route</a>
-            <a class="flight-text-link" href="tickets.php">View other ticket options</a>
+            <a class="et-btn et-btn--outline" href="contact.html?topic=flights">Ask about this route</a>
+            <a class="flight-text-link" href="tickets.html">View other ticket options</a>
           </div>
         </section>
       </div>
     </section>
 
-    <!-- 4. What the prototype demonstrates + backend handoff -->
     <section class="flight-demo" aria-labelledby="flight-demo-title">
       <div class="et-container">
         <header class="flight-section-head">
@@ -222,49 +289,124 @@ $today = date('Y-m-d');
       </div>
     </section>
 
-    <!-- 5. Destination inspiration (links to the real season pages; no prices) -->
     <section class="flight-inspire" aria-labelledby="flight-inspire-title">
       <div class="et-container flight-inspire__inner">
         <div class="flight-inspire__copy">
           <h2 class="flight-section-head__title" id="flight-inspire-title">Still choosing where to go?</h2>
           <p class="flight-section-head__text">Explore seasonal destination ideas before preparing your flight search.</p>
-          <a class="et-btn et-btn--outline et-btn--lg" href="destinations.php">
+          <a class="et-btn et-btn--outline et-btn--lg" href="destinations.html">
             Explore destinations
             <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
           </a>
         </div>
         <ul class="flight-seasons">
-          <?php foreach (['winter' => ['Winter', 420], 'spring' => ['Spring', 400], 'summer' => ['Summer', 400], 'autumn' => ['Autumn', 400]] as $key => [$label, $h]): ?>
-            <li>
-              <a class="flight-seasons__link" href="<?= $key ?>.php">
-                <img class="flight-seasons__img" src="assets/images/destinations/<?= $key ?>.webp" width="600" height="<?= $h ?>"
-                     alt="" loading="lazy" decoding="async" />
-                <span class="flight-seasons__label"><?= $label ?> ideas</span>
-              </a>
-            </li>
-          <?php endforeach; ?>
+          <li>
+            <a class="flight-seasons__link" href="winter.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/winter.webp" width="600" height="420"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Winter ideas</span>
+            </a>
+          </li>
+          <li>
+            <a class="flight-seasons__link" href="spring.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/spring.webp" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Spring ideas</span>
+            </a>
+          </li>
+          <li>
+            <a class="flight-seasons__link" href="summer.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/summer.webp" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Summer ideas</span>
+            </a>
+          </li>
+          <li>
+            <a class="flight-seasons__link" href="autumn.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/autumn.webp" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Autumn ideas</span>
+            </a>
+          </li>
         </ul>
       </div>
     </section>
 
-    <!-- 6. Final step -->
     <section class="flight-cta" aria-labelledby="flight-cta-title">
       <div class="et-container">
         <div class="flight-cta__panel">
           <h2 class="flight-cta__title" id="flight-cta-title">Need help planning the journey?</h2>
           <p class="flight-cta__text">Our team can help you think through routes and dates, or you can compare other ways to travel.</p>
           <div class="flight-cta__actions">
-            <a class="et-btn et-btn--on-dark et-btn--lg" href="contact.php">Contact EasyTrip</a>
-            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.php">See all ticket options</a>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="contact.html">Contact EasyTrip</a>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.html">See all ticket options</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <?php include __DIR__ . '/partials/footer.php'; ?>
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
 
-  <script src="js/includes.js"></script>
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
   <script src="js/flight.js"></script>
 </body>
 </html>

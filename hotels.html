@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hotels — EasyTrip</title>
+  <meta name="description" content="Browse EasyTrip's sample hotel collection: city hotels, coastal resorts and mountain retreats. Filter by destination and sample price." />
+  <link rel="preload" as="image" href="assets/images/stays/hotel-lobby.webp" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/listings.css" />
+</head>
+<body class="hotels-page">
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              Destinations
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="destinations.html">All destinations</a></li>
+              <li><a class="et-nav__menu-link" href="winter.html">Winter destinations</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring destinations</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer destinations</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn destinations</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger is-current" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              Hotels &amp; Chalets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels-chalets.html">Hotels &amp; chalets overview</a></li>
+              <li><a class="et-nav__menu-link" href="hotels.html" aria-current="page">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              Tickets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="tickets.html">All tickets</a></li>
+              <li><a class="et-nav__menu-link" href="flight.html">Flight tickets</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train tickets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              About
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="lst-intro" aria-labelledby="lst-intro-title">
+      <div class="et-container lst-intro__inner">
+        <div class="lst-intro__copy">
+          <nav class="lst-breadcrumb" aria-label="Breadcrumb">
+            <ol>
+              <li><a href="hotels-chalets.html">Hotels &amp; Chalets</a></li>
+              <li><span aria-current="page">Hotels</span></li>
+            </ol>
+          </nav>
+          <h1 class="lst-intro__title" id="lst-intro-title">Hotels for every kind of journey</h1>
+          <p class="lst-intro__text">
+            Explore a curated set of sample stays, from city hotels to coastal and mountain retreats.
+          </p>
+        </div>
+        <div class="lst-intro__media">
+          <picture>
+            <source type="image/webp" srcset="assets/images/stays/hotel-lobby.webp" />
+            <img class="lst-intro__img" src="assets/images/stays-hotels-hero.jpg" width="600" height="338"
+                 alt="" fetchpriority="high" decoding="async" />
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <section class="lst-browse" aria-labelledby="lst-results-title" data-listing data-listing-noun="hotel">
+      <div class="et-container">
+        <form class="lst-toolbar" data-listing-filters hidden aria-label="Filter and sort hotels">
+          <div class="lst-field lst-field--search">
+            <label class="lst-field__label" for="hotel-search">Destination or hotel</label>
+            <input class="lst-field__input" type="search" id="hotel-search" name="q"
+                   data-filter="search" placeholder="e.g. Paris, Bali or Tower" autocomplete="off" />
+          </div>
+          <div class="lst-field lst-field--price">
+            <label class="lst-field__label" for="hotel-price">
+              Max sample price
+              <output class="lst-field__value" for="hotel-price" data-price-output>$600</output>
+              <span class="lst-field__unit">/ night</span>
+            </label>
+            <input class="lst-field__range" type="range" id="hotel-price" name="max"
+                   data-filter="price" min="150" max="600" step="10" value="600" />
+          </div>
+          <div class="lst-field lst-field--sort">
+            <label class="lst-field__label" for="hotel-sort">Sort by</label>
+            <select class="lst-field__input" id="hotel-sort" name="sort" data-filter="sort">
+              <option value="recommended">Recommended</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="name-asc">Name: A to Z</option>
+            </select>
+          </div>
+          <button class="et-btn et-btn--outline lst-toolbar__clear" type="button" data-clear-filters>Clear filters</button>
+        </form>
+
+        <header class="lst-results-head">
+          <div>
+            <h2 class="lst-results-head__title" id="lst-results-title">Explore hotel stays</h2>
+            <p class="lst-results-head__note">
+              These hotels and prices are sample content created for a university project. Online hotel booking isn't connected yet.
+            </p>
+          </div>
+          <p class="lst-results-head__count" data-listing-count>27 hotels</p>
+        </header>
+
+        <p class="et-visually-hidden" role="status" data-listing-status></p>
+
+        <!-- Sample hotels (illustrative only). js/listings.js reads each card's data-* attributes. -->
+        <div class="lst-grid" data-listing-grid>
+          <article class="lst-card" data-listing-item
+                   data-name="The Royal Grand Resort" data-location="Maldives"
+                   data-price="350" data-order="1"
+                   aria-labelledby="hotel-1-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-1.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-1-image.jpg" width="600" height="400"
+                   alt="Overwater villas with a pool beside palm trees and turquoise water" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-1-name">The Royal Grand Resort</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Maldives
+              </p>
+              <p class="lst-card__text">Overwater bungalows and villas set above a clear lagoon, designed with privacy in mind.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$350 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: The Royal Grand Resort</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: The Royal Grand Resort</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="City Tower Boutique" data-location="New York, USA"
+                   data-price="280" data-order="2"
+                   aria-labelledby="hotel-2-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-2.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-2-image.jpg" width="600" height="400"
+                   alt="Hotel room with floor-to-ceiling windows overlooking a city skyline" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-2-name">City Tower Boutique</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                New York, USA
+              </p>
+              <p class="lst-card__text">A design-led boutique base within easy reach of Manhattan&#039;s landmarks and entertainment.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$280 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: City Tower Boutique</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: City Tower Boutique</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Desert Sunset Lodge" data-location="Dubai, UAE"
+                   data-price="190" data-order="3"
+                   aria-labelledby="hotel-3-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-3.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-3-image.jpg" width="600" height="400"
+                   alt="Camel caravan crossing golden desert dunes" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-3-name">Desert Sunset Lodge</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Dubai, UAE
+              </p>
+              <p class="lst-card__text">Beach views and on-site dining, with the city&#039;s shopping districts close by.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$190 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Desert Sunset Lodge</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Desert Sunset Lodge</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="The Parisian Palace" data-location="Paris, France"
+                   data-price="450" data-order="4"
+                   aria-labelledby="hotel-4-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-4.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-4-image.jpg" width="600" height="400"
+                   alt="Classic Paris hotel buildings on a street corner with the Eiffel Tower behind" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-4-name">The Parisian Palace</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Paris, France
+              </p>
+              <p class="lst-card__text">A palace-style hotel with classic interiors, a short walk from landmarks such as the Louvre.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$450 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: The Parisian Palace</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: The Parisian Palace</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Alpine Heights Boutique" data-location="Switzerland"
+                   data-price="580" data-order="5"
+                   aria-labelledby="hotel-5-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-5.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-5-image.jpg" width="600" height="400"
+                   alt="Wooden chalets on a green hillside surrounded by pine forest" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-5-name">Alpine Heights Boutique</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Switzerland
+              </p>
+              <p class="lst-card__text">A mountain hotel with direct access to ski and hiking trails, surrounded by peaks and lakes.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$580 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Alpine Heights Boutique</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Alpine Heights Boutique</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Kyoto Garden Retreat" data-location="Kyoto, Japan"
+                   data-price="315" data-order="6"
+                   aria-labelledby="hotel-6-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-6.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-6-image.jpg" width="600" height="400"
+                   alt="Japanese castle framed by cherry blossom trees" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-6-name">Kyoto Garden Retreat</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Kyoto, Japan
+              </p>
+              <p class="lst-card__text">A ryokan-inspired stay with calm Japanese design and garden views, close to the city&#039;s cultural sites.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$315 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Kyoto Garden Retreat</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Kyoto Garden Retreat</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Santorini Sun Suites" data-location="Santorini, Greece"
+                   data-price="510" data-order="7"
+                   aria-labelledby="hotel-7-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-7.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-7-image.jpg" width="600" height="400"
+                   alt="Whitewashed buildings on a cliff above a deep blue sea" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-7-name">Santorini Sun Suites</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Santorini, Greece
+              </p>
+              <p class="lst-card__text">Whitewashed cave-style suites set into the caldera cliffs, with plunge pools and sunset views.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$510 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Santorini Sun Suites</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Santorini Sun Suites</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Serengeti Safari Lodge" data-location="Serengeti, Tanzania"
+                   data-price="480" data-order="8"
+                   aria-labelledby="hotel-8-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-8.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-8-image.jpg" width="600" height="400"
+                   alt="Sunlit garden path lined with palm trees" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-8-name">Serengeti Safari Lodge</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Serengeti, Tanzania
+              </p>
+              <p class="lst-card__text">A tented safari lodge with views across the Serengeti plains and wildlife close by.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$480 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Serengeti Safari Lodge</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Serengeti Safari Lodge</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="The Venice Lagoon Suites" data-location="Venice, Italy"
+                   data-price="390" data-order="9"
+                   aria-labelledby="hotel-9-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-9.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-9-image.jpg" width="600" height="400"
+                   alt="Gondola on a narrow canal between old buildings" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-9-name">The Venice Lagoon Suites</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Venice, Italy
+              </p>
+              <p class="lst-card__text">Suites in a historic palazzo with canal views and classic Italian interiors.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$390 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: The Venice Lagoon Suites</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: The Venice Lagoon Suites</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Patagonia Wilderness Lodge" data-location="Patagonia, Argentina"
+                   data-price="250" data-order="10"
+                   aria-labelledby="hotel-10-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-10.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-10-image.jpg" width="600" height="400"
+                   alt="House with a red roof on a forested hillside" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-10-name">Patagonia Wilderness Lodge</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Patagonia, Argentina
+              </p>
+              <p class="lst-card__text">A remote lodge that makes a warm base after days exploring glaciers and mountain peaks.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$250 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Patagonia Wilderness Lodge</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Patagonia Wilderness Lodge</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Berlin Art Hotel" data-location="Berlin, Germany"
+                   data-price="180" data-order="11"
+                   aria-labelledby="hotel-11-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-11.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-11-image.jpg" width="600" height="400"
+                   alt="Historic palace above terraced gardens" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-11-name">Berlin Art Hotel</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Berlin, Germany
+              </p>
+              <p class="lst-card__text">A modern, art-focused hotel with sleek design and easy access to the city&#039;s historic sites.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$180 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Berlin Art Hotel</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Berlin Art Hotel</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Rio Beachfront Paradise" data-location="Rio de Janeiro, Brazil"
+                   data-price="295" data-order="12"
+                   aria-labelledby="hotel-12-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-12.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-12-image.jpg" width="600" height="400"
+                   alt="Infinity pool and palm trees at sunset" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-12-name">Rio Beachfront Paradise</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Rio de Janeiro, Brazil
+              </p>
+              <p class="lst-card__text">A beachfront hotel near Copacabana and Ipanema, with a rooftop pool and ocean views.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$295 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Rio Beachfront Paradise</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Rio Beachfront Paradise</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Seoul Tech Towers" data-location="Seoul, South Korea"
+                   data-price="210" data-order="13"
+                   aria-labelledby="hotel-13-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-13.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-13-image.jpg" width="600" height="400"
+                   alt="Neon-lit city street at night" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-13-name">Seoul Tech Towers</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Seoul, South Korea
+              </p>
+              <p class="lst-card__text">A high-rise hotel with contemporary, tech-forward design in the heart of the city.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$210 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Seoul Tech Towers</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Seoul Tech Towers</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Casablanca Royal Palace" data-location="Casablanca, Morocco"
+                   data-price="320" data-order="14"
+                   aria-labelledby="hotel-14-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-14.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-14-image.jpg" width="600" height="400"
+                   alt="Ornate palace courtyard lit up at night" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-14-name">Casablanca Royal Palace</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Casablanca, Morocco
+              </p>
+              <p class="lst-card__text">Moroccan tradition meets Art Deco style, with grand halls, a spa and ocean views.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$320 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Casablanca Royal Palace</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Casablanca Royal Palace</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Irish Country Manor" data-location="Dublin, Ireland"
+                   data-price="175" data-order="15"
+                   aria-labelledby="hotel-15-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-15.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-15-image.jpg" width="600" height="400"
+                   alt="Colourful buildings along a waterfront" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-15-name">Irish Country Manor</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Dublin, Ireland
+              </p>
+              <p class="lst-card__text">A manor house hotel pairing old-world character with modern comfort, in green countryside near the city.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$175 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Irish Country Manor</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Irish Country Manor</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Sydney Harbour Views" data-location="Sydney, Australia"
+                   data-price="410" data-order="16"
+                   aria-labelledby="hotel-16-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-16.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-16-image.jpg" width="600" height="400"
+                   alt="Sydney Opera House beside the harbour" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-16-name">Sydney Harbour Views</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Sydney, Australia
+              </p>
+              <p class="lst-card__text">A waterfront hotel with views of the Opera House and Harbour Bridge, plus a rooftop bar.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$410 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Sydney Harbour Views</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Sydney Harbour Views</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Tulum Eco Resort" data-location="Tulum, Mexico"
+                   data-price="230" data-order="17"
+                   aria-labelledby="hotel-17-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-17.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-17-image.jpg" width="600" height="400"
+                   alt="Terrace lounge with sofas under a glass roof" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-17-name">Tulum Eco Resort</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Tulum, Mexico
+              </p>
+              <p class="lst-card__text">An eco-minded beach resort with yoga sessions, cabanas and Mayan-inspired architecture.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$230 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Tulum Eco Resort</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Tulum Eco Resort</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Vienna Opera House Hotel" data-location="Vienna, Austria"
+                   data-price="305" data-order="18"
+                   aria-labelledby="hotel-18-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-18.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-18-image.jpg" width="600" height="400"
+                   alt="White hotel facade with balconies framed by trees" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-18-name">Vienna Opera House Hotel</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Vienna, Austria
+              </p>
+              <p class="lst-card__text">A classic hotel in the historic centre, close to the opera and the city&#039;s cultural landmarks.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$305 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Vienna Opera House Hotel</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Vienna Opera House Hotel</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Cape Town Table Mountain Suites" data-location="Cape Town, South Africa"
+                   data-price="245" data-order="19"
+                   aria-labelledby="hotel-19-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-19.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-19-image.jpg" width="600" height="400"
+                   alt="Restaurant terrace overlooking a hillside town and the sea" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-19-name">Cape Town Table Mountain Suites</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Cape Town, South Africa
+              </p>
+              <p class="lst-card__text">Modern suites facing Table Mountain and the Atlantic, with easy access to beaches and wine routes.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$245 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Cape Town Table Mountain Suites</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Cape Town Table Mountain Suites</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Helsinki Northern Lights Retreat" data-location="Helsinki, Finland"
+                   data-price="385" data-order="20"
+                   aria-labelledby="hotel-20-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-20.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-20-image.jpg" width="600" height="400"
+                   alt="Boats moored in a harbour lined with colourful houses" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-20-name">Helsinki Northern Lights Retreat</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Helsinki, Finland
+              </p>
+              <p class="lst-card__text">A minimalist Nordic city hotel, with glass retreats nearby for a chance to see the Northern Lights.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$385 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Helsinki Northern Lights Retreat</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Helsinki Northern Lights Retreat</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Bali Oceanfront Villa" data-location="Bali, Indonesia"
+                   data-price="270" data-order="21"
+                   aria-labelledby="hotel-21-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-21.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-21-image.jpg" width="600" height="400"
+                   alt="Aerial view of a villa among palm trees beside a white beach" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-21-name">Bali Oceanfront Villa</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Bali, Indonesia
+              </p>
+              <p class="lst-card__text">Private villas in tropical gardens or facing the ocean, with infinity pools and Balinese hospitality.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$270 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Bali Oceanfront Villa</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Bali Oceanfront Villa</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Beirut Waterfront Suites" data-location="Beirut, Lebanon"
+                   data-price="220" data-order="22"
+                   aria-labelledby="hotel-22-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-22.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-22-image.jpg" width="600" height="400"
+                   alt="Aerial view of a turquoise coastline beside a resort pool" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-22-name">Beirut Waterfront Suites</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Beirut, Lebanon
+              </p>
+              <p class="lst-card__text">Sea-view suites close to the city centre and its art, dining and nightlife.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$220 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Beirut Waterfront Suites</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Beirut Waterfront Suites</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="AlUla Heritage Resort" data-location="AlUla, Saudi Arabia"
+                   data-price="450" data-order="23"
+                   aria-labelledby="hotel-23-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-23.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-23-image.jpg" width="600" height="400"
+                   alt="Off-road vehicle crossing red desert rocks" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-23-name">AlUla Heritage Resort</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                AlUla, Saudi Arabia
+              </p>
+              <p class="lst-card__text">A desert resort among dramatic rock formations, with a focus on local heritage and wellness.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$450 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: AlUla Heritage Resort</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: AlUla Heritage Resort</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Cairo Nile View Palace" data-location="Cairo, Egypt"
+                   data-price="210" data-order="24"
+                   aria-labelledby="hotel-24-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-24.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-24-image.jpg" width="600" height="400"
+                   alt="Riverside hotels with boats moored along the Nile" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-24-name">Cairo Nile View Palace</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Cairo, Egypt
+              </p>
+              <p class="lst-card__text">Classical architecture with views of the Nile, close to the city&#039;s historic sites.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$210 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Cairo Nile View Palace</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Cairo Nile View Palace</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Dead Sea Spa Hotel" data-location="Sweimeh, Jordan"
+                   data-price="275" data-order="25"
+                   aria-labelledby="hotel-25-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-25.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-25-image.jpg" width="600" height="400"
+                   alt="Hotel room with a jacuzzi bath and a view of the sea" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-25-name">Dead Sea Spa Hotel</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Sweimeh, Jordan
+              </p>
+              <p class="lst-card__text">A wellness resort by the Dead Sea, known for mineral-rich mud treatments and views across the water.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$275 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Dead Sea Spa Hotel</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Dead Sea Spa Hotel</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Manama Pearl Residence" data-location="Manama, Bahrain"
+                   data-price="310" data-order="26"
+                   aria-labelledby="hotel-26-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-26.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-26-image.jpg" width="600" height="400"
+                   alt="Modern high-rise hotel towers against a blue sky" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-26-name">Manama Pearl Residence</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Manama, Bahrain
+              </p>
+              <p class="lst-card__text">A business-friendly hotel in the financial district, with views over the city and the Gulf.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$310 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Manama Pearl Residence</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Manama Pearl Residence</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="lst-card" data-listing-item
+                   data-name="Muscat Grand Ocean Resort" data-location="Muscat, Oman"
+                   data-price="380" data-order="27"
+                   aria-labelledby="hotel-27-name">
+            <picture>
+              <source type="image/webp" srcset="assets/images/hotels/hotel-27.webp" />
+              <img class="lst-card__img" src="assets/images/hotel-27-image.jpg" width="600" height="400"
+                   alt="Curved beachfront hotel beside a sandy beach" loading="lazy" decoding="async" />
+            </picture>
+            <div class="lst-card__body">
+              <h3 class="lst-card__name" id="hotel-27-name">Muscat Grand Ocean Resort</h3>
+              <p class="lst-card__location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Muscat, Oman
+              </p>
+              <p class="lst-card__text">A coastal resort between mountains and the Arabian Sea, close to beaches and diving spots.</p>
+              <div class="lst-card__footer">
+                <p class="lst-card__price">
+                  <span class="lst-card__price-label">Sample price</span>
+                  <span class="lst-card__price-value">$380 <span>/ night</span></span>
+                </p>
+                <a class="et-btn et-btn--outline lst-card__action" href="contact.html?topic=stays" data-listing-fallback>
+                  Ask about this stay<span class="et-visually-hidden">: Muscat Grand Ocean Resort</span>
+                </a>
+                <button class="et-btn et-btn--outline lst-card__action" type="button" data-listing-details hidden>
+                  View details<span class="et-visually-hidden">: Muscat Grand Ocean Resort</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="lst-empty" data-listing-empty hidden>
+          <h3 class="lst-empty__title">No hotels match those filters.</h3>
+          <p class="lst-empty__text">Try another destination or increase the maximum sample price.</p>
+          <button class="et-btn et-btn--primary" type="button" data-clear-filters>Clear filters</button>
+        </div>
+
+        <div class="lst-more" data-listing-more-wrap hidden>
+          <button class="et-btn et-btn--outline et-btn--lg" type="button" data-listing-more>Show more hotels</button>
+        </div>
+      </div>
+
+      <dialog class="lst-dialog" data-listing-dialog aria-labelledby="lst-dialog-title">
+        <div class="lst-dialog__inner">
+          <button class="lst-dialog__close" type="button" data-dialog-close aria-label="Close details">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+          <img class="lst-dialog__img" src="data:," alt="" width="600" height="400" data-dialog-img />
+          <div class="lst-dialog__body">
+            <h2 class="lst-dialog__title" id="lst-dialog-title" data-dialog-name></h2>
+            <p class="lst-card__location lst-dialog__location" data-dialog-location></p>
+            <p class="lst-dialog__text" data-dialog-text></p>
+            <p class="lst-dialog__price">
+              <span class="lst-card__price-label">Sample price</span>
+              <span class="lst-card__price-value" data-dialog-price></span>
+            </p>
+            <p class="lst-dialog__notice">
+              This is a sample listing for a university project. Online hotel reservations aren't connected yet, but you can
+              ask our team about this stay.
+            </p>
+            <div class="lst-dialog__actions">
+              <a class="et-btn et-btn--primary" href="contact.html?topic=stays">Ask about this stay</a>
+              <button class="et-btn et-btn--outline" type="button" data-dialog-close>Close</button>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <section class="lst-alt" aria-labelledby="lst-alt-title">
+      <div class="et-container">
+        <div class="lst-alt__panel">
+          <div class="lst-alt__copy">
+            <h2 class="lst-alt__title" id="lst-alt-title">Looking for more privacy?</h2>
+            <p class="lst-alt__text">Explore chalet stays designed for families, groups and nature-focused trips.</p>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="chalets.html">
+              Explore chalets
+              <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </div>
+          <div class="lst-alt__media">
+            <picture>
+              <source type="image/webp" srcset="assets/images/stays/chalet-snow-night.webp" />
+              <img class="lst-alt__img" src="assets/images/chalet-14-image.jpg" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/listings.js"></script>
+</body>
+</html>

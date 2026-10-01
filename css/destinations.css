@@ -1,10 +1,5 @@
-/* ==========================================================================
-   Destinations page (destinations.php)
-   Every rule is scoped to "dst-" components. Colours, fonts, buttons and the
-   container come from the shared design system in css/styles.css.
-   ========================================================================== */
+/* Destinations page (destinations.html) */
 
-/* Shared section rhythm ------------------------------------------------- */
 .dst-section {
   padding-block: 88px;
 }
@@ -40,7 +35,6 @@
   font-size: 17px;
 }
 
-/* 1. Hero ----------------------------------------------------------------- */
 .dst-hero {
   position: relative;
   display: flex;
@@ -62,7 +56,6 @@
   object-position: 50% 60%;
 }
 
-/* The photo is already dark at the edges; the scrim only supports the text side. */
 .dst-hero::after {
   content: "";
   position: absolute;
@@ -105,12 +98,10 @@
   outline-color: var(--et-focus-on-dark);
 }
 
-/* The arrow points down to the collection, so it nudges down, not sideways. */
 .et-btn:hover .dst-hero__arrow {
   transform: translateY(3px);
 }
 
-/* 2. Seasonal collection -------------------------------------------------- */
 .dst-seasons {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -136,7 +127,6 @@
   box-shadow: 0 24px 48px -32px rgba(0, 27, 72, .45);
 }
 
-/* Keyboard focus on the card's link outlines the whole card. */
 .dst-card:has(.dst-card__link:focus-visible) {
   outline: 3px solid var(--et-focus);
   outline-offset: 3px;
@@ -155,7 +145,6 @@
   transition: transform .6s ease;
 }
 
-/* Fallback PNG is portrait; keep the fence and path in frame. */
 .dst-card__img--autumn {
   object-position: 50% 62%;
 }
@@ -239,7 +228,6 @@
   font-weight: 600;
 }
 
-/* One link per card, stretched over the whole card so the photo is clickable too. */
 .dst-card__link::after {
   content: "";
   position: absolute;
@@ -247,7 +235,6 @@
   border-radius: inherit;
 }
 
-/* The card draws the focus ring; browsers without :has() keep the link's own outline. */
 @supports selector(:has(*)) {
   .dst-card__link:focus-visible {
     outline: none;
@@ -273,7 +260,6 @@
   transform: translateX(4px);
 }
 
-/* 3. Choose by the experience -------------------------------------------- */
 .dst-guide {
   display: grid;
   grid-template-columns: minmax(240px, 1fr) 2fr;
@@ -344,7 +330,6 @@
   color: var(--et-primary-hover);
 }
 
-/* 4. Final action --------------------------------------------------------- */
 .dst-stay {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -392,7 +377,6 @@
   object-fit: cover;
 }
 
-/* Responsive -------------------------------------------------------------- */
 @media (max-width: 67.49em) {
   .dst-seasons {
     gap: 24px;

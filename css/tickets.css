@@ -1,20 +1,12 @@
-/* ==========================================================================
-   Tickets overview (tickets.php)
-   A transport-choice page: hero, two transport panels, a quick comparison,
-   a prototype note and a closing call to action.
-   All classes start with "tkt-" so nothing here can affect the shared header,
-   footer or other pages. Colours, fonts, buttons and the container come from
-   css/styles.css.
-   ========================================================================== */
+/* Tickets overview (tickets.html) */
 
 .tickets-page {
-  --tkt-air: var(--et-primary);    /* flights accent */
+  --tkt-air: var(--et-primary);
   --tkt-air-tint: #eef6fb;
-  --tkt-ground: #1d6b57;           /* bus & train accent: 6.4:1 on white */
+  --tkt-ground: #1d6b57;
   --tkt-ground-tint: #eef5f1;
 }
 
-/* Shared bits ------------------------------------------------------------------ */
 .tkt-eyebrow {
   margin: 0 0 10px;
   color: var(--et-primary);
@@ -59,7 +51,6 @@
   color: var(--et-primary-hover);
 }
 
-/* 1. Hero ---------------------------------------------------------------------- */
 .tkt-hero {
   padding-block: 48px 56px;
   background: #f3f8fb;
@@ -98,7 +89,7 @@
 }
 
 .tkt-hero .et-btn:hover .tkt-icon-down {
-  transform: translateY(3px);   /* points where the link goes */
+  transform: translateY(3px);
 }
 
 .tkt-hero__img {
@@ -109,7 +100,6 @@
   border-radius: 20px;
 }
 
-/* 2. Transport panels ------------------------------------------------------------ */
 .tkt-options {
   padding-block: 72px 32px;
 }
@@ -214,7 +204,6 @@
   font-weight: 700;
 }
 
-/* Plain dots rather than checkmarks: these are use cases, not product features. */
 .tkt-mode__uses {
   display: grid;
   gap: 6px;
@@ -244,7 +233,6 @@
   margin-top: auto;
 }
 
-/* 3. Comparison ---------------------------------------------------------------- */
 .tkt-compare {
   padding-block: 56px 80px;
 }
@@ -317,7 +305,6 @@
   color: var(--et-primary-hover);
 }
 
-/* 4. Prototype note ------------------------------------------------------------ */
 .tkt-notice {
   display: flex;
   gap: 14px;
@@ -350,7 +337,6 @@
   color: var(--et-navy);
 }
 
-/* 5. Closing call to action ------------------------------------------------------- */
 .tkt-cta {
   padding-bottom: 88px;
 }
@@ -396,7 +382,7 @@
 
 .tkt-cta__help a {
   display: inline-block;
-  padding-block: 12px;   /* 44px tap height on a one-line text link */
+  padding-block: 12px;
   color: #fff;
   font-weight: 600;
   text-decoration: underline;
@@ -407,7 +393,6 @@
   outline-color: var(--et-focus-on-dark);
 }
 
-/* Responsive ------------------------------------------------------------------- */
 @media (max-width: 63.99em) {
   .tkt-mode__body {
     padding: 24px 24px 28px;
@@ -443,7 +428,7 @@
   }
 
   .tkt-mode__img {
-    aspect-ratio: 2 / 1;   /* stacked panels are full width, so keep them short */
+    aspect-ratio: 2 / 1;
   }
 
   .tkt-compare {

@@ -1,6 +1,4 @@
-// Shared header/footer loader and the single navigation controller for every page.
-// Pages that render the partials with PHP (index.php) skip the fetch; the others
-// get them injected here, and the nav is initialised once after that.
+// Navigation menu: dropdowns, the mobile menu and the current-page highlight.
 (function () {
   'use strict';
 
@@ -10,25 +8,9 @@
   var MOBILE_QUERY = '(max-width: 67.49em)';
   var HOVER_CLOSE_DELAY = 160;
 
-  async function inject(id, url) {
-    var mount = document.getElementById(id);
-    if (!mount) return;
-    try {
-      var res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
-      var tpl = document.createElement('template');
-      tpl.innerHTML = await res.text();
-      // Replace the mount so the header is a direct child of <body>; a sticky
-      // element inside a wrapper of its own height never sticks.
-      mount.replaceWith(tpl.content);
-    } catch (err) {
-      console.error('Include failed →', url, err);
-    }
-  }
-
   function currentPage() {
     var file = window.location.pathname.split('/').pop();
-    return file || 'index.php';
+    return file || 'index.html';
   }
 
   function ensureMainTarget() {
@@ -73,8 +55,7 @@
 
     function setMenu(trigger, open, byHover) {
       trigger.setAttribute('aria-expanded', String(open));
-      // Remember hover-opened menus so the click that often follows a hover
-      // doesn't immediately close the menu again.
+      // Remember hover-opened menus so the click that usually follows a hover doesn't close them.
       if (open && byHover) trigger.dataset.hoverOpen = 'true';
       else delete trigger.dataset.hoverOpen;
     }
@@ -139,7 +120,6 @@
         });
       }
 
-      // Pointer hover on desktop only; touch and pen rely on click.
       item.addEventListener('pointerenter', function (e) {
         if (e.pointerType !== 'mouse' || isMobile()) return;
         clearTimeout(hoverTimer);
@@ -154,7 +134,6 @@
         }, HOVER_CLOSE_DELAY);
       });
 
-      // Close a desktop dropdown once keyboard focus leaves it.
       item.addEventListener('focusout', function (e) {
         if (isMobile()) return;
         if (!item.contains(e.relatedTarget)) setMenu(trigger, false);
@@ -176,7 +155,6 @@
 
     document.addEventListener('click', function (e) {
       if (header.contains(e.target)) {
-        // Following a link inside the open mobile panel (e.g. a same-page anchor) closes it.
         if (panelOpen() && e.target.closest('.et-nav a')) setPanel(false);
         return;
       }
@@ -204,13 +182,9 @@
     if (typeof window.initSite === 'function') window.initSite();
   }
 
-  (async function () {
-    await inject('include-header', 'partials/header.php');
-    await inject('include-footer', 'partials/footer.php');
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initSite);
-    } else {
-      initSite();
-    }
-  })();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSite);
+  } else {
+    initSite();
+  }
 })();

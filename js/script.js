@@ -1,7 +1,4 @@
-// Page behaviours shared by several pages. Navigation lives in js/includes.js.
-
-// Reveal-on-scroll: content is visible by default; it is only hidden for the
-// animation when the browser can reveal it again and motion is welcome.
+// Reveal on scroll. Content stays visible without JavaScript and when reduced motion is requested.
 (function () {
   const revealEls = document.querySelectorAll('.reveal')
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -17,7 +14,6 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' })
 
   revealEls.forEach(el => {
-    // Anything already on screen stays visible without animating in.
     if (el.getBoundingClientRect().top < window.innerHeight) {
       el.classList.add('is-visible')
     } else {

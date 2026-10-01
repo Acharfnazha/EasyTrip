@@ -1,16 +1,9 @@
-// Route planner (bus-train.php): one form for bus and train. Handles transport
-// mode, trip type, swap, date limits, validation and the route summary. There is
-// no transport data behind this page, so a valid plan shows a summary of what the
-// visitor entered, never invented routes, times or fares.
-//
-// Without JavaScript every field stays visible and labelled, the browser checks
-// the required ones, and a note explains that the summary needs JavaScript.
+// Bus & train route planner: validation and a summary of the route (there is no real transport data).
 (function () {
   'use strict';
 
   var MODES = { bus: 'Bus', train: 'Train' };
   var MAX_TRAVELERS = 9;
-  // Mode-specific preference field → its readable options and summary label.
   var CLASS_FIELDS = {
     bus: { field: 'bus-seat', label: 'Seating preference', missing: 'Choose a seating preference.',
       options: { standard: 'Standard seating', premium: 'Premium seating' } },
@@ -24,7 +17,6 @@
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
-  // "2026-10-14" → "Wed, 14 October 2026" (parsed as a local date, not UTC).
   function formatDate(iso) {
     var p = iso.split('-').map(Number);
     return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString('en-GB', {
@@ -32,16 +24,15 @@
     });
   }
 
-  // Compare places loosely: "  tripoli " and "Tripoli" are the same place.
   function samePlace(a, b) {
     var n = function (s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim().toLowerCase(); };
     return n(a) === n(b);
   }
 
   function initPlanner(form) {
-    if (form.dataset.ready) return;   // never bind twice
+    if (form.dataset.ready) return;
     form.dataset.ready = 'true';
-    form.noValidate = true;           // our messages replace the browser's pop-ups
+    form.noValidate = true;
 
     var q = function (sel) { return form.querySelector(sel); };
     var fields = {};
@@ -67,7 +58,6 @@
     var isRoundTrip = function () { return checkedValue(tripInputs) !== 'oneway'; };
     var classFieldName = function () { return CLASS_FIELDS[currentMode()].field; };
 
-    // Validation rules: each returns an error message, or '' when the value is fine.
     var rules = {
       mode: function () { return MODES[checkedValue(modeInputs)] ? '' : 'Choose bus or train.'; },
       trip: function () { return ['round', 'oneway'].indexOf(checkedValue(tripInputs)) !== -1 ? '' : 'Choose round trip or one way.'; },
@@ -101,16 +91,12 @@
       'bus-seat': function () { return classRule('bus'); },
       'train-class': function () { return classRule('train'); }
     };
-    // Only the current mode's preference is required.
     function classRule(mode) {
       var cfg = CLASS_FIELDS[mode];
       if (currentMode() !== mode) return '';
       return cfg.options[fields[cfg.field].value] ? '' : cfg.missing;
     }
 
-    // Errors ------------------------------------------------------------------------
-    // Every message is linked in the HTML (aria-describedby on the field or fieldset);
-    // it is empty and hidden while the value is fine.
     function targetsFor(name) {
       if (name === 'mode') return { inputs: modeInputs, error: document.getElementById('route-mode-error') };
       if (name === 'trip') return { inputs: tripInputs, error: document.getElementById('route-trip-error') };
@@ -137,8 +123,6 @@
 
     var isInvalid = function (name) { return targetsFor(name).inputs[0].getAttribute('aria-invalid') === 'true'; };
 
-    // Transport mode: update the heading, examples and mode-specific fields only.
-    // Shared values (route, dates, travelers) and each mode's own choices are kept.
     function applyMode() {
       var mode = currentMode();
       var radio = Array.prototype.find.call(modeInputs, function (i) { return i.value === mode; });
@@ -153,7 +137,6 @@
       form.querySelectorAll('[data-for-mode]').forEach(function (el) {
         var active = el.dataset.forMode === mode;
         el.hidden = !active;
-        // Disabled controls are skipped by the keyboard and never sent with the form.
         el.querySelectorAll('input, select').forEach(function (control) { control.disabled = !active; });
       });
       Object.keys(CLASS_FIELDS).forEach(function (m) {
@@ -162,36 +145,29 @@
       if (isInvalid('mode')) validate('mode');
     }
 
-    // Trip type ---------------------------------------------------------------------
     function applyTripType() {
       var round = isRoundTrip();
       if (returnField) returnField.hidden = !round;
-      fields.return.disabled = !round;   // a hidden return date is never sent
+      fields.return.disabled = !round;
       if (!round) setError('return', '');
       if (isInvalid('trip')) validate('trip');
     }
 
-    // Dates: departure from today; return from the chosen departure ---------------------
     function updateDateLimits() {
       var today = todayISO();
       fields.depart.min = today;
       fields.return.min = fields.depart.value && fields.depart.value >= today ? fields.depart.value : today;
     }
 
-    // Validation timing --------------------------------------------------------------
-    // Nothing is checked until the visitor has changed a field and left it, or submits.
-    // Once a field shows an error, it is re-checked as they fix it.
-    //
-    // Pressing a button (e.g. "Review route") also makes the current field lose focus.
-    // If that showed a message, the page would shift and the press could miss the
-    // button, so leaving a field that way is skipped: the button checks everything itself.
+    // While a button is being pressed, skip blur validation: a new error message would
+    // shift the layout and the click could miss the button.
     var pressingButton = false;
     form.addEventListener('pointerdown', function (event) {
       if (event.target.closest('button')) pressingButton = true;
     });
     ['pointerup', 'pointercancel'].forEach(function (type) {
       document.addEventListener(type, function () {
-        setTimeout(function () { pressingButton = false; }, 0);   // after the click has run
+        setTimeout(function () { pressingButton = false; }, 0);
       });
     });
 
@@ -209,13 +185,10 @@
       });
     });
 
-    // A changed origin can fix (or cause) the "same place" error on the destination.
     fields.from.addEventListener('input', function () {
       if (isInvalid('to')) validate('to');
     });
 
-    // Moving the departure date updates the return limit and flags a return date
-    // that is now before it (the value is kept so the visitor can see what changed).
     fields.depart.addEventListener('change', function () {
       updateDateLimits();
       if (isRoundTrip() && fields.return.value && (isInvalid('return') || fields.return.value < fields.depart.value)) {
@@ -239,9 +212,8 @@
       });
     }
 
-    // Submit ---------------------------------------------------------------------
     form.addEventListener('submit', function (event) {
-      event.preventDefault();   // there is no transport service to send this to yet
+      event.preventDefault();
       updateDateLimits();
       var order = ['mode', 'trip', 'from', 'to', 'depart', 'return', 'travelers', classFieldName()];
       var firstInvalid = null;
@@ -261,7 +233,6 @@
     function readPlan() {
       var mode = currentMode();
       var cfg = CLASS_FIELDS[mode];
-      // Only enabled boxes count: the other mode's preference is disabled while hidden.
       var prefs = Array.prototype.filter.call(form.querySelectorAll('[data-pref]'), function (box) { return box.checked && !box.disabled; })
         .map(function (box) { return box.dataset.pref; });
       var travelers = Number(fields.travelers.value);
@@ -279,7 +250,6 @@
       };
     }
 
-    // Summary --------------------------------------------------------------------
     function showSummary(plan) {
       if (!summary) return;
       var s = function (sel) { return summary.querySelector(sel); };
@@ -300,7 +270,7 @@
       var returnRow = s('[data-summary-return-row]');
       if (returnRow) returnRow.hidden = !plan.round;
 
-      // "Beirut → Tripoli" built with text nodes, never innerHTML, since it is the visitor's own input.
+      // Text nodes, not innerHTML: this is the visitor's own input.
       var route = s('[data-summary-route]');
       if (route) {
         route.textContent = '';
@@ -321,11 +291,9 @@
       var heading = s('#route-summary-title');
       var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       summary.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
-      if (heading) heading.focus({ preventScroll: true });   // screen readers announce the heading
+      if (heading) heading.focus({ preventScroll: true });
     }
 
-    // If the form changes after a summary was made, say so instead of silently
-    // leaving an out-of-date summary on screen.
     function markStale() {
       if (!summary || summary.hidden || !lastSummary) return;
       var stale = summary.querySelector('[data-summary-stale]');
@@ -337,7 +305,7 @@
     var edit = summary && summary.querySelector('[data-edit-route]');
     if (edit) {
       edit.addEventListener('click', function () {
-        fields.from.focus();   // the browser scrolls the field into view, clear of the sticky header
+        fields.from.focus();
       });
     }
 

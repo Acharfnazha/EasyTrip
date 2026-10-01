@@ -1,13 +1,11 @@
 # EasyTrip — files that stay on your computer and are not committed.
-# Everything the site needs (PHP, CSS, JS, images, videos, 3D models, the SQL schema
-# and the docs) IS committed.
+# Everything the site needs (HTML, CSS, JS, images, videos, 3D models and the docs)
+# IS committed.
 
-# Environment and local configuration (database passwords go here, never in the code)
+# Environment and local configuration
 .env
 .env.*
 !.env.example
-*.local.php
-.htaccess.local
 
 # IDE and editor settings
 .vscode/
@@ -42,16 +40,6 @@ node_modules/
 __pycache__/
 *.pyc
 .venv*/
-
-# Local database files and backups with real data.
-# database/easytrip_db.sql (schema only) is committed.
-*.sqlite
-*.sqlite3
-*.db
-*.dump
-database/backups/
-database/*backup*.sql
-database/local-*.sql
 
 # Runtime uploads and generated output
 uploads/

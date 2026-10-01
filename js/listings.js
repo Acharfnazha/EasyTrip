@@ -1,33 +1,17 @@
-// Listing controller for accommodation pages (hotels.php and chalets.php).
-//
-// Progressive enhancement: the page HTML already lists every stay with all of its
-// details, so it works without JavaScript. This script adds search, a maximum
-// price, sorting, "Show more", an empty state and a details dialog.
-//
-// All data comes from attributes on each card — never from visible text:
-//   <article data-listing-item data-name="…" data-location="…" data-price="350" data-order="1">
-//
-// Optional extras, driven entirely by the page's HTML:
-//   - Any other field such as <select data-filter="setting"> keeps only cards whose
-//     data-setting matches the chosen value (an empty value means "all").
-//   - <button data-quick-filter="search" data-quick-value="Lebanon"> is a shortcut that
-//     fills in (or clears) that field; aria-pressed shows whether it is active.
-//   - Elements marked [data-listing-enhance] start hidden and are shown once this runs.
-//   - A card's [data-listing-meta] text (e.g. "Cabin · Mountain") is copied into the
-//     dialog's [data-dialog-meta].
+// Hotels and chalets listings: search, filters, sorting, "Show more" and the details dialog.
+// Each card is read from its data-* attributes (data-name, data-location, data-price, data-order).
 (function () {
   'use strict';
 
-  var ANNOUNCE_DELAY = 400;               // wait for typing to pause before announcing
-  var WIDE_QUERY = '(min-width: 64em)';   // 3-column grid → reveal 9 at a time, else 6
+  var ANNOUNCE_DELAY = 400;
+  var WIDE_QUERY = '(min-width: 64em)';
 
-  // Lower-case and strip accents so "raouche" matches "Raouché".
   function normalise(value) {
     return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
   }
 
   function initListing(root) {
-    if (root.dataset.listingReady) return;   // never bind the same listing twice
+    if (root.dataset.listingReady) return;
     root.dataset.listingReady = 'true';
 
     var q = function (sel) { return root.querySelector(sel); };
@@ -45,7 +29,6 @@
     var dialog = q('[data-listing-dialog]');
     if (!grid) return;
 
-    // Fields that match a card attribute exactly, e.g. data-filter="setting" → data-setting.
     var BUILT_IN = ['search', 'price', 'sort'];
     var attrFilters = Array.prototype.filter.call(root.querySelectorAll('[data-filter]'), function (field) {
       return BUILT_IN.indexOf(field.dataset.filter) === -1;
@@ -55,7 +38,6 @@
     var noun = root.dataset.listingNoun || 'result';
     var plural = function (n) { return n + ' ' + noun + (n === 1 ? '' : 's'); };
 
-    // Read each card's data once. Missing optional values fall back safely.
     var items = Array.prototype.map.call(grid.querySelectorAll('[data-listing-item]'), function (el, i) {
       var p = parseFloat(el.dataset.price);
       return {
@@ -77,7 +59,6 @@
       'price-desc': function (a, b) { return byPrice(a, b, -1); },
       'name-asc': function (a, b) { return a.name.localeCompare(b.name) || a.order - b.order; }
     };
-    // Cards without a price always sort after priced ones.
     function byPrice(a, b, dir) {
       if (a.price === null || b.price === null) return (a.price === null) - (b.price === null);
       return (a.price - b.price) * dir || a.order - b.order;
@@ -92,7 +73,6 @@
       return true;
     }
 
-    // A quick filter is "on" while its field holds exactly its value.
     function syncQuickButtons() {
       quickButtons.forEach(function (button) {
         var field = q('[data-filter="' + button.dataset.quickFilter + '"]');
@@ -159,7 +139,6 @@
       update();
     }
 
-    // Controls that only work with JavaScript start hidden and are revealed here.
     root.querySelectorAll('[data-listing-enhance]').forEach(function (el) { el.hidden = false; });
 
     if (form) {
@@ -185,7 +164,6 @@
       button.addEventListener('click', function () {
         var fromEmptyState = empty && empty.contains(button);
         clearFilters();
-        // The empty state's button disappears once results return; keep focus sensible.
         if (fromEmptyState && search) search.focus();
       });
     });
@@ -195,8 +173,6 @@
         var firstNew = visibleLimit;
         visibleLimit += pageSize();
         update();
-        // If the button has just disappeared, move focus to the first newly shown card
-        // rather than losing it to the page.
         if (moreWrap && moreWrap.hidden) {
           var cards = Array.prototype.filter.call(grid.children, function (el) { return !el.hidden; });
           var target = cards[firstNew] && cards[firstNew].querySelector('a:not([hidden]), button:not([hidden])');
@@ -205,7 +181,6 @@
       });
     }
 
-    // Details dialog -----------------------------------------------------------
     if (dialog && typeof dialog.showModal === 'function') {
       var opener = null;
       var d = function (sel) { return dialog.querySelector(sel); };
@@ -231,7 +206,6 @@
         var metaEl = d('[data-dialog-meta]');
         var cardMeta = item.el.querySelector('[data-listing-meta]');
         if (metaEl) {
-          // Copy the label's nodes (not text) so its screen-reader separator comes along.
           metaEl.textContent = '';
           if (cardMeta) {
             Array.prototype.forEach.call(cardMeta.childNodes, function (node) {
@@ -248,13 +222,12 @@
           priceEl.textContent = item.price === null ? '' : '$' + item.price + ' / night';
         }
         opener = button;
-        dialog.showModal();   // native modal: background is inert, Escape closes it
+        dialog.showModal();
       }
 
       dialog.querySelectorAll('[data-dialog-close]').forEach(function (b) {
         b.addEventListener('click', function () { dialog.close(); });
       });
-      // A click on the dimmed backdrop (outside the panel) also closes it.
       dialog.addEventListener('click', function (e) {
         if (e.target === dialog) dialog.close();
       });

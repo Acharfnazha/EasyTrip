@@ -1,9 +1,4 @@
-// Flight planner (flight.php): trip type, swap, date limits, validation and the
-// search summary. There is no flight data behind this page, so a valid search
-// shows a summary of what the visitor entered, never invented results.
-//
-// Without JavaScript the form still shows every field, the browser checks the
-// required ones, and a note explains that the summary needs JavaScript.
+// Flight planner: validation and a summary of the search (there is no real flight data).
 (function () {
   'use strict';
 
@@ -16,7 +11,6 @@
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
-  // "2026-10-14" → "Wed, 14 October 2026" (parsed as a local date, not UTC).
   function formatDate(iso) {
     var p = iso.split('-').map(Number);
     return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString('en-GB', {
@@ -24,16 +18,15 @@
     });
   }
 
-  // Compare places loosely: "  beirut " and "Beirut" are the same place.
   function samePlace(a, b) {
     var n = function (s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim().toLowerCase(); };
     return n(a) === n(b);
   }
 
   function initPlanner(form) {
-    if (form.dataset.ready) return;   // never bind twice
+    if (form.dataset.ready) return;
     form.dataset.ready = 'true';
-    form.noValidate = true;           // our messages replace the browser's pop-ups
+    form.noValidate = true;
 
     var q = function (sel) { return form.querySelector(sel); };
     var fields = {
@@ -58,7 +51,6 @@
       return !checked || checked.value === 'round';
     };
 
-    // Validation rules: each returns an error message, or '' when the value is fine.
     var rules = {
       from: function () {
         return fields.from.value.trim() ? '' : 'Enter the city or airport you are flying from.';
@@ -92,8 +84,6 @@
       }
     };
 
-    // Show or clear the message under a field. The message is always linked to its
-    // field through aria-describedby in the HTML; it is empty and hidden when valid.
     function setError(name, message) {
       var input = fields[name];
       var error = document.getElementById(input.id + '-error');
@@ -112,35 +102,28 @@
 
     var isInvalid = function (name) { return fields[name].getAttribute('aria-invalid') === 'true'; };
 
-    // Trip type -----------------------------------------------------------------
     function applyTripType() {
       var round = isRoundTrip();
       if (returnField) returnField.hidden = !round;
-      fields.return.disabled = !round;   // disabled fields are skipped and not submitted
+      fields.return.disabled = !round;
       if (!round) setError('return', '');
     }
 
-    // Dates: departure from today; return from the chosen departure -----------------
     function updateDateLimits() {
       var today = todayISO();
       fields.depart.min = today;
       fields.return.min = fields.depart.value && fields.depart.value >= today ? fields.depart.value : today;
     }
 
-    // Validation timing --------------------------------------------------------------
-    // Nothing is checked until the visitor has typed in a field and left it, or submits.
-    // Once a field shows an error, it is re-checked as they fix it.
-    //
-    // Pressing a button (e.g. "Review search") also makes the current field lose focus.
-    // If that showed a message, the page would shift and the press could miss the
-    // button, so leaving a field that way is skipped: the button checks everything itself.
+    // While a button is being pressed, skip blur validation: a new error message would
+    // shift the layout and the click could miss the button.
     var pressingButton = false;
     form.addEventListener('pointerdown', function (event) {
       if (event.target.closest('button')) pressingButton = true;
     });
     ['pointerup', 'pointercancel'].forEach(function (type) {
       document.addEventListener(type, function () {
-        setTimeout(function () { pressingButton = false; }, 0);   // after the click has run
+        setTimeout(function () { pressingButton = false; }, 0);
       });
     });
 
@@ -158,13 +141,10 @@
       });
     });
 
-    // A changed origin can fix (or cause) the "same place" error on the destination.
     fields.from.addEventListener('input', function () {
       if (isInvalid('to')) validate('to');
     });
 
-    // Moving the departure date updates the return limit and flags a return date
-    // that is now before it (the value is kept so the visitor can see what changed).
     fields.depart.addEventListener('change', function () {
       updateDateLimits();
       if (isRoundTrip() && fields.return.value && (isInvalid('return') || fields.return.value < fields.depart.value)) {
@@ -189,9 +169,8 @@
       });
     }
 
-    // Submit ---------------------------------------------------------------------
     form.addEventListener('submit', function (event) {
-      event.preventDefault();   // there is no search service to send this to yet
+      event.preventDefault();
       updateDateLimits();
       var firstInvalid = null;
       order.forEach(function (name) {
@@ -220,7 +199,6 @@
       };
     }
 
-    // Summary --------------------------------------------------------------------
     function showSummary(search) {
       if (!summary) return;
       var s = function (sel) { return summary.querySelector(sel); };
@@ -237,7 +215,7 @@
       var returnRow = s('[data-summary-return-row]');
       if (returnRow) returnRow.hidden = !search.round;
 
-      // "Beirut → Paris" built with text nodes, never innerHTML, since it is the visitor's own input.
+      // Text nodes, not innerHTML: this is the visitor's own input.
       var route = s('[data-summary-route]');
       if (route) {
         route.textContent = '';
@@ -258,11 +236,9 @@
       var title = s('#flight-summary-title');
       var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       summary.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
-      if (title) title.focus({ preventScroll: true });   // screen readers announce the heading
+      if (title) title.focus({ preventScroll: true });
     }
 
-    // If the form changes after a summary was made, say so instead of silently
-    // leaving an out-of-date summary on screen.
     function markStale() {
       if (!summary || summary.hidden || !lastSummary) return;
       var stale = summary.querySelector('[data-summary-stale]');
@@ -274,7 +250,7 @@
     var edit = summary && summary.querySelector('[data-edit-search]');
     if (edit) {
       edit.addEventListener('click', function () {
-        fields.from.focus();   // the browser scrolls the field into view, clear of the sticky header
+        fields.from.focus();
       });
     }
 

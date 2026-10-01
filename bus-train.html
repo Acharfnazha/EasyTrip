@@ -1,26 +1,3 @@
-<?php
-// Today's date (server time) is the earliest departure when JavaScript is off;
-// js/bus-train.js replaces it with the visitor's own local date.
-$today = date('Y-m-d');
-
-// Text that changes with the transport mode. js/bus-train.js reads the same
-// values from data attributes on each radio button.
-$modes = [
-  'bus' => [
-    'label' => 'Bus',
-    'title' => 'Plan a bus journey',
-    'text' => 'Prepare an intercity bus journey.',
-    'place' => 'City or bus station',
-  ],
-  'train' => [
-    'label' => 'Train',
-    'title' => 'Plan a train journey',
-    'text' => 'Prepare a regional or intercity rail journey.',
-    'place' => 'City or train station',
-  ],
-];
-$e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,16 +14,86 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
   <link rel="stylesheet" href="css/bus-train.css" />
 </head>
 <body class="ground-travel-page">
-  <?php include __DIR__ . '/partials/header.php'; ?>
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              Destinations
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="destinations.html">All destinations</a></li>
+              <li><a class="et-nav__menu-link" href="winter.html">Winter destinations</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring destinations</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer destinations</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn destinations</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              Hotels &amp; Chalets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels-chalets.html">Hotels &amp; chalets overview</a></li>
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger is-current" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              Tickets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="tickets.html">All tickets</a></li>
+              <li><a class="et-nav__menu-link" href="flight.html">Flight tickets</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html" aria-current="page">Bus &amp; train tickets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              About
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
 
   <main id="main" tabindex="-1">
-    <!-- 1. Compact hero -->
     <section class="ground-hero" aria-labelledby="ground-hero-title">
       <div class="et-container ground-hero__inner">
         <div class="ground-hero__copy">
           <nav class="ground-breadcrumb" aria-label="Breadcrumb">
             <ol>
-              <li><a href="tickets.php">Tickets</a></li>
+              <li><a href="tickets.html">Tickets</a></li>
               <li><span aria-current="page">Bus &amp; train</span></li>
             </ol>
           </nav>
@@ -59,7 +106,7 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
               Start planning
               <svg class="et-btn__icon ground-icon-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
             </a>
-            <a class="et-btn et-btn--outline et-btn--lg" href="tickets.php">Other ticket options</a>
+            <a class="et-btn et-btn--outline et-btn--lg" href="tickets.html">Other ticket options</a>
           </div>
         </div>
         <div class="ground-hero__media">
@@ -73,38 +120,39 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
       </div>
     </section>
 
-    <!-- 2. Route planner: one form for both bus and train -->
     <section class="route-planner-section" id="route-planner" aria-labelledby="route-planner-title">
       <div class="et-container">
         <header class="ground-section-head">
-          <h2 class="ground-section-head__title" id="route-planner-title" data-mode-title><?= $e($modes['bus']['title']) ?></h2>
+          <h2 class="ground-section-head__title" id="route-planner-title" data-mode-title>Plan a bus journey</h2>
           <p class="ground-section-head__text">
-            <span data-mode-text><?= $e($modes['bus']['text']) ?></span>
+            <span data-mode-text>Prepare an intercity bus journey.</span>
             This prototype prepares your route details. Live routes and schedules will be connected during backend development.
           </p>
         </header>
 
-        <form class="route-planner" action="bus-train.php#route-planner" method="get" data-route-planner data-mode="bus">
+        <form class="route-planner" action="bus-train.html#route-planner" method="get" data-route-planner data-mode="bus">
           <p class="route-planner__required-note">All fields are required unless marked optional.</p>
 
           <div class="route-planner__choices">
             <fieldset class="route-planner__group" aria-describedby="route-mode-error">
               <legend class="route-planner__legend">Transport type</legend>
               <div class="route-planner__segments">
-                <?php foreach ($modes as $key => $m): ?>
-                  <label class="route-planner__segment route-planner__mode">
-                    <input type="radio" name="mode" value="<?= $key ?>" <?= $key === 'bus' ? 'checked' : '' ?> data-field-mode
-                           data-title="<?= $e($m['title']) ?>" data-text="<?= $e($m['text']) ?>" data-place="<?= $e($m['place']) ?>" />
-                    <span>
-                      <?php if ($key === 'bus'): ?>
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/><circle cx="8" cy="14.5" r=".6"/><circle cx="16" cy="14.5" r=".6"/></svg>
-                      <?php else: ?>
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 21l1.5-4M15 21l-1.5-4M12 3v7"/><circle cx="9" cy="13.5" r=".6"/><circle cx="15" cy="13.5" r=".6"/></svg>
-                      <?php endif; ?>
-                      <?= $m['label'] ?>
-                    </span>
-                  </label>
-                <?php endforeach; ?>
+                <label class="route-planner__segment route-planner__mode">
+                  <input type="radio" name="mode" value="bus" checked data-field-mode
+                         data-title="Plan a bus journey" data-text="Prepare an intercity bus journey." data-place="City or bus station" />
+                  <span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M8 21v-3M16 21v-3"/><circle cx="8" cy="14.5" r=".6"/><circle cx="16" cy="14.5" r=".6"/></svg>
+                    Bus
+                  </span>
+                </label>
+                <label class="route-planner__segment route-planner__mode">
+                  <input type="radio" name="mode" value="train" data-field-mode
+                         data-title="Plan a train journey" data-text="Prepare a regional or intercity rail journey." data-place="City or train station" />
+                  <span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 21l1.5-4M15 21l-1.5-4M12 3v7"/><circle cx="9" cy="13.5" r=".6"/><circle cx="15" cy="13.5" r=".6"/></svg>
+                    Train
+                  </span>
+                </label>
               </div>
               <p class="route-planner__error" id="route-mode-error" hidden></p>
             </fieldset>
@@ -129,11 +177,10 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
             <div class="route-planner__field">
               <label class="route-planner__label" for="route-from">From</label>
               <input class="route-planner__input" type="text" id="route-from" name="from" required maxlength="80"
-                     autocomplete="off" placeholder="<?= $e($modes['bus']['place']) ?>" aria-describedby="route-from-error"
+                     autocomplete="off" placeholder="City or bus station" aria-describedby="route-from-error"
                      data-field="from" data-mode-placeholder />
               <p class="route-planner__error" id="route-from-error" hidden></p>
             </div>
-            <!-- Shown by js/bus-train.js -->
             <button class="route-planner__swap" type="button" aria-label="Swap origin and destination"
                     title="Swap origin and destination" hidden data-swap>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>
@@ -142,7 +189,7 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
             <div class="route-planner__field">
               <label class="route-planner__label" for="route-to">To</label>
               <input class="route-planner__input" type="text" id="route-to" name="to" required maxlength="80"
-                     autocomplete="off" placeholder="<?= $e($modes['bus']['place']) ?>" aria-describedby="route-to-error"
+                     autocomplete="off" placeholder="City or bus station" aria-describedby="route-to-error"
                      data-field="to" data-mode-placeholder />
               <p class="route-planner__error" id="route-to-error" hidden></p>
             </div>
@@ -152,7 +199,7 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
             <div class="route-planner__field">
               <label class="route-planner__label" for="route-depart">Departure date</label>
               <input class="route-planner__input" type="date" id="route-depart" name="depart" required
-                     min="<?= $today ?>" aria-describedby="route-depart-error" data-field="depart" />
+                     aria-describedby="route-depart-error" data-field="depart" />
               <p class="route-planner__error" id="route-depart-error" hidden></p>
             </div>
             <div class="route-planner__field" data-return-field>
@@ -160,7 +207,7 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
                 Return date <span class="route-planner__optional">(round trip only)</span>
               </label>
               <input class="route-planner__input" type="date" id="route-return" name="return"
-                     min="<?= $today ?>" aria-describedby="route-return-error" data-field="return" />
+                     aria-describedby="route-return-error" data-field="return" />
               <p class="route-planner__error" id="route-return-error" hidden></p>
             </div>
           </div>
@@ -170,14 +217,19 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
               <label class="route-planner__label" for="route-travelers">Travelers</label>
               <select class="route-planner__input" id="route-travelers" name="travelers" required
                       aria-describedby="route-travelers-error" data-field="travelers">
-                <?php for ($n = 1; $n <= 9; $n++): ?>
-                  <option value="<?= $n ?>"><?= $n ?> traveler<?= $n === 1 ? '' : 's' ?></option>
-                <?php endfor; ?>
+                <option value="1">1 traveler</option>
+                <option value="2">2 travelers</option>
+                <option value="3">3 travelers</option>
+                <option value="4">4 travelers</option>
+                <option value="5">5 travelers</option>
+                <option value="6">6 travelers</option>
+                <option value="7">7 travelers</option>
+                <option value="8">8 travelers</option>
+                <option value="9">9 travelers</option>
               </select>
               <p class="route-planner__error" id="route-travelers-error" hidden></p>
             </div>
 
-            <!-- Mode-specific preference: only the current mode's field is shown and sent. -->
             <div class="route-planner__field" data-for-mode="bus">
               <label class="route-planner__label" for="route-bus-seat">Bus seating preference</label>
               <select class="route-planner__input" id="route-bus-seat" name="bus_seat"
@@ -231,7 +283,6 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
           </div>
         </form>
 
-        <!-- 3. Route summary: filled in by js/bus-train.js with the visitor's own details -->
         <section class="route-summary" aria-labelledby="route-summary-title" hidden data-route-summary>
           <h3 class="route-summary__title" id="route-summary-title" tabindex="-1">Your route plan is ready</h3>
           <p class="route-summary__route" data-summary-route></p>
@@ -255,15 +306,14 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
           </p>
           <div class="route-summary__actions">
             <button class="et-btn et-btn--primary" type="button" data-edit-route>Edit route</button>
-            <a class="et-btn et-btn--outline" href="contact.php?topic=bus-train">Ask about this journey</a>
-            <a class="ground-text-link" href="tickets.php">View other ticket options</a>
-            <a class="ground-text-link" href="flight.php">Plan a flight instead</a>
+            <a class="et-btn et-btn--outline" href="contact.html?topic=bus-train">Ask about this journey</a>
+            <a class="ground-text-link" href="tickets.html">View other ticket options</a>
+            <a class="ground-text-link" href="flight.html">Plan a flight instead</a>
           </div>
         </section>
       </div>
     </section>
 
-    <!-- 4. How the planner works + backend note -->
     <section class="ground-how" aria-labelledby="ground-how-title">
       <div class="et-container">
         <header class="ground-section-head">
@@ -291,7 +341,6 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
       </div>
     </section>
 
-    <!-- 5. Editorial: ground travel in general (no routes, schedules or fares) -->
     <section class="ground-editorial" aria-labelledby="ground-editorial-title">
       <div class="et-container ground-editorial__inner">
         <div class="ground-editorial__media">
@@ -308,7 +357,7 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
             Bus and train travel can be useful for regional journeys, connected cities, and travelers who prefer to see
             more along the way.
           </p>
-          <a class="et-btn et-btn--outline et-btn--lg" href="destinations.php">
+          <a class="et-btn et-btn--outline et-btn--lg" href="destinations.html">
             Explore destinations
             <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
           </a>
@@ -316,25 +365,82 @@ $e = fn($s) => htmlspecialchars($s, ENT_QUOTES);
       </div>
     </section>
 
-    <!-- 6. Final step -->
     <section class="ground-cta" aria-labelledby="ground-cta-title">
       <div class="et-container">
         <div class="ground-cta__panel">
           <h2 class="ground-cta__title" id="ground-cta-title">Need help with your route?</h2>
           <p class="ground-cta__text">Contact EasyTrip or explore another ticket type.</p>
           <div class="ground-cta__actions">
-            <a class="et-btn et-btn--on-dark et-btn--lg" href="contact.php">Contact EasyTrip</a>
-            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.php">See all ticket options</a>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="contact.html">Contact EasyTrip</a>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.html">See all ticket options</a>
           </div>
-          <p class="ground-cta__more"><a href="flight.php">Plan a flight</a></p>
+          <p class="ground-cta__more"><a href="flight.html">Plan a flight</a></p>
         </div>
       </div>
     </section>
   </main>
 
-  <?php include __DIR__ . '/partials/footer.php'; ?>
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
 
-  <script src="js/includes.js"></script>
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
   <script src="js/bus-train.js"></script>
 </body>
 </html>

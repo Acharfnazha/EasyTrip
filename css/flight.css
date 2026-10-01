@@ -1,19 +1,11 @@
-/* ==========================================================================
-   Flights (flight.php)
-   A flight-planning prototype: hero, planner form, search summary, a short
-   explanation of the prototype, destination ideas and a closing call to action.
-   Every class starts with "flight-" so nothing here reaches the shared header,
-   footer or other pages. Colours, fonts, buttons and the container come from
-   css/styles.css.
-   ========================================================================== */
+/* Flights page (flight.html) */
 
 .flight-page {
-  --flight-sky: #000f33;        /* matches the photo's night sky */
-  --flight-error: #b42318;      /* 6.6:1 on white */
+  --flight-sky: #000f33;
+  --flight-error: #b42318;
   --flight-surface: #f3f8fb;
 }
 
-/* Shared bits ------------------------------------------------------------------ */
 .flight-section-head {
   max-width: 760px;
   margin-bottom: 28px;
@@ -49,7 +41,6 @@
   color: var(--et-primary-hover);
 }
 
-/* 1. Hero ------------------------------------------------------------------------ */
 .flight-hero {
   position: relative;
   overflow: hidden;
@@ -57,8 +48,6 @@
   color: #fff;
 }
 
-/* The photo sits on the right and fades into the same night-sky colour on the
-   left, so the text needs no dark overlay on top of the image. */
 .flight-hero__media {
   position: absolute;
   inset: 0 0 0 30%;
@@ -141,7 +130,6 @@
   transform: translateY(3px);
 }
 
-/* 2. Planner form ---------------------------------------------------------------- */
 .flight-planner-section {
   padding-block: 56px 72px;
   background: var(--flight-surface);
@@ -184,7 +172,6 @@
   font-weight: 500;
 }
 
-/* Trip type: real radio buttons styled as a two-part switch */
 .flight-planner__segments {
   display: inline-flex;
   padding: 4px;
@@ -232,7 +219,6 @@
   outline-offset: 2px;
 }
 
-/* Rows of fields */
 .flight-planner__route {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -263,7 +249,7 @@
   width: 100%;
   min-height: 50px;
   padding: 0 14px;
-  border: 1px solid #7a8ca3;   /* 3.4:1 against white */
+  border: 1px solid #7a8ca3;
   border-radius: 10px;
   background: #fff;
   color: var(--et-ink);
@@ -287,7 +273,7 @@
   place-items: center;
   width: 48px;
   height: 48px;
-  margin-top: 29px;   /* lines up with the inputs, below their labels */
+  margin-top: 29px;
   padding: 0;
   border: 1px solid #7a8ca3;
   border-radius: 50%;
@@ -298,7 +284,7 @@
 }
 
 .flight-planner__swap[hidden] {
-  display: none;   /* needs JavaScript; stays hidden without it */
+  display: none;
 }
 
 .flight-planner__swap:hover {
@@ -316,7 +302,6 @@
   stroke-linejoin: round;
 }
 
-/* Error messages: text + icon, not colour alone */
 .flight-planner__error {
   display: flex;
   gap: 6px;
@@ -345,7 +330,6 @@
   display: none;
 }
 
-/* Optional preferences */
 .flight-planner__options {
   display: flex;
   flex-wrap: wrap;
@@ -393,14 +377,13 @@
   font-weight: 600;
 }
 
-/* 3. Search summary -------------------------------------------------------------- */
 .flight-summary {
   margin-top: 28px;
   padding: 32px;
   border: 1px solid var(--et-line);
   border-top: 4px solid var(--et-primary);
   border-radius: 20px;
-  background: #fff;   /* scrolling clears the sticky header via html's scroll-padding-top */
+  background: #fff;
 }
 
 .flight-summary[hidden] {
@@ -440,7 +423,7 @@
   overflow: hidden;
   border: 1px solid var(--et-line);
   border-radius: 12px;
-  background: var(--et-line);   /* shows through the 1px gaps as dividers */
+  background: var(--et-line);
 }
 
 .flight-summary__details > div {
@@ -496,7 +479,6 @@
   gap: 12px 16px;
 }
 
-/* 4. What the prototype demonstrates ------------------------------------------ */
 .flight-demo {
   padding-block: 72px 32px;
 }
@@ -517,7 +499,6 @@
   counter-increment: flight-step;
 }
 
-/* Numbered markers joined by a line: a sequence, not a grid of cards */
 .flight-steps__item::before {
   content: counter(flight-step);
   position: absolute;
@@ -571,7 +552,6 @@
   color: var(--et-navy);
 }
 
-/* 5. Destination ideas ---------------------------------------------------------- */
 .flight-inspire {
   padding-block: 48px 72px;
 }
@@ -630,7 +610,6 @@
   text-underline-offset: 3px;
 }
 
-/* 6. Closing call to action -------------------------------------------------------- */
 .flight-cta {
   padding-bottom: 88px;
 }
@@ -673,7 +652,6 @@
   outline-color: var(--et-focus-on-dark);
 }
 
-/* Responsive ------------------------------------------------------------------- */
 @media (max-width: 63.99em) {
   .flight-summary__details {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -686,7 +664,6 @@
 }
 
 @media (max-width: 47.99em) {
-  /* Photo on top, text below on the same sky colour */
   .flight-hero__media {
     position: relative;
     display: block;
@@ -695,7 +672,7 @@
 
   .flight-hero__img {
     height: auto;
-    max-height: 240px;   /* keeps the hero short on wider phones and small tablets */
+    max-height: 240px;
     aspect-ratio: 2 / 1;
     object-position: 50% 50%;
     -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent);
@@ -752,7 +729,6 @@
 }
 
 @media (max-width: 40em) {
-  /* Stack From / swap / To; the swap button sits between them on the right */
   .flight-planner__route,
   .flight-planner__route:not(:has(.flight-planner__swap:not([hidden]))),
   .flight-planner__dates,

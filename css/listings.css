@@ -1,12 +1,5 @@
-/* ==========================================================================
-   Accommodation listings (hotels.php and chalets.php)
-   Reusable "lst-" components: intro, filter toolbar, results header, card grid,
-   empty state, "show more", details dialog and the closing panel.
-   Colours, fonts, buttons and the container come from css/styles.css.
-   Page-specific touches are modifiers in section 8 (.chalets-page).
-   ========================================================================== */
+/* Hotels and chalets listings (hotels.html, chalets.html) */
 
-/* 1. Compact introduction ------------------------------------------------- */
 .lst-intro {
   padding-block: 40px 48px;
   background: #f3f8fb;
@@ -77,7 +70,6 @@
   border-radius: 20px;
 }
 
-/* 2. Filter toolbar --------------------------------------------------------- */
 .lst-browse {
   padding-block: 32px 80px;
 }
@@ -128,7 +120,7 @@
   width: 100%;
   min-height: 48px;
   padding: 0 14px;
-  border: 1px solid #7a8ca3;   /* 3:1 against white, as WCAG requires for input borders */
+  border: 1px solid #7a8ca3;
   border-radius: 10px;
   background: #fff;
   color: var(--et-ink);
@@ -155,7 +147,6 @@
   min-height: 48px;
 }
 
-/* 3. Results header ----------------------------------------------------------- */
 .lst-results-head {
   display: flex;
   flex-wrap: wrap;
@@ -192,7 +183,6 @@
   white-space: nowrap;
 }
 
-/* 4. Card grid -------------------------------------------------------------- */
 .lst-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -312,7 +302,6 @@
   display: none;
 }
 
-/* 5. Empty state and "show more" -------------------------------------------- */
 .lst-empty {
   padding: 48px 24px;
   border: 1px dashed #b9d6e8;
@@ -345,7 +334,6 @@
   margin-top: 40px;
 }
 
-/* 6. Details dialog --------------------------------------------------------- */
 .lst-dialog {
   width: min(560px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
@@ -444,7 +432,6 @@
   gap: 12px;
 }
 
-/* 7. Closing panel ------------------------------------------------------------ */
 .lst-alt {
   padding-bottom: 88px;
 }
@@ -495,9 +482,8 @@
   object-fit: cover;
 }
 
-/* 8. Chalets: same components, a calmer nature-led accent ---------------------- */
 .chalets-page {
-  --lst-accent: #1d6b57;   /* pine green: 6.4:1 on white, used only for small labels */
+  --lst-accent: #1d6b57;
   --lst-tint: #eef5f1;
 }
 
@@ -510,11 +496,10 @@
 }
 
 .lst-intro--chalets .lst-intro__img {
-  aspect-ratio: 2 / 1;   /* wider and shorter, so the listings stay close */
+  aspect-ratio: 2 / 1;
   object-position: 50% 40%;
 }
 
-/* Collection introduction above the filters */
 .lst-results-head--lead {
   margin: 0 0 24px;
 }
@@ -526,8 +511,7 @@
   font-size: 17px;
 }
 
-/* Type and setting label, e.g. "Cabin · Mountain". It follows the name in the HTML
-   (so the heading is read first) but is shown above it. */
+/* Shown above the name, but it comes after it in the HTML so the heading is read first. */
 .lst-card__meta {
   order: -1;
   margin: 0 0 6px;
@@ -550,12 +534,10 @@
   max-width: none;
 }
 
-/* Five-field toolbar */
 .lst-toolbar--setting {
   grid-template-columns: 1.5fr 1fr 1.3fr 1fr auto;
 }
 
-/* Quick filters, beside the result count */
 .lst-shortcuts {
   display: flex;
   flex-wrap: wrap;
@@ -617,7 +599,6 @@
   margin: 20px 0 24px;
 }
 
-/* Responsive ------------------------------------------------------------------- */
 @media (max-width: 67.49em) {
   .lst-toolbar,
   .lst-toolbar--setting {

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Destinations by Season — EasyTrip</title>
+  <meta name="description" content="Compare winter, spring, summer and autumn trips and choose the season that suits your next adventure." />
+  <link rel="preload" as="image" href="assets/images/destinations/hero-mobile-800.webp"
+        media="(max-width: 40em)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/destinations/hero-1200.webp"
+        imagesrcset="assets/images/destinations/hero-1200.webp 1200w, assets/images/destinations/hero-2000.webp 2000w"
+        imagesizes="100vw" media="(min-width: 40.0625em)" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/destinations.css" />
+</head>
+<body class="dst-page">
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger is-current" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              Destinations
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="destinations.html" aria-current="page">All destinations</a></li>
+              <li><a class="et-nav__menu-link" href="winter.html">Winter destinations</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring destinations</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer destinations</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn destinations</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              Hotels &amp; Chalets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels-chalets.html">Hotels &amp; chalets overview</a></li>
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              Tickets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="tickets.html">All tickets</a></li>
+              <li><a class="et-nav__menu-link" href="flight.html">Flight tickets</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train tickets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              About
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="dst-hero" aria-labelledby="dst-hero-title">
+      <picture>
+        <source type="image/webp" media="(max-width: 40em)" srcset="assets/images/destinations/hero-mobile-800.webp" />
+        <source type="image/webp" srcset="assets/images/destinations/hero-1200.webp 1200w, assets/images/destinations/hero-2000.webp 2000w" sizes="100vw" />
+        <img class="dst-hero__img" src="assets/images/destinations/hero.jpg" width="2400" height="1250"
+             alt="" fetchpriority="high" decoding="async" />
+      </picture>
+      <div class="et-container dst-hero__inner">
+        <p class="dst-hero__eyebrow">Destinations by season</p>
+        <h1 class="dst-hero__title" id="dst-hero-title">Find your next escape</h1>
+        <p class="dst-hero__text">
+          From snowy mountain breaks to sun-filled coastlines, explore a season that suits your next adventure.
+        </p>
+        <a class="et-btn et-btn--primary et-btn--lg" href="#seasons">
+          Explore the seasons
+          <svg class="et-btn__icon dst-hero__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="dst-section dst-section--tint" id="seasons" aria-labelledby="dst-seasons-title">
+      <div class="et-container">
+        <header class="dst-head">
+          <h2 class="dst-title" id="dst-seasons-title">Every season, somewhere new</h2>
+          <p class="dst-lead">
+            Each season has its own page with trip ideas, featured countries and a quick way to ask our team for help.
+          </p>
+        </header>
+
+        <ul class="dst-seasons" role="list">
+          <li class="dst-card reveal">
+            <div class="dst-card__media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/destinations/winter.webp" />
+                <img class="dst-card__img dst-card__img--winter" src="assets/images/winter.jpg"
+                     width="600" height="420" alt="Snow-covered mountain village surrounded by pine trees"
+                     loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="dst-card__body">
+              <h3 class="dst-card__name">Winter</h3>
+              <p class="dst-card__text">Illuminated streets, snowy landscapes and warm lodges after a day in the mountains.</p>
+              <ul class="dst-card__labels" role="list" aria-label="Winter experiences">
+                <li>Snowy city breaks</li>
+                <li>Mountain escapes</li>
+                <li>Ice skating</li>
+              </ul>
+              <p class="dst-card__countries">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                <span><span class="et-visually-hidden">Featured countries: </span>Switzerland, Austria, Finland, Canada</span>
+              </p>
+              <a class="dst-card__link" href="winter.html">
+                Explore winter
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </li>
+          <li class="dst-card reveal">
+            <div class="dst-card__media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/destinations/spring.webp" />
+                <img class="dst-card__img dst-card__img--spring" src="assets/images/spring.jpg"
+                     width="600" height="400" alt="Cherry blossom trees above a canal with wooden boats"
+                     loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="dst-card__body">
+              <h3 class="dst-card__name">Spring</h3>
+              <p class="dst-card__text">Blossom festivals, flower fields and old towns that are made for walking.</p>
+              <ul class="dst-card__labels" role="list" aria-label="Spring experiences">
+                <li>Blossom festivals</li>
+                <li>Gardens</li>
+                <li>City walks</li>
+              </ul>
+              <p class="dst-card__countries">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                <span><span class="et-visually-hidden">Featured countries: </span>Japan, France, Netherlands, Italy</span>
+              </p>
+              <a class="dst-card__link" href="spring.html">
+                Explore spring
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </li>
+          <li class="dst-card reveal">
+            <div class="dst-card__media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/destinations/summer.webp" />
+                <img class="dst-card__img dst-card__img--summer" src="assets/images/summer.jpg"
+                     width="600" height="400" alt="White beach and overwater bungalows in front of a green mountain"
+                     loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="dst-card__body">
+              <h3 class="dst-card__name">Summer</h3>
+              <p class="dst-card__text">Beach days, island hopping and lively open-air evenings in the city.</p>
+              <ul class="dst-card__labels" role="list" aria-label="Summer experiences">
+                <li>Beaches</li>
+                <li>Island hopping</li>
+                <li>Hiking trails</li>
+              </ul>
+              <p class="dst-card__countries">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                <span><span class="et-visually-hidden">Featured countries: </span>Greece, Italy, Spain, Costa Rica</span>
+              </p>
+              <a class="dst-card__link" href="summer.html">
+                Explore summer
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </li>
+          <li class="dst-card reveal">
+            <div class="dst-card__media">
+              <picture>
+                <source type="image/webp" srcset="assets/images/destinations/autumn.webp" />
+                <img class="dst-card__img dst-card__img--autumn" src="assets/images/autumn.png"
+                     width="600" height="400" alt="Golden trees and fallen leaves beside a wooden fence at sunset"
+                     loading="lazy" decoding="async" />
+              </picture>
+            </div>
+            <div class="dst-card__body">
+              <h3 class="dst-card__name">Autumn</h3>
+              <p class="dst-card__text">Golden forests, lakeside cabins and scenic road trips through the countryside.</p>
+              <ul class="dst-card__labels" role="list" aria-label="Autumn experiences">
+                <li>Golden forests</li>
+                <li>Scenic getaways</li>
+                <li>Photography</li>
+              </ul>
+              <p class="dst-card__countries">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                <span><span class="et-visually-hidden">Featured countries: </span>Canada, Germany, Croatia, Turkey</span>
+              </p>
+              <a class="dst-card__link" href="autumn.html">
+                Explore autumn
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="dst-section" aria-labelledby="dst-guide-title">
+      <div class="et-container dst-guide">
+        <header class="dst-guide__head">
+          <h2 class="dst-title" id="dst-guide-title">Choose by the experience</h2>
+          <p class="dst-lead">Not sure when to go? Start with what you want to do, then pick a season that fits.</p>
+        </header>
+
+        <ul class="dst-guide__list" role="list">
+          <li class="dst-guide__item">
+            <h3 class="dst-guide__title">Snow and mountain views</h3>
+            <p class="dst-guide__text">Cable cars, viewpoints and cosy lodges in winter; cooler high-altitude hikes in summer.</p>
+            <p class="dst-guide__seasons">
+              <span class="dst-guide__seasons-label">Best seasons:</span>
+              <a class="dst-chip" href="winter.html">Winter<span class="et-visually-hidden"> destinations</span></a>
+              <a class="dst-chip" href="summer.html">Summer<span class="et-visually-hidden"> destinations</span></a>
+            </p>
+          </li>
+          <li class="dst-guide__item">
+            <h3 class="dst-guide__title">Gardens and outdoor scenery</h3>
+            <p class="dst-guide__text">Flower fields and botanical gardens in spring; national parks and colourful valleys in autumn.</p>
+            <p class="dst-guide__seasons">
+              <span class="dst-guide__seasons-label">Best seasons:</span>
+              <a class="dst-chip" href="spring.html">Spring<span class="et-visually-hidden"> destinations</span></a>
+              <a class="dst-chip" href="autumn.html">Autumn<span class="et-visually-hidden"> destinations</span></a>
+            </p>
+          </li>
+          <li class="dst-guide__item">
+            <h3 class="dst-guide__title">Beaches and islands</h3>
+            <p class="dst-guide__text">Resorts, secluded coves and boat tours in the Mediterranean and beyond.</p>
+            <p class="dst-guide__seasons">
+              <span class="dst-guide__seasons-label">Best season:</span>
+              <a class="dst-chip" href="summer.html">Summer<span class="et-visually-hidden"> destinations</span></a>
+            </p>
+          </li>
+          <li class="dst-guide__item">
+            <h3 class="dst-guide__title">City breaks</h3>
+            <p class="dst-guide__text">Winter lights and markets, spring old towns, summer nightlife and autumn culture tours.</p>
+            <p class="dst-guide__seasons">
+              <span class="dst-guide__seasons-label">Best seasons:</span>
+              <a class="dst-chip" href="winter.html">Winter<span class="et-visually-hidden"> destinations</span></a>
+              <a class="dst-chip" href="spring.html">Spring<span class="et-visually-hidden"> destinations</span></a>
+              <a class="dst-chip" href="summer.html">Summer<span class="et-visually-hidden"> destinations</span></a>
+              <a class="dst-chip" href="autumn.html">Autumn<span class="et-visually-hidden"> destinations</span></a>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="dst-section dst-section--flush" aria-labelledby="dst-stay-title">
+      <div class="et-container">
+        <div class="dst-stay">
+          <div class="dst-stay__copy">
+            <h2 class="dst-stay__title" id="dst-stay-title">Found your season? Find your stay.</h2>
+            <p class="dst-stay__text">Compare hotels and chalets for your trip, from city stays to cosy mountain lodges.</p>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="hotels-chalets.html">
+              Browse hotels &amp; chalets
+              <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </div>
+          <div class="dst-stay__media">
+            <picture>
+              <source type="image/webp" srcset="assets/images/destinations/stays-chalets.webp" />
+              <img class="dst-stay__img" src="assets/images/stays-chalets-hero.jpg" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

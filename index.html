@@ -13,10 +13,80 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="home-page">
-  <?php include __DIR__ . '/partials/header.php'; ?>
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html" aria-current="page">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              Destinations
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="destinations.html">All destinations</a></li>
+              <li><a class="et-nav__menu-link" href="winter.html">Winter destinations</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring destinations</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer destinations</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn destinations</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              Hotels &amp; Chalets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels-chalets.html">Hotels &amp; chalets overview</a></li>
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              Tickets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="tickets.html">All tickets</a></li>
+              <li><a class="et-nav__menu-link" href="flight.html">Flight tickets</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train tickets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              About
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
 
   <main id="main" tabindex="-1">
-    <!-- Hero with destination strip -->
     <section class="home-hero" aria-labelledby="home-hero-title">
       <picture>
         <source type="image/webp" srcset="assets/images/home/hero-800.webp 800w, assets/images/home/hero-1200.webp 1199w" sizes="100vw" />
@@ -32,11 +102,11 @@
             Discover destinations that inspire, stories that move you, and adventures that stay with you forever.
           </p>
           <div class="home-hero__actions">
-            <a class="et-btn et-btn--primary et-btn--lg" href="destinations.php">
+            <a class="et-btn et-btn--primary et-btn--lg" href="destinations.html">
               Start your journey
               <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
             </a>
-            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.php">Book tickets</a>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.html">Book tickets</a>
           </div>
         </div>
 
@@ -44,7 +114,7 @@
           <h2 class="hero-dest__title">Top destinations</h2>
           <ul class="hero-dest__list" role="list">
             <li>
-              <a class="hero-card" href="chalets.php">
+              <a class="hero-card" href="chalets.html">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/lebanon-card.webp" />
                   <img class="hero-card__img" src="assets/images/lebanon.png" width="480" height="320" alt="" decoding="async" />
@@ -54,7 +124,7 @@
               </a>
             </li>
             <li>
-              <a class="hero-card" href="chalets.php">
+              <a class="hero-card" href="chalets.html">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/iceland-card.webp" />
                   <img class="hero-card__img" src="assets/images/iceland.png" width="480" height="320" alt="" decoding="async" />
@@ -64,7 +134,7 @@
               </a>
             </li>
             <li>
-              <a class="hero-card" href="spring.php">
+              <a class="hero-card" href="spring.html">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/italy-card.webp" />
                   <img class="hero-card__img" src="assets/images/italy.png" width="480" height="320" alt="" decoding="async" />
@@ -74,7 +144,7 @@
               </a>
             </li>
             <li>
-              <a class="hero-card" href="hotels.php">
+              <a class="hero-card" href="hotels.html">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/dubai-card.webp" />
                   <img class="hero-card__img" src="assets/images/dubai.png" width="480" height="320" alt="" decoding="async" />
@@ -88,7 +158,6 @@
       </div>
     </section>
 
-    <!-- About -->
     <section class="home-section" aria-labelledby="about-title">
       <div class="et-container split">
         <div class="split__copy reveal">
@@ -99,7 +168,7 @@
             adventure, we share destination highlights, travel tips and curated recommendations, backed by
             real people you can contact.
           </p>
-          <a class="et-btn et-btn--primary et-btn--lg" href="about.php">
+          <a class="et-btn et-btn--primary et-btn--lg" href="about.html">
             Who we are
             <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
           </a>
@@ -114,7 +183,6 @@
       </div>
     </section>
 
-    <!-- Seasons -->
     <section class="home-section home-section--tint" aria-labelledby="seasons-title">
       <div class="et-container">
         <header class="home-section__head">
@@ -124,7 +192,7 @@
 
         <ul class="season-list" role="list">
           <li class="reveal">
-            <a class="season-card" href="winter.php">
+            <a class="season-card" href="winter.html">
               <span class="season-card__media">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/winter-600.webp" />
@@ -139,7 +207,7 @@
             </a>
           </li>
           <li class="reveal">
-            <a class="season-card" href="spring.php">
+            <a class="season-card" href="spring.html">
               <span class="season-card__media">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/spring-600.webp" />
@@ -154,7 +222,7 @@
             </a>
           </li>
           <li class="reveal">
-            <a class="season-card" href="summer.php">
+            <a class="season-card" href="summer.html">
               <span class="season-card__media">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/summer-600.webp" />
@@ -169,7 +237,7 @@
             </a>
           </li>
           <li class="reveal">
-            <a class="season-card" href="autumn.php">
+            <a class="season-card" href="autumn.html">
               <span class="season-card__media">
                 <picture>
                   <source type="image/webp" srcset="assets/images/home/autumn-600.webp" />
@@ -187,7 +255,6 @@
       </div>
     </section>
 
-    <!-- Services -->
     <section class="home-section" id="services" aria-labelledby="services-title">
       <div class="et-container">
         <header class="home-section__head">
@@ -202,7 +269,7 @@
             </span>
             <h3 class="service-item__title">Ticket booking</h3>
             <p class="service-item__text">Browse flight, bus and train tickets and plan how you get there.</p>
-            <a class="service-item__link" href="tickets.php">Browse tickets <span aria-hidden="true">&rarr;</span></a>
+            <a class="service-item__link" href="tickets.html">Browse tickets <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="service-item reveal">
             <span class="service-item__icon" aria-hidden="true">
@@ -210,7 +277,7 @@
             </span>
             <h3 class="service-item__title">Hotels &amp; chalets</h3>
             <p class="service-item__text">Find the right stay, from city hotels to cozy mountain chalets.</p>
-            <a class="service-item__link" href="hotels-chalets.php">Find a place to stay <span aria-hidden="true">&rarr;</span></a>
+            <a class="service-item__link" href="hotels-chalets.html">Find a place to stay <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="service-item reveal">
             <span class="service-item__icon" aria-hidden="true">
@@ -218,7 +285,7 @@
             </span>
             <h3 class="service-item__title">Seasonal destinations</h3>
             <p class="service-item__text">Discover the best places by season: winter, spring, summer or autumn.</p>
-            <a class="service-item__link" href="destinations.php">Explore by season <span aria-hidden="true">&rarr;</span></a>
+            <a class="service-item__link" href="destinations.html">Explore by season <span aria-hidden="true">&rarr;</span></a>
           </li>
           <li class="service-item reveal">
             <span class="service-item__icon" aria-hidden="true">
@@ -226,13 +293,12 @@
             </span>
             <h3 class="service-item__title">Travel support</h3>
             <p class="service-item__text">Have a question about a trip or booking? Send our team a message.</p>
-            <a class="service-item__link" href="contact.php">Contact support <span aria-hidden="true">&rarr;</span></a>
+            <a class="service-item__link" href="contact.html">Contact support <span aria-hidden="true">&rarr;</span></a>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- Explore band -->
     <section class="explore" aria-labelledby="explore-title">
       <picture>
         <source type="image/webp" media="(max-width: 40em)" srcset="assets/images/home/explore-800.webp" />
@@ -248,14 +314,13 @@
             island escape.
           </p>
         </div>
-        <a class="et-btn et-btn--on-dark et-btn--lg explore__cta" href="hotels.php">
+        <a class="et-btn et-btn--on-dark et-btn--lg explore__cta" href="hotels.html">
           Browse hotel stays
           <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
         </a>
       </div>
     </section>
 
-    <!-- Journey CTA -->
     <section class="home-section" aria-labelledby="journey-title">
       <div class="et-container split split--reverse">
         <div class="split__media reveal">
@@ -272,17 +337,75 @@
             Pick your tickets now, or tell us where you want to go and our team will help you plan it.
           </p>
           <div class="split__actions">
-            <a class="et-btn et-btn--primary et-btn--lg" href="tickets.php">Book tickets</a>
-            <a class="et-btn et-btn--outline et-btn--lg" href="contact.php">Contact us</a>
+            <a class="et-btn et-btn--primary et-btn--lg" href="tickets.html">Book tickets</a>
+            <a class="et-btn et-btn--outline et-btn--lg" href="contact.html">Contact us</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <?php include __DIR__ . '/partials/footer.php'; ?>
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
 
-  <script src="js/includes.js"></script>
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>

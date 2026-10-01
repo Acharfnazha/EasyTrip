@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Who We Are — EasyTrip</title>
+  <meta name="description" content="EasyTrip is a university web-programming project: a travel-planning interface for seasonal destinations, sample stays, and flight or bus and train planning prototypes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/about.css" />
+</head>
+<body>
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              Destinations
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="destinations.html">All destinations</a></li>
+              <li><a class="et-nav__menu-link" href="winter.html">Winter destinations</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring destinations</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer destinations</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn destinations</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              Hotels &amp; Chalets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels-chalets.html">Hotels &amp; chalets overview</a></li>
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              Tickets
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="tickets.html">All tickets</a></li>
+              <li><a class="et-nav__menu-link" href="flight.html">Flight tickets</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train tickets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu">
+            <button class="et-nav__link et-nav__trigger is-current" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              About
+              <span class="et-nav__caret" aria-hidden="true"></span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html" aria-current="page">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" class="about-page" tabindex="-1">
+    <section class="about-hero" aria-labelledby="about-hero-title">
+      <div class="et-container about-hero__inner">
+        <div class="about-hero__copy">
+          <p class="about-hero__eyebrow">About EasyTrip</p>
+          <h1 class="about-hero__title" id="about-hero-title">Travel ideas, shaped into one learning experience</h1>
+          <p class="about-hero__text">
+            EasyTrip is a university web project exploring how destinations, stays, and transport planning can
+            come together in a clear, accessible interface.
+          </p>
+          <a class="et-btn et-btn--primary et-btn--lg" href="#about-intro">
+            See what EasyTrip is
+            <svg class="et-btn__icon about-hero__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
+          </a>
+        </div>
+        <figure class="about-hero__media">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/about/byblos-440.webp 440w, assets/images/about/byblos-880.webp 880w"
+                    sizes="(max-width: 47.99em) calc(100vw - 48px), 420px" />
+            <img class="about-hero__img" src="assets/images/about/byblos-640.jpg" width="640" height="800"
+                 alt="" fetchpriority="high" decoding="async" />
+          </picture>
+          <figcaption class="about-hero__caption">Byblos (Jbeil), on the coast of Lebanon</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="about-section about-intro" id="about-intro" aria-labelledby="about-intro-title">
+      <div class="et-container about-intro__inner">
+        <div class="about-intro__copy">
+          <h2 class="about-title" id="about-intro-title">What EasyTrip is</h2>
+          <p class="about-text">
+            EasyTrip brings several travel-planning ideas into one student-built website. Visitors can explore
+            destinations by season, browse sample accommodation, and prepare flight or ground-transport searches
+            through interactive frontend experiences.
+          </p>
+          <p class="about-text">
+            The current version focuses on interface design, responsive behavior, accessibility, and clear user
+            flows. Backend and database features can be connected as the programming project develops.
+          </p>
+        </div>
+        <figure class="about-shot reveal">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/about/homepage-720.webp 720w, assets/images/about/homepage-1200.webp 1200w"
+                    sizes="(max-width: 59.99em) calc(100vw - 48px), 640px" />
+            <img class="about-shot__img" src="assets/images/about/homepage-1200.jpg" width="1200" height="750"
+                 alt="EasyTrip homepage with the heading “Explore the world” and four destination cards"
+                 loading="lazy" decoding="async" />
+          </picture>
+          <figcaption class="about-shot__caption">The current EasyTrip homepage, built with HTML, CSS and JavaScript.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="about-section about-section--tint about-purpose" aria-labelledby="about-purpose-title">
+      <div class="et-container about-purpose__inner">
+        <div class="about-purpose__copy">
+          <h2 class="about-title" id="about-purpose-title">Why we built it</h2>
+          <p class="about-purpose__lead">
+            Travel planning creates useful programming challenges: organizing information, validating forms,
+            connecting pages, designing responsive interfaces, and eventually storing and retrieving data.
+          </p>
+          <p class="about-text">EasyTrip turns those challenges into one coherent academic project.</p>
+        </div>
+        <div class="about-purpose__skills">
+          <h3 class="about-label">Skills in focus</h3>
+          <ul class="about-skills">
+            <li>Structuring a multi-page website with shared navigation</li>
+            <li>Building consistent, reusable interface patterns</li>
+            <li>Designing forms, filters and browsing experiences</li>
+            <li>Making pages accessible and responsive on any screen</li>
+            <li>Preparing the frontend for backend and database work</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-experience" aria-labelledby="about-experience-title">
+      <div class="et-container">
+        <header class="about-section__head">
+          <h2 class="about-title" id="about-experience-title">What you can explore today</h2>
+          <p class="about-text">
+            Each area below is a page you can open now. Prices, routes and availability are sample content,
+            so nothing can be booked or paid for.
+          </p>
+        </header>
+
+        <div class="about-experience__layout">
+          <article class="about-feature reveal" aria-labelledby="about-feature-title">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/about/bali-cliff-600.webp 600w, assets/images/about/bali-cliff-1200.webp 1200w"
+                      sizes="(max-width: 59.99em) calc(100vw - 48px), 620px" />
+              <img class="about-feature__img" src="assets/images/about/bali-cliff-800.jpg" width="800" height="600"
+                   alt="" loading="lazy" decoding="async" />
+            </picture>
+            <div class="about-feature__body">
+              <h3 class="about-feature__title" id="about-feature-title">Destinations by season</h3>
+              <p class="about-text">
+                Compare winter, spring, summer and autumn trip ideas, then open a season to see its featured
+                countries and suggestions.
+              </p>
+              <a class="about-link" href="destinations.html">
+                Explore destinations
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <ul class="about-areas">
+            <li class="about-area">
+              <h3 class="about-area__title">Hotels and chalets</h3>
+              <p class="about-area__text">
+                Browse 27 sample hotels and 27 sample chalets with search, a price filter, sorting and a details view.
+              </p>
+              <a class="about-link" href="hotels-chalets.html">
+                Browse stays
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </li>
+            <li class="about-area">
+              <h3 class="about-area__title">
+                Flight planner<span class="about-tag"><span class="et-visually-hidden">, </span>Prototype</span>
+              </h3>
+              <p class="about-area__text">
+                Enter a route, dates and travelers to see a checked summary of your search. There are no live
+                fares or seats.
+              </p>
+              <a class="about-link" href="flight.html">
+                Plan a flight
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </li>
+            <li class="about-area">
+              <h3 class="about-area__title">
+                Bus and train planner<span class="about-tag"><span class="et-visually-hidden">, </span>Prototype</span>
+              </h3>
+              <p class="about-area__text">
+                Plan a regional journey by bus or train and review the route details. Timetables and tickets
+                are not connected yet.
+              </p>
+              <a class="about-link" href="bus-train.html">
+                Plan a bus or train trip
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </li>
+            <li class="about-area">
+              <h3 class="about-area__title">Contact form</h3>
+              <p class="about-area__text">
+                Write a question in a form that checks each field before sending. It is a demo, so messages
+                are not sent anywhere.
+              </p>
+              <a class="about-link" href="contact.html">
+                Try the contact form
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-section--tint about-principles" aria-labelledby="about-principles-title">
+      <div class="et-container">
+        <header class="about-section__head">
+          <h2 class="about-title" id="about-principles-title">What guides the experience</h2>
+          <p class="about-text">Four principles shape every page, from the main menu to the planners.</p>
+        </header>
+        <dl class="about-principles__list">
+          <div class="about-principle">
+            <dt class="about-principle__term">Clarity</dt>
+            <dd class="about-principle__text">Important actions and information should be easy to find, with plain labels and one clear next step.</dd>
+          </div>
+          <div class="about-principle">
+            <dt class="about-principle__term">Consistency</dt>
+            <dd class="about-principle__text">Pages share the same navigation, buttons and layout rules, so the site feels like one product.</dd>
+          </div>
+          <div class="about-principle">
+            <dt class="about-principle__term">Accessibility</dt>
+            <dd class="about-principle__text">Navigation and content should work with a keyboard, a screen reader, zoomed text and small screens.</dd>
+          </div>
+          <div class="about-principle">
+            <dt class="about-principle__term">Honesty</dt>
+            <dd class="about-principle__text">Prototypes say what they are. Sample prices and planners never pretend to offer live data or bookings.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="about-section about-project" aria-labelledby="about-project-title">
+      <div class="et-container">
+        <div class="about-project__copy">
+          <h2 class="about-title" id="about-project-title">Built as a university project</h2>
+          <p class="about-text">
+            EasyTrip was created as a programming project to combine interface design, frontend development,
+            form behavior, and future database work in one connected website.
+          </p>
+        </div>
+        <div class="about-project__stages">
+          <div class="about-stage">
+            <h3 class="about-stage__title">Today</h3>
+            <ul class="about-stage__list">
+              <li>Static pages built with HTML, CSS and JavaScript</li>
+              <li>Sample hotels, chalets, prices and routes</li>
+              <li>Forms that check what you enter in the browser</li>
+            </ul>
+          </div>
+          <div class="about-stage about-stage--next">
+            <h3 class="about-stage__title">Possible next steps</h3>
+            <ul class="about-stage__list">
+              <li>Listings loaded from a database</li>
+              <li>Accounts and sign-in</li>
+              <li>Reservations saved on a server</li>
+              <li>Admin tools to manage content</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-section--flush about-cta" aria-labelledby="about-cta-title">
+      <div class="et-container">
+        <div class="about-cta__panel">
+          <div class="about-cta__copy">
+            <h2 class="about-cta__title" id="about-cta-title">Explore what EasyTrip can do</h2>
+            <p class="about-cta__text">
+              Start with a season that suits you, or open the planners to see how a journey comes together.
+            </p>
+          </div>
+          <div class="about-cta__actions">
+            <a class="et-btn et-btn--primary et-btn--lg" href="destinations.html">Explore destinations</a>
+            <a class="et-btn et-btn--outline et-btn--lg" href="tickets.html">Plan a journey</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>

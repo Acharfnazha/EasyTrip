@@ -1,21 +1,12 @@
-/* ==========================================================================
-   Bus & train (bus-train.php)
-   A ground-travel planning prototype that follows the Flight page's system:
-   hero, one shared route form (bus or train), route summary, how-it-works steps,
-   an editorial section and a closing call to action.
-   Page sections use "ground-", the form uses "route-planner" and the result uses
-   "route-summary", so nothing here reaches the shared header, footer or other
-   pages. Colours, fonts, buttons and the container come from css/styles.css.
-   ========================================================================== */
+/* Bus & train page (bus-train.html) */
 
 .ground-travel-page {
-  --ground-error: #b42318;      /* 6.6:1 on white */
+  --ground-error: #b42318;
   --ground-surface: #f3f8fb;
   --ground-bus: var(--et-primary);
-  --ground-train: #1d6b57;      /* same rail/ground green as the Tickets page: 6.4:1 on white */
+  --ground-train: #1d6b57;
 }
 
-/* Shared bits ------------------------------------------------------------------ */
 .ground-section-head {
   max-width: 760px;
   margin-bottom: 28px;
@@ -51,7 +42,6 @@
   color: var(--et-primary-hover);
 }
 
-/* 1. Hero ------------------------------------------------------------------------ */
 .ground-hero {
   padding-block: 40px 56px;
   background: var(--ground-surface);
@@ -127,16 +117,14 @@
   max-height: 420px;
   aspect-ratio: 6 / 5;
   object-fit: cover;
-  object-position: 50% 70%;   /* keep the train in view */
+  object-position: 50% 70%;
   border-radius: 20px;
 }
 
-/* 2. Route planner ---------------------------------------------------------------- */
 .route-planner-section {
   padding-block: 56px 72px;
 }
 
-/* The accent follows the chosen mode: blue for bus, green for train. */
 .route-planner,
 .route-summary {
   --route-accent: var(--ground-bus);
@@ -192,7 +180,6 @@
   font-weight: 500;
 }
 
-/* Transport type and trip type: real radio buttons styled as two-part switches */
 .route-planner__segments {
   display: inline-flex;
   padding: 4px;
@@ -251,7 +238,6 @@
   outline-offset: 2px;
 }
 
-/* Rows of fields */
 .route-planner__route {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -282,7 +268,7 @@
   width: 100%;
   min-height: 50px;
   padding: 0 14px;
-  border: 1px solid #7a8ca3;   /* 3.4:1 against white */
+  border: 1px solid #7a8ca3;
   border-radius: 10px;
   background: #fff;
   color: var(--et-ink);
@@ -308,7 +294,7 @@
   gap: 6px;
   width: 48px;
   height: 48px;
-  margin-top: 29px;   /* lines up with the inputs, below their labels */
+  margin-top: 29px;
   padding: 0;
   border: 1px solid #7a8ca3;
   border-radius: 999px;
@@ -320,7 +306,7 @@
 }
 
 .route-planner__swap[hidden] {
-  display: none;   /* needs JavaScript; stays hidden without it */
+  display: none;
 }
 
 .route-planner__swap:hover {
@@ -339,12 +325,10 @@
   stroke-linejoin: round;
 }
 
-/* The word "Swap" is shown only when the fields stack (see the 40em query). */
 .route-planner__swap-text {
   display: none;
 }
 
-/* Error messages: text + icon, not colour alone */
 .route-planner__error {
   display: flex;
   gap: 6px;
@@ -373,7 +357,6 @@
   display: none;
 }
 
-/* Optional preferences */
 .route-planner__options {
   display: flex;
   flex-wrap: wrap;
@@ -428,14 +411,13 @@
   font-weight: 600;
 }
 
-/* 3. Route summary ---------------------------------------------------------------- */
 .route-summary {
   margin-top: 28px;
   padding: 32px;
   border: 1px solid var(--et-line);
   border-top: 4px solid var(--route-accent);
   border-radius: 20px;
-  background: #fff;   /* scrolling clears the sticky header via html's scroll-padding-top */
+  background: #fff;
 }
 
 .route-summary[hidden] {
@@ -475,7 +457,7 @@
   overflow: hidden;
   border: 1px solid var(--et-line);
   border-radius: 12px;
-  background: var(--et-line);   /* shows through the 1px gaps as dividers */
+  background: var(--et-line);
 }
 
 .route-summary__details > div {
@@ -535,7 +517,6 @@
   gap: 12px 20px;
 }
 
-/* 4. How this planner works ------------------------------------------------------- */
 .ground-how {
   padding-block: 64px 32px;
   background: var(--ground-surface);
@@ -557,7 +538,6 @@
   counter-increment: ground-step;
 }
 
-/* Numbered markers joined by a line: an ordered sequence, not a card grid */
 .ground-steps__item::before {
   content: counter(ground-step);
   position: absolute;
@@ -611,7 +591,6 @@
   color: var(--et-navy);
 }
 
-/* 5. Editorial ------------------------------------------------------------------ */
 .ground-editorial {
   padding-block: 72px;
 }
@@ -638,7 +617,6 @@
   margin-bottom: 24px;
 }
 
-/* 6. Closing call to action -------------------------------------------------------- */
 .ground-cta {
   padding-bottom: 88px;
 }
@@ -682,7 +660,7 @@
 
 .ground-cta__more a {
   display: inline-block;
-  padding-block: 12px;   /* 44px tap height on a one-line text link */
+  padding-block: 12px;
   color: #fff;
   font-weight: 600;
   text-decoration: underline;
@@ -693,7 +671,6 @@
   outline-color: var(--et-focus-on-dark);
 }
 
-/* Responsive ------------------------------------------------------------------- */
 @media (max-width: 63.99em) {
   .route-summary__details {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -712,7 +689,7 @@
   }
 
   .ground-hero__media {
-    order: -1;   /* photo first on small screens, like the other stacked heroes */
+    order: -1;
   }
 
   .ground-hero__img {
@@ -761,7 +738,6 @@
 }
 
 @media (max-width: 40em) {
-  /* Stack From / Swap / To; the swap button shows its word and sits between them */
   .route-planner__route,
   .route-planner__route:not(:has(.route-planner__swap:not([hidden]))),
   .route-planner__row {
@@ -781,7 +757,7 @@
   }
 
   .route-planner__swap svg {
-    transform: rotate(90deg);   /* points up and down when the fields stack */
+    transform: rotate(90deg);
   }
 
   .route-planner__swap-text {

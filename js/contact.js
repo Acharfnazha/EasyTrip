@@ -1,21 +1,11 @@
-// Contact form (contact.php): progressive enhancements only.
-//
-// The form is a normal PHP POST and works without JavaScript: the browser checks
-// the required fields, and includes/contact-handler.php validates everything again
-// and saves the message. This script adds:
-//   - the same checks as the server, shown next to each field before sending
-//   - an error summary with links to the fields
-//   - focus on the server's success or error message after a submission
-//   - a character count for the message
-//   - protection against sending the same message twice with a double click
-// It never pretends a message was sent: only the server shows "Message received".
+// Contact form: checks each field, then shows a confirmation. Nothing is sent (there is no server).
 (function () {
   'use strict';
 
-  // Keep these in step with includes/contact-handler.php.
+  // Keep these in step with the maxlength attributes in contact.html.
   var LIMITS = { name: 120, email: 190, phone: 40, message: 2000 };
   var ORDER = ['name', 'email', 'phone', 'topic', 'message'];
-  var COUNT_WARNING = 200;   // show and announce the count from here down
+  var COUNT_WARNING = 200;
 
   var formatNumber = function (n) { return n.toLocaleString('en-GB'); };
 
@@ -33,7 +23,7 @@
       return '';
     },
     phone: function (v) {
-      if (!v) return '';   // optional
+      if (!v) return '';
       var digits = v.replace(/\D/g, '').length;
       if (v.length > LIMITS.phone || !/^[0-9+().\-\s]+$/.test(v) || digits < 6 || digits > 17) {
         return 'Enter a phone number using digits, spaces and + ( ) - only, or leave it blank.';
@@ -51,9 +41,9 @@
   };
 
   function initForm(form) {
-    if (form.dataset.ready) return;   // never bind twice
+    if (form.dataset.ready) return;
     form.dataset.ready = 'true';
-    form.noValidate = true;           // our messages replace the browser's pop-ups
+    form.noValidate = true;
 
     var fields = {};
     ORDER.forEach(function (name) { fields[name] = form.querySelector('[data-field="' + name + '"]'); });
@@ -62,14 +52,17 @@
     var card = form.closest('.contact-form-card') || document;
     var summary = card.querySelector('[data-error-summary]');
     var summaryList = summary && summary.querySelector('[data-error-list]');
-    var submitButton = form.querySelector('[data-contact-submit]');
-    var submitting = false;
+    var success = card.querySelector('[data-form-success]');
+
+    // Links from other pages can choose a topic, e.g. contact.html?topic=stays
+    var topic = new URLSearchParams(window.location.search).get('topic');
+    if (topic && fields.topic.querySelector('option[value="' + CSS.escape(topic) + '"]:not([disabled])')) {
+      fields.topic.value = topic;
+    }
 
     var valueOf = function (name) { return fields[name].value.trim(); };
     var isInvalid = function (name) { return fields[name].getAttribute('aria-invalid') === 'true'; };
 
-    // Show or clear the message under a field. The message is linked to its field
-    // through aria-describedby in the HTML; it is empty and hidden when valid.
     function setError(name, message) {
       var input = fields[name];
       var error = document.getElementById(input.id + '-error');
@@ -86,20 +79,15 @@
       return message;
     }
 
-    // Validation timing -----------------------------------------------------------
-    // Nothing is checked until the visitor has typed in a field and left it, or
-    // presses "Send message". Once a field shows an error, it is re-checked as they fix it.
-    //
-    // Pressing the button also makes the current field lose focus. If that showed a
-    // message, the page could shift and the press could miss the button, so leaving a
-    // field that way is skipped: the button checks everything itself.
+    // While a button is being pressed, skip blur validation: a new error message would
+    // shift the layout and the click could miss the button.
     var pressingButton = false;
     form.addEventListener('pointerdown', function (event) {
       if (event.target.closest('button')) pressingButton = true;
     });
     ['pointerup', 'pointercancel'].forEach(function (type) {
       document.addEventListener(type, function () {
-        setTimeout(function () { pressingButton = false; }, 0);   // after the click has run
+        setTimeout(function () { pressingButton = false; }, 0);
       });
     });
 
@@ -118,7 +106,6 @@
       });
     });
 
-    // Error summary: built with text nodes, never innerHTML ----------------------------
     function showSummary(problems) {
       if (!summary || !summaryList) return;
       summaryList.textContent = '';
@@ -134,7 +121,6 @@
       summary.focus();
     }
 
-    // A summary link moves focus into its field, with the field's label in view.
     if (summary) {
       summary.addEventListener('click', function (event) {
         var link = event.target.closest('a[href^="#"]');
@@ -148,12 +134,11 @@
       });
     }
 
-    // Submit ------------------------------------------------------------------------
+    var updateCount = initCounter(fields.message);
+
     form.addEventListener('submit', function (event) {
-      if (submitting) {             // already on its way: ignore extra clicks
-        event.preventDefault();
-        return;
-      }
+      event.preventDefault();
+      if (success) success.hidden = true;
 
       var problems = [];
       ORDER.forEach(function (name) {
@@ -161,61 +146,23 @@
         if (message) problems.push({ name: name, message: message });
       });
 
-      // Messages from the previous submission no longer apply.
-      card.querySelectorAll('[data-form-status]:not([data-error-summary])').forEach(function (status) {
-        status.hidden = true;
-      });
-
       if (problems.length) {
-        event.preventDefault();
         showSummary(problems);
         return;
       }
 
-      // Valid: let the browser post the form to the server as normal.
       if (summary) summary.hidden = true;
-      submitting = true;
-      if (submitButton) {
-        submitButton.setAttribute('aria-disabled', 'true');
-        submitButton.textContent = 'Sending…';
+      form.reset();
+      ORDER.forEach(function (name) { delete fields[name].dataset.edited; });
+      if (updateCount) updateCount(false);
+      if (success) {
+        success.hidden = false;
+        success.focus();
       }
     });
-
-    // Coming back with the browser's Back button can restore this page as it was
-    // left, mid-send. Make the button usable again.
-    window.addEventListener('pageshow', function (event) {
-      if (!event.persisted) return;
-      submitting = false;
-      if (submitButton) {
-        submitButton.removeAttribute('aria-disabled');
-        submitButton.textContent = 'Send message';
-      }
-    });
-
-    initCounter(fields.message);
-
-    // After a submission, move focus to the server's message so it is read out.
-    // The form posts to contact.php#contact-form, and the browser's jump to that
-    // anchor can reset focus once the page has loaded, so focus again then, unless
-    // the visitor has already moved somewhere.
-    var status = card.querySelector('[data-error-summary][data-form-status]:not([hidden])') ||
-                 card.querySelector('[data-form-status]:not([hidden])');
-    if (status) {
-      status.focus();
-      var refocus = function () {
-        setTimeout(function () {
-          var active = document.activeElement;
-          if (!status.hidden && (!active || active === document.body)) status.focus();
-        }, 0);
-      };
-      if (document.readyState === 'complete') refocus();
-      else window.addEventListener('load', refocus, { once: true });
-    }
   }
 
-  // Character count ---------------------------------------------------------------------
-  // The visible count is part of the field's description. Screen readers are only
-  // told about it when it gets close to the limit, not on every key press.
+  // Screen readers hear the character count only near the limit, not on every key press.
   function initCounter(textarea) {
     var count = document.querySelector('[data-message-count]');
     var announcer = document.querySelector('[data-count-announcer]');
@@ -223,7 +170,6 @@
     var max = Number(textarea.getAttribute('maxlength')) || LIMITS.message;
     var announceTimer;
 
-    // Which warning band the count is in: 200, 100, 50 or 0 characters left, or none.
     var bandFor = function (left) {
       if (left === 0) return 0;
       if (left <= 50) return 50;
@@ -237,7 +183,6 @@
       count.textContent = text;
       count.classList.toggle('is-near-limit', left <= COUNT_WARNING);
 
-      // Announce once per band, after typing pauses.
       var band = bandFor(left);
       if (band === lastBand) return;
       lastBand = band;
@@ -248,8 +193,9 @@
     }
 
     var lastBand = null;
-    update(false);   // show the count for a preserved message without announcing it
+    update(false);
     textarea.addEventListener('input', function () { update(true); });
+    return update;
   }
 
   function init() {

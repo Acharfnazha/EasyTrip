@@ -1,10 +1,5 @@
-/* ==========================================================================
-   Hotels & Chalets overview (hotels-chalets.php)
-   Every rule is scoped to "hc-" components. Colours, fonts, buttons and the
-   container come from the shared design system in css/styles.css.
-   ========================================================================== */
+/* Hotels & chalets overview (hotels-chalets.html) */
 
-/* Shared section pieces ---------------------------------------------------- */
 .hc-section {
   padding-block: 88px;
 }
@@ -43,7 +38,6 @@
   font-weight: 600;
 }
 
-/* 1. Hero ------------------------------------------------------------------ */
 .hc-hero {
   padding-block: 64px 72px;
   background: #f3f8fb;
@@ -92,7 +86,6 @@
   color: var(--et-primary-hover);
 }
 
-/* Photo pair: a hotel room with a chalet inset over its lower corner. */
 .hc-hero__media {
   position: relative;
   padding-bottom: 32px;
@@ -122,12 +115,10 @@
   box-shadow: 0 18px 36px -24px rgba(0, 27, 72, .45);
 }
 
-/* The arrow points down to the options, so it nudges down, not sideways. */
 .et-btn:hover .hc-down {
   transform: translateY(3px);
 }
 
-/* 2. Choose how you want to stay ------------------------------------------- */
 .hc-choose {
   padding-top: 88px;
 }
@@ -212,12 +203,10 @@
   font-size: 15px;
 }
 
-/* Hotels: bright and open, photo on the left. */
 .hc-option--hotels {
   padding-block: 8px 88px;
 }
 
-/* Chalets: a darker, cosier band with the photo on the right. */
 .hc-option--chalets {
   padding-block: 88px;
   background: var(--et-navy);
@@ -261,7 +250,6 @@
   outline-color: var(--et-focus-on-dark);
 }
 
-/* 3. Comparison table ------------------------------------------------------ */
 .hc-table {
   width: 100%;
   max-width: 860px;
@@ -314,12 +302,10 @@
   font-size: 16.5px;
 }
 
-/* Tint the chalets column slightly so the two columns read apart. */
 .hc-table tr > :last-child {
   background: #f8fbfd;
 }
 
-/* 4. Guidance -------------------------------------------------------------- */
 .hc-guide {
   display: grid;
   grid-template-columns: 5fr 7fr;
@@ -358,7 +344,6 @@
   font-size: 15.5px;
 }
 
-/* 5. Final action ---------------------------------------------------------- */
 .hc-cta {
   max-width: 720px;
   text-align: center;
@@ -376,8 +361,6 @@
   min-width: 220px;
 }
 
-/* Responsive --------------------------------------------------------------- */
-/* Tablet: keep the side-by-side layouts, but give the copy more room. */
 @media (max-width: 60em) {
   .hc-hero__inner,
   .hc-option__inner,
@@ -425,7 +408,6 @@
     border-width: 4px;
   }
 
-  /* Photo first, then the text, for both options. */
   .hc-option--chalets .hc-option__media {
     order: 0;
   }

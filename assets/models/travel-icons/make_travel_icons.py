@@ -1,9 +1,4 @@
-"""Low-poly EasyTrip travel icon set: plane, train, bus and chalet (GLB).
-
-Modelled Z-up in metres-ish units (each icon ~2 units long), then rotated to glTF's
-Y-up on export. Every part keeps its own PBR material so the models stay editable
-in Blender / Three.js.
-"""
+"""Low-poly EasyTrip travel icons (plane, train, bus, chalet), exported as GLB files."""
 import sys
 from pathlib import Path
 
@@ -44,7 +39,6 @@ def box(ext, at, colour, **kw):
 
 
 def cyl(r, h, at, axis, colour, sections=24, **kw):
-    """Cylinder of radius r, length h, along 'x', 'y' or 'z', centred at `at`."""
     m = trimesh.creation.cylinder(radius=r, height=h, sections=sections)
     if axis == "x":
         m.apply_transform(rotation_matrix(np.pi / 2, [0, 1, 0]))
@@ -92,17 +86,15 @@ def ellipsoid(radii, at, colour, **kw):
     return paint(m, colour, **kw)
 
 
-# ---------------------------------------------------------------- models (Z-up, nose +X)
 def plane():
     parts = {}
     fus = trimesh.creation.capsule(radius=0.2, height=1.5, count=[16, 16])
     fus.apply_transform(rotation_matrix(np.pi / 2, [0, 1, 0]))
     parts["fuselage"] = paint(fus, "white", roughness=0.4)
     parts["window_stripe"] = cyl(0.203, 1.0, [0.05, 0, 0.0], "x", "royal", sections=16)
-    parts["window_stripe"].apply_scale([1, 1, 0.25])  # a thin band around the middle
+    parts["window_stripe"].apply_scale([1, 1, 0.25])
     parts["window_stripe"].apply_translation([0, 0, 0.06])
     parts["cockpit"] = ellipsoid([0.15, 0.14, 0.07], [0.7, 0, 0.15], "navy", roughness=0.2)
-    # swept wings: two rotated slabs meeting under the fuselage
     for side, s in (("left", 1), ("right", -1)):
         parts[f"wing_{side}"] = rotated_box([0.42, 1.0, 0.045], [0.02, s * 0.58, -0.06],
                                             s * 0.35, [0, 0, 1], "primary")
@@ -116,7 +108,6 @@ def plane():
 def train():
     parts = {}
     parts["body"] = box([1.8, 0.6, 0.6], [-0.1, 0, 0.47], "primary", roughness=0.45)
-    # side profile of the nose: flat front bottom, sloping windscreen up to the roof line
     parts["nose"] = extrude_xz([(0.79, 0.17), (1.08, 0.17), (1.08, 0.36), (0.79, 0.77)], -0.3, 0.3, "primary", roughness=0.45)
     parts["window_band"] = box([1.82, 0.62, 0.14], [-0.1, 0, 0.6], "navy", roughness=0.2)
     slope = np.array([0.79 - 1.08, 0.77 - 0.36]); length = np.linalg.norm(slope); d = slope / length
@@ -187,12 +178,10 @@ def chalet():
     return parts
 
 
-# ---------------------------------------------------------------- export
 Y_UP = rotation_matrix(-np.pi / 2, [1, 0, 0])   # Z-up modelling → glTF Y-up
 
 
 def normalise(parts):
-    """Centre on X/Y and stand the model on the ground (min Z = 0)."""
     lo, hi = trimesh.util.concatenate([p.copy() for p in parts.values()]).bounds
     shift = [-(lo[0] + hi[0]) / 2, -(lo[1] + hi[1]) / 2, -lo[2]]
     for p in parts.values():
