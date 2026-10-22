@@ -36,7 +36,8 @@ package manager.
 | --- | --- | --- |
 | Home | `index.html` | Hero, top destinations, about, seasonal trip ideas, services, explore band |
 | Destinations | `destinations.html` | Seasonal travel guide: compare winter, spring, summer and autumn, choose by experience |
-| Winter / Spring / Summer / Autumn | `winter.html`, `spring.html`, `summer.html`, `autumn.html` | Trip ideas and featured countries for each season |
+| Winter | `winter.html` | Winter travel guide: city breaks, mountain escapes and cozy stays, four featured countries, practical tips before planning, and links to sample stays, the planners and the other seasons |
+| Spring / Summer / Autumn | `spring.html`, `summer.html`, `autumn.html` | Trip ideas and featured countries for each season |
 | Hotels & chalets | `hotels-chalets.html` | Accommodation guide: hotels vs chalets, quick comparison, what to consider |
 | Hotels | `hotels.html` | Sample hotel collection: search, max sample price, sorting, "Show more", details dialog |
 | Chalets | `chalets.html` | Sample chalets & private retreats: search, setting, max sample price, sorting, "Stays in Lebanon" shortcut, details dialog |
@@ -78,11 +79,14 @@ Easy_Trip/
 │   ├── reset.css             Older shared base styles (loaded by several pages)
 │   ├── styles2.css           Older base styles (no longer loaded by any page)
 │   ├── listings.css          Listing components (toolbar, cards, dialog) for hotels.html and chalets.html
+│   ├── cursor.css            Custom desktop cursor (loaded by js/cursor.js, see docs/cursor.md)
 │   └── <page>.css            One stylesheet per page (about, why-easytrip, flight, winter, …),
 │                             each scoped under its page's <main> class (e.g. .about-page)
 │
 ├── js/
-│   ├── nav.js                Navigation menu (dropdowns, mobile menu, current page)
+│   ├── nav.js                Navigation menu (dropdowns, mobile menu, current page); loads cursor.js after page load
+│   ├── cursor.js             Custom desktop cursor (fine pointer only, off for reduced motion)
+│   ├── home-flight.js        Homepage plane entrance animation (decorative, runs once)
 │   ├── script.js             Scroll reveal (plus an old "stays" tab switcher no page uses any more)
 │   ├── listings.js           Listing controller for hotels and chalets: filter, sort, show more, dialog
 │   ├── flight.js             Flight planner: trip type, swap, date limits, validation, search summary
@@ -102,11 +106,14 @@ Easy_Trip/
 │   │   ├── contact/          Contact page hero (.webp of support.png)
 │   │   ├── tickets/          Tickets page images (optimized .webp)
 │   │   ├── travel/           Transport images used by bus-train.html
+│   │   ├── winter/           Winter page hero (.webp copies of faraya.png)
 │   │   └── *.png / *.jpg     Destination, hotel, chalet and page images
 │   ├── models/travel-icons/  Low-poly 3D icons (plane, train, bus, chalet) as .glb, plus the script that makes them
 │   └── videos/               About page video
 │
 └── docs/
+    ├── app-flow/             App flow diagram (draw.io + PNG/SVG) and its explanation
+    ├── cursor.md             How the custom cursor works and how to tune it
     ├── screenshots/          Images used in this README
     └── template-reference/   Original design template (kept locally only; not in the Git repository)
 ```
@@ -217,7 +224,8 @@ The main colours are CSS variables at the top of `css/styles.css`:
   `kaleici-old-town.png`, `lara-beach.png`, `antalya-cirali.png`, `island-*.png`, `egypt-*.png` and
   `turkey-*.png` in `assets/images/`. (The About page uses resized WebP crops of `jbayl.png` and
   `island-bali.png`, saved in `assets/images/about/`. The Why choose EasyTrip page uses a rotated
-  crop of `assets/images/tickets/busandtrain.jpg`, saved in `assets/images/why/`.)
+  crop of `assets/images/tickets/busandtrain.jpg`, saved in `assets/images/why/`. The Winter page uses
+  resized WebP copies of `faraya.png`, saved in `assets/images/winter/`.)
 - These files are not used by any page yet: `css/styles2.css`, `assets/images/chalets-hero-detail.jpg`,
   `assets/images/brand/logo.png`, `assets/images/contact.png`, `assets/images/train.png`,
   `assets/images/team-1.jpg`, `assets/images/team-2.jpg`, `assets/images/about-hero.jpg` and
