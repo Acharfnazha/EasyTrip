@@ -1,8 +1,7 @@
 # EasyTrip Database (Part 1)
 
 This folder has the MySQL database for EasyTrip, the Web Programming I project. It follows the
-database design in our project proposal, and the backend (Node.js and Express) will connect to it
-in the next part.
+database design in our project proposal. The [server](../server/README.md) connects to it.
 
 | File | What it does |
 | --- | --- |
@@ -96,13 +95,13 @@ also in the database:
 
 ## Limits of this part
 
-- The website doesn't read from the database yet. The pages still show their own HTML content until
-  the backend is built.
-- Two bookings for the same dates are prevented by a query in the backend, not by a table rule. The
+- So far only accounts use the database (register, log in and the admin totals). The hotel, chalet and
+  destination pages still show their own HTML content.
+- Two bookings for the same dates will be prevented by a query in the backend, not by a table rule. The
   query is in section 4 of `queries.sql`.
 - A place has one season per row. To feature it in another season, add another row.
 - Prices are sample prices in US dollars. Tickets have no price because the site has no real fares.
 
 ## Next part
 
-Set up Node.js and Express, connect them to this database, and build register and login.
+Connect the stays, bookings, tickets and contact form to these tables.

@@ -32,7 +32,7 @@ temp/
 *.tmp
 *.bak
 
-# Dependencies installed locally (none are needed today)
+# Dependencies installed by npm install
 vendor/
 node_modules/
 
