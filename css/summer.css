@@ -6,7 +6,7 @@
 
 
 .summer .page {
-  padding-top: 5rem;
+  padding-top: 0;
   padding-bottom: 4rem;
 }
 
@@ -58,32 +58,10 @@
 }
 
 
-.summer .herobutton {
+.summer .herotext .et-btn {
+  align-self: flex-start;
   margin-top: 0.75rem;
-  display: inline-block;
-  padding: 0.7rem 1.7rem;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-
-  background-color: var(--sky);
-  color: #ffffff;
-  box-shadow: 0 12px 26px rgba(1, 138, 190, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
 }
-
-.summer .herobutton:hover {
-  background-color: var(--royal);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(2, 69, 122, 0.45);
-}
-
-
 
 .summer .heroimage img {
   display: block;
@@ -167,29 +145,6 @@
   color: var(--muted);
   max-width: 32rem;
 }
-
-.summer .seasonbutton {
-  display: inline-block;
-  padding: 0.7rem 1.7rem;
-  border-radius: 999px;
-  background-color: var(--light);
-  color: var(--deep);
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.summer .seasonbutton:hover {
-  background-color: #ffffff;
-  box-shadow: 0 10px 24px rgba(0, 27, 72, 0.25);
-  transform: translateY(-2px);
-}
-
 
 @media (min-width: 768px) {
   .summer .heroinner {

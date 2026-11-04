@@ -237,6 +237,10 @@
       });
     }
 
+    // Links from other pages can fill the search box, e.g. chalets.html?q=Lebanon
+    var linkedSearch = new URLSearchParams(window.location.search).get('q');
+    if (search && linkedSearch) search.value = linkedSearch;
+
     update({ announce: false });
   }
 
