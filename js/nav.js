@@ -33,6 +33,22 @@
     });
   }
 
+  // Shows "My account" instead of "Log in" when the visitor is logged in. When the site is
+  // opened without the server there is nothing to ask, so the link stays as "Log in".
+  function updateAccountLink(header) {
+    var link = header.querySelector('[data-account-link]');
+    if (!link || window.location.protocol === 'file:') return;
+    fetch('/api/auth/me')
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (result) {
+        if (!result || !result.user) return;
+        link.textContent = 'My account';
+        link.setAttribute('href', result.user.role === 'admin' ? 'admin.html' : 'account.html');
+        markActive(header);
+      })
+      .catch(function () {});
+  }
+
   function syncHeaderHeight(header) {
     var bar = header.querySelector('.et-header__bar');
     var h = (bar || header).getBoundingClientRect().height;
@@ -174,6 +190,7 @@
 
     markActive(header);
     syncHeaderHeight(header);
+    updateAccountLink(header);
   }
 
   function initSite() {

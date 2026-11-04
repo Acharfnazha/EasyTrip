@@ -7,14 +7,15 @@ chalets, look at flight, bus and train tickets, and fill in a contact form.
 > course adds the backend. Hotels, chalets, prices and ticket planners are sample content: nothing
 > can be booked or paid for yet, and the contact form doesn't send messages anywhere.
 
-**Tech stack:** HTML, CSS and vanilla JavaScript for the frontend, and MySQL for the database. The
-backend (Node.js and Express) is the next part, so the website doesn't use the database yet.
+**Tech stack:** HTML, CSS and vanilla JavaScript for the frontend, Node.js and Express for the server,
+and MySQL for the database.
 
 | Part | Status |
 | --- | --- |
 | Frontend (all pages) | Done |
 | [Database](database/README.md) | Part 1 done: tables, sample data and example queries |
-| Backend (Node.js and Express) | Next part |
+| [Server](server/README.md) | Part 2 done: register, log in, log out, and customer and admin roles |
+| Stays, bookings, tickets and contact form saved in the database | Next part |
 
 ![EasyTrip homepage on desktop](docs/screenshots/home-desktop.jpg)
 
@@ -53,15 +54,30 @@ backend (Node.js and Express) is the next part, so the website doesn't use the d
 | Who we are | `about.html` | What EasyTrip is, why it was built, what you can explore, its design principles and possible next steps |
 | Why choose EasyTrip | `why-easytrip.html` | Why the connected frontend is useful: real page screenshots, four reasons the experience works, a four-step journey through the site, and what works today vs. what backend work could add |
 | Contact | `contact.html` | Contact form with guidance, field-level validation and a confirmation (demo only: nothing is sent) |
+| Log in | `login.html` | Login form connected to the server |
+| Create an account | `register.html` | Registration form connected to the server |
+| My account | `account.html` | A customer's details (needs login) |
+| Admin dashboard | `admin.html` | Totals from the database (admins only) |
 
 ---
 
 ## Running the project
 
-Open `index.html` in a modern browser (double-click it). Every page works straight from the
-folder: no server or installation is needed.
+**With the server (everything works):** create the [database](#database), then run these from the
+project folder. The full steps are in [server/README.md](server/README.md#how-to-run-it).
 
-Any static web host (GitHub Pages, Netlify, a university web space) can also serve the folder as it is.
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+
+Then open <http://localhost:3000>.
+
+**Without the server:** open `index.html` in a modern browser (double-click it). The browsing pages and
+forms still work, but logging in doesn't. A static web host (GitHub Pages, Netlify) works the same way.
 
 ---
 
@@ -93,6 +109,10 @@ Easy_Trip/
 ├── hotels.html  chalets.html Listings with filters
 ├── tickets.html              Tickets overview
 ├── flight.html  bus-train.html
+├── login.html  register.html Log in and create an account
+├── account.html  admin.html  Customer account and admin dashboard
+├── package.json              Node.js packages and the npm start command
+├── .env.example              Example settings (copy it to .env)
 │
 ├── css/
 │   ├── styles.css            Shared styles: header, footer, homepage, buttons
@@ -100,6 +120,7 @@ Easy_Trip/
 │   ├── styles2.css           Older base styles (no longer loaded by any page)
 │   ├── listings.css          Listing components (toolbar, cards, dialog) for hotels.html and chalets.html
 │   ├── cursor.css            Custom desktop cursor (loaded by js/cursor.js, see docs/cursor.md)
+│   ├── auth.css              Login, register, account and admin pages
 │   └── <page>.css            One stylesheet per page (about, why-easytrip, flight, winter, …),
 │                             each scoped under its page's <main> class (e.g. .about-page)
 │
@@ -111,7 +132,9 @@ Easy_Trip/
 │   ├── listings.js           Listing controller for hotels and chalets: filter, sort, show more, dialog
 │   ├── flight.js             Flight planner: trip type, swap, date limits, validation, search summary
 │   ├── bus-train.js          Route planner: bus/train mode, trip type, swap, validation, route summary
-│   └── contact.js            Contact form: checks, error summary, confirmation, character count
+│   ├── contact.js            Contact form: checks, error summary, confirmation, character count
+│   ├── auth.js               Login and register forms: checks, then sends them to the server
+│   └── account.js            Account and admin pages: loads the user, the totals and log out
 │
 ├── assets/
 │   ├── images/
@@ -130,6 +153,13 @@ Easy_Trip/
 │   │   └── *.png / *.jpg     Destination, hotel, chalet and page images
 │   ├── models/travel-icons/  Low-poly 3D icons (plane, train, bus, chalet) as .glb, plus the script that makes them
 │   └── videos/               About page video
+│
+├── server/
+│   ├── index.js              Starts the server and serves the website and the API
+│   ├── db.js                 The connection to MySQL
+│   ├── routes/               API routes (auth.js, admin.js)
+│   ├── middleware/           Login token check (auth.js)
+│   └── README.md             How to run it, the API and how login works
 │
 ├── database/
 │   ├── schema.sql            Creates the database and its six tables
@@ -158,7 +188,7 @@ Easy_Trip/
 
 Every page contains its own copy of the same header (logo, main menu, Book Now button) and
 footer (links, copyright), so each page works on its own, even with JavaScript
-turned off. **When you change the header or footer, make the same change in all 15 pages**
+turned off. **When you change the header or footer, make the same change in all 19 pages**
 (your editor's "Replace in files" does this in one step).
 
 `js/nav.js` runs the **navigation menu** on every page:
@@ -168,6 +198,7 @@ turned off. **When you change the header or footer, make the same change in all 
 - Below 1080px the menu collapses behind a menu button. Submenus expand in place, and
   **Book Now** stays visible.
 - The current page is highlighted in the menu (`aria-current="page"` on its link).
+- The last menu link says **Log in**, and changes to **My account** when the visitor is logged in.
 
 ---
 
@@ -240,9 +271,9 @@ The main colours are CSS variables at the top of `css/styles.css`:
 
 ## Known limitations
 
-- **No accounts, booking or payment.** The flight and bus & train planners check what
-  the visitor enters and show a summary, but there are no live routes, schedules or fares, and
-  there is no login or registration.
+- **No booking or payment.** The flight and bus & train planners check what the visitor enters and
+  show a summary, but there are no live routes, schedules or fares. Accounts work, but nothing is
+  saved to them yet.
 - **The contact form doesn't send anything.** It checks each field in the browser and then shows a
   confirmation that says the message wasn't sent. Without JavaScript, sending only reloads the page.
 - **No social media links.** EasyTrip has no verified social accounts, so the footer doesn't link to any.

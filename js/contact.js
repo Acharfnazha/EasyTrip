@@ -1,4 +1,4 @@
-// Contact form: checks each field, then shows a confirmation. Nothing is sent (there is no server).
+// Contact form: checks each field, then shows a confirmation. Nothing is sent yet (it isn't connected to the server).
 (function () {
   'use strict';
 
