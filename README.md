@@ -1,15 +1,20 @@
 # EasyTrip — Travel Made Simple
 
-EasyTrip is a travel website built with **HTML, CSS and vanilla JavaScript**.
-Visitors can explore destinations by season, browse hotels and chalets, look at flight,
-bus and train tickets, and fill in a contact form.
+EasyTrip is a travel website where visitors can explore destinations by season, browse hotels and
+chalets, look at flight, bus and train tickets, and fill in a contact form.
 
-> **University project.** EasyTrip demonstrates frontend web development.
-> Hotels, chalets, prices and ticket planners are sample content: nothing can be booked or paid for,
-> and the contact form doesn't send messages anywhere.
+> **University project.** The frontend was built for the Web Design course, and the Web Programming I
+> course adds the backend. Hotels, chalets, prices and ticket planners are sample content: nothing
+> can be booked or paid for yet, and the contact form doesn't send messages anywhere.
 
-**Tech stack:** HTML, CSS and vanilla JavaScript. No server, database, frameworks, build step or
-package manager.
+**Tech stack:** HTML, CSS and vanilla JavaScript for the frontend, and MySQL for the database. The
+backend (Node.js and Express) is the next part, so the website doesn't use the database yet.
+
+| Part | Status |
+| --- | --- |
+| Frontend (all pages) | Done |
+| [Database](database/README.md) | Part 1 done: tables, sample data and example queries |
+| Backend (Node.js and Express) | Next part |
 
 ![EasyTrip homepage on desktop](docs/screenshots/home-desktop.jpg)
 
@@ -21,6 +26,7 @@ package manager.
 
 - [Pages](#pages)
 - [Running the project](#running-the-project)
+- [Database](#database)
 - [Project structure](#project-structure)
 - [Header and footer](#header-and-footer)
 - [Common changes](#common-changes)
@@ -56,6 +62,20 @@ Open `index.html` in a modern browser (double-click it). Every page works straig
 folder: no server or installation is needed.
 
 Any static web host (GitHub Pages, Netlify, a university web space) can also serve the folder as it is.
+
+---
+
+## Database
+
+The MySQL database is in the `database/` folder. To create it and add the sample data, run this
+from the project folder (it asks for your MySQL password):
+
+```bash
+mysql -u root -p --default-character-set=utf8mb4 -e "source database/schema.sql; source database/seed.sql;"
+```
+
+[database/README.md](database/README.md) explains the tables, the ER diagram and the rules, and also
+has the steps for MySQL Workbench.
 
 ---
 
@@ -110,6 +130,13 @@ Easy_Trip/
 │   │   └── *.png / *.jpg     Destination, hotel, chalet and page images
 │   ├── models/travel-icons/  Low-poly 3D icons (plane, train, bus, chalet) as .glb, plus the script that makes them
 │   └── videos/               About page video
+│
+├── database/
+│   ├── schema.sql            Creates the database and its six tables
+│   ├── seed.sql              Sample data (the site's stays and destinations, plus test records)
+│   ├── queries.sql           Example queries for each feature
+│   ├── er-diagram.svg        ER diagram
+│   └── README.md             How to run it and how the tables work
 │
 └── docs/
     ├── app-flow/             App flow diagram (draw.io + PNG/SVG) and its explanation
@@ -174,6 +201,11 @@ Chalets work the same way in `chalets.html`. Each card also has a `data-setting`
 of the values in the "Setting" filter (`mountain`, `coastal`, `countryside`, `forest`, `desert`,
 `tropical`), and a label such as "Cabin · Mountain". The "Stays in Lebanon" button fills the search
 box with "Lebanon", so it finds every chalet whose location contains that word.
+
+### Link to hotels or chalets with a search
+
+`chalets.html?q=Lebanon` opens the chalets page with "Lebanon" in the search box, and
+`hotels.html?q=Dubai` does the same for hotels. The homepage destination cards use these links.
 
 ### Link to the contact form with a topic
 
