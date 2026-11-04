@@ -785,7 +785,96 @@ html:not(.et-js) .et-nav__item--has-menu:focus-within > .et-nav__menu {
     linear-gradient(180deg, rgba(0, 18, 47, .2) 0%, rgba(0, 18, 47, 0) 35%, rgba(0, 18, 47, .88) 100%);
 }
 
+/* One small entrance, isolated behind hero content. No layout or scroll animation. */
+.home-flight {
+  --flight-height: calc(100vh - var(--et-header-h));
+  --flight-height: calc(100svh - var(--et-header-h));
+  --flight-pitch: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: #eaf5fb;
+}
+
+.home-flight[hidden] {
+  display: none;
+}
+
+.home-flight__traveler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  opacity: 0;
+  pointer-events: none;
+  animation: home-flight-path 4.2s linear var(--delay, 0ms) 1 both,
+             home-flight-fade 4.2s linear var(--delay, 0ms) 1 both;
+}
+
+.home-flight__plane svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.home-flight__smoke::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--smoke-size);
+  height: var(--smoke-size);
+  border-radius: 50%;
+  background: radial-gradient(circle, currentColor, transparent 70%);
+  opacity: var(--smoke-opacity);
+  transform: translate(-50%, -50%);
+}
+
+@keyframes home-flight-path {
+  0% { transform: translate3d(-8.00vw, calc(var(--flight-height) * 0.8400), 0) rotate(calc(-24.6deg * var(--flight-pitch))); }
+  5% { transform: translate3d(-2.12vw, calc(var(--flight-height) * 0.7819), 0) rotate(calc(-31.9deg * var(--flight-pitch))); }
+  10% { transform: translate3d(3.56vw, calc(var(--flight-height) * 0.7106), 0) rotate(calc(-37.1deg * var(--flight-pitch))); }
+  15% { transform: translate3d(9.06vw, calc(var(--flight-height) * 0.6300), 0) rotate(calc(-40.3deg * var(--flight-pitch))); }
+  20% { transform: translate3d(14.44vw, calc(var(--flight-height) * 0.5444), 0) rotate(calc(-41.8deg * var(--flight-pitch))); }
+  25% { transform: translate3d(19.74vw, calc(var(--flight-height) * 0.4581), 0) rotate(calc(-41.7deg * var(--flight-pitch))); }
+  30% { transform: translate3d(25.00vw, calc(var(--flight-height) * 0.3750), 0) rotate(calc(-40.0deg * var(--flight-pitch))); }
+  35% { transform: translate3d(30.26vw, calc(var(--flight-height) * 0.2994), 0) rotate(calc(-36.3deg * var(--flight-pitch))); }
+  40% { transform: translate3d(35.56vw, calc(var(--flight-height) * 0.2356), 0) rotate(calc(-30.3deg * var(--flight-pitch))); }
+  45% { transform: translate3d(40.94vw, calc(var(--flight-height) * 0.1875), 0) rotate(calc(-21.4deg * var(--flight-pitch))); }
+  50% { transform: translate3d(46.44vw, calc(var(--flight-height) * 0.1594), 0) rotate(calc(-9.3deg * var(--flight-pitch))); }
+  55% { transform: translate3d(52.12vw, calc(var(--flight-height) * 0.1556), 0) rotate(calc(5.2deg * var(--flight-pitch))); }
+  60% { transform: translate3d(58.00vw, calc(var(--flight-height) * 0.1800), 0) rotate(calc(20.1deg * var(--flight-pitch))); }
+  65% { transform: translate3d(63.68vw, calc(var(--flight-height) * 0.2087), 0) rotate(calc(10.2deg * var(--flight-pitch))); }
+  70% { transform: translate3d(68.91vw, calc(var(--flight-height) * 0.2161), 0) rotate(calc(-1.4deg * var(--flight-pitch))); }
+  75% { transform: translate3d(74.00vw, calc(var(--flight-height) * 0.2049), 0) rotate(calc(-11.9deg * var(--flight-pitch))); }
+  80% { transform: translate3d(79.25vw, calc(var(--flight-height) * 0.1776), 0) rotate(calc(-19.2deg * var(--flight-pitch))); }
+  85% { transform: translate3d(84.97vw, calc(var(--flight-height) * 0.1369), 0) rotate(calc(-22.9deg * var(--flight-pitch))); }
+  90% { transform: translate3d(91.47vw, calc(var(--flight-height) * 0.0854), 0) rotate(calc(-23.8deg * var(--flight-pitch))); }
+  95% { transform: translate3d(99.04vw, calc(var(--flight-height) * 0.0255), 0) rotate(calc(-22.9deg * var(--flight-pitch))); }
+  100% { transform: translate3d(108.00vw, calc(var(--flight-height) * -0.0400), 0) rotate(calc(-20.8deg * var(--flight-pitch))); }
+}
+
+@keyframes home-flight-fade {
+  0%, 100% { opacity: 0; }
+  12%, 82% { opacity: .65; }
+}
+
+@media (max-width: 40em) {
+  .home-flight { --flight-pitch: 1.6; }
+  .home-flight__traveler { width: 24px; height: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-flight { display: none; }
+  .home-flight__traveler { animation: none; }
+}
+
 .home-hero__inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

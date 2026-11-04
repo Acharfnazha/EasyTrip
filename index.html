@@ -94,6 +94,19 @@
              alt="" fetchpriority="high" decoding="async" />
       </picture>
 
+      <div class="home-flight" aria-hidden="true" hidden>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 60ms; --smoke-opacity: .20; --smoke-size: 7px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 120ms; --smoke-opacity: .15; --smoke-size: 9px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 180ms; --smoke-opacity: .10; --smoke-size: 11px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 240ms; --smoke-opacity: .06; --smoke-size: 13px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 300ms; --smoke-opacity: .03; --smoke-size: 15px"></span>
+        <span class="home-flight__traveler home-flight__plane">
+          <svg viewBox="0 0 40 40" width="32" height="32" focusable="false">
+            <path fill="currentColor" d="M36 18c4 1 4 3 0 4l-12 2-9 13h-5l5-13-8-1-4 5H0l3-8-3-8h3l4 5 8-1L10 3h5l9 13z"/>
+          </svg>
+        </span>
+      </div>
+
       <div class="et-container home-hero__inner">
         <div class="home-hero__content">
           <p class="home-hero__eyebrow">Welcome to EasyTrip</p>
@@ -407,5 +420,6 @@
 
   <script src="js/nav.js"></script>
   <script src="js/script.js"></script>
+  <script src="js/home-flight.js" async fetchpriority="low"></script>
 </body>
 </html>

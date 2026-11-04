@@ -5,11 +5,14 @@
   <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Winter Destinations — EasyTrip</title>
-  <link rel="stylesheet" href="css/reset.css" />
+  <meta name="description" content="Winter trip ideas from EasyTrip: city breaks, mountain escapes and cozy stays, with featured countries and practical tips for planning a winter journey." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/winter.css" />
 </head>
-<body class="winter">
+<body>
   <a class="et-skip-link" href="#main">Skip to main content</a>
   <header class="et-header" data-et-header>
     <div class="et-container et-header__bar">
@@ -82,66 +85,295 @@
       <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
     </div>
   </header>
-  <main class="page">
-    <section class="hero">
-      <div class="heroinner">
-        <div class="herotext">
-          <p class="herotag">Seasonal trips</p>
-          <h1 class="herotitle">Winter destinations</h1>
-          <p class="herocopy">
-            Travel in the calm season of snow, lights and cozy cafés.
-            Perfect for city breaks, mountain views and warm indoor activities.
+
+  <main id="main" class="winter-page" tabindex="-1">
+    <section class="winter-hero" aria-labelledby="winter-hero-title">
+      <div class="et-container winter-hero__inner">
+        <div class="winter-hero__copy">
+          <nav class="winter-breadcrumb" aria-label="Breadcrumb">
+            <ol>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="destinations.html">Destinations</a></li>
+              <li><span aria-current="page">Winter</span></li>
+            </ol>
+          </nav>
+          <h1 class="winter-hero__title" id="winter-hero-title">Find your kind of winter</h1>
+          <p class="winter-hero__text">
+            Explore snowy landscapes, mountain escapes and city breaks with time to slow down.
           </p>
-          <a href="tickets.html" class="herobutton">Find winter tickets</a>
+          <div class="winter-hero__actions">
+            <a class="et-btn et-btn--primary et-btn--lg" href="#winter-ideas">
+              Explore winter ideas
+              <svg class="et-btn__icon winter-hero__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
+            </a>
+            <a class="et-btn et-btn--outline et-btn--lg" href="destinations.html">Compare all seasons</a>
+          </div>
         </div>
-        <figure class="heroimage">
-          <img src="assets/images/winter.jpg" alt="Winter travel destination">
-        </figure>
+        <div class="winter-hero__media">
+          <img class="winter-hero__img" src="assets/images/winter/snowy-lake-736.webp"
+               srcset="assets/images/winter/snowy-lake-480.webp 480w, assets/images/winter/snowy-lake-736.webp 736w"
+               sizes="(max-width: 47.99em) calc(100vw - 32px), 440px"
+               width="736" height="920"
+               alt="Snow-covered hills and pine forest around a frozen lake, seen from above"
+               fetchpriority="high" decoding="async" />
+        </div>
       </div>
     </section>
-    <section class="seasonblock">
-      <header class="seasonlead">
-        <h2 class="seasontitle">Winter trip ideas</h2>
-        <p class="seasontext">
-          Enjoy illuminated streets, snowy landscapes and warm food
-          in the best winter destinations.
-        </p>
-      </header>
-      <div class="cardlist">
-        <article class="cardbox">
-          <h3 class="cardtitle">Snowy city breaks</h3>
-          <p class="cardtext">
-            Explore historic cities with winter lights, local markets and hot drinks.
+
+    <section class="winter-section winter-ideas" id="winter-ideas" aria-labelledby="winter-ideas-title">
+      <div class="et-container">
+        <header class="winter-section__head">
+          <h2 class="winter-title" id="winter-ideas-title">Choose your winter experience</h2>
+          <p class="winter-lead">
+            Most winter trips lean one of three ways. Start with the one that sounds most like the break you want.
           </p>
-        </article>
-        <article class="cardbox">
-          <h3 class="cardtitle">Mountain escapes</h3>
-          <p class="cardtext">
-            Take cable cars, enjoy viewpoints and relax in warm lodges after a cold day.
-          </p>
-        </article>
-        <article class="cardbox">
-          <h3 class="cardtitle">Winter activities</h3>
-          <p class="cardtext">
-            Ice skating, light walks, short hiking routes and photo spots in the snow.
-          </p>
-        </article>
-        <article class="cardbox">
-          <h3 class="cardtitle">Featured countries</h3>
-          <p class="cardtext">
-            Switzerland, Austria, Finland, Canada – famous for winter views and snowy trips.
-          </p>
-        </article>
+        </header>
+
+        <ul class="winter-ideas__grid" role="list">
+          <li class="winter-idea winter-idea--mountain">
+            <img class="winter-idea__img" src="assets/images/destinations/winter.webp" width="600" height="420"
+                 alt="Snow-covered village of steep-roofed houses below forested mountains"
+                 loading="lazy" decoding="async" />
+            <div class="winter-idea__body">
+              <h3 class="winter-idea__title">Mountain escapes</h3>
+              <p class="winter-idea__text">
+                Trade busy streets for snowy valleys, viewpoints and quiet village walks. Some people come to ski or
+                snowshoe; others simply come for the views and the calm.
+              </p>
+            </div>
+          </li>
+          <li class="winter-idea winter-idea--city">
+            <span class="winter-idea__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V5l7-2v18m0-12 7 2v10M8 8h1m-1 4h1m-1 4h1m6-3h1m-1 4h1"/></svg>
+            </span>
+            <div class="winter-idea__body">
+              <h3 class="winter-idea__title">City breaks</h3>
+              <p class="winter-idea__text">
+                Fill short days with museums, seasonal markets, concerts and long lunches. So much happens indoors
+                that a city break copes well with cold or wet weather.
+              </p>
+            </div>
+          </li>
+          <li class="winter-idea winter-idea--cozy">
+            <img class="winter-idea__img" src="assets/images/chalets/chalet-3.webp" width="600" height="400"
+                 alt="Fire burning in a stone fireplace in a wood-panelled room"
+                 loading="lazy" decoding="async" />
+            <div class="winter-idea__body">
+              <h3 class="winter-idea__title">Cozy stays</h3>
+              <p class="winter-idea__text">
+                Sometimes the place you stay is the trip: a chalet with a fireplace, a lodge with a view, an evening
+                with nowhere to be. Choose a warm base and let slow days be part of the plan.
+              </p>
+            </div>
+          </li>
+        </ul>
       </div>
-      <footer class="seasonfoot">
-        <p class="seasonguide">
-          Share your dates and preferred temperature and we will suggest
-          the best winter routes and cities for you.
+    </section>
+
+    <section class="winter-section winter-section--tint winter-destinations" id="winter-destinations" aria-labelledby="winter-destinations-title">
+      <div class="et-container">
+        <header class="winter-section__head">
+          <h2 class="winter-title" id="winter-destinations-title">Featured winter destinations</h2>
+          <p class="winter-lead">
+            Four countries to start your research. Each covers very different regions, so winter conditions vary
+            by place, altitude and year.
+          </p>
+        </header>
+
+        <article class="winter-feature" aria-labelledby="winter-dest-switzerland">
+          <div class="winter-feature__intro">
+            <h3 class="winter-feature__country" id="winter-dest-switzerland">Switzerland</h3>
+            <p class="winter-feature__heading">Alpine villages linked by scenic railways</p>
+          </div>
+          <div class="winter-feature__body">
+            <p class="winter-feature__text">
+              Panoramic rail routes cross the Swiss Alps past valleys, lakes and mountain villages such as Zermatt
+              and car-free Wengen. Trains, buses and mountain railways let you pair a city stay with a few days in
+              the mountains.
+            </p>
+            <p class="winter-tag winter-tag--on-dark"><span class="et-visually-hidden">Best for: </span>Mountain scenery</p>
+          </div>
+        </article>
+
+        <ul class="winter-destinations__list" role="list">
+          <li>
+            <article class="winter-dest" aria-labelledby="winter-dest-austria">
+              <h3 class="winter-dest__country" id="winter-dest-austria">Austria</h3>
+              <p class="winter-dest__heading">Advent markets and coffee-house culture</p>
+              <p class="winter-dest__text">
+                Vienna and Salzburg hold Advent markets in the weeks before Christmas, Salzburg&rsquo;s in the
+                squares of its Baroque old town. Between visits, Vienna&rsquo;s traditional coffee houses are a warm
+                place to slow down.
+              </p>
+              <p class="winter-tag"><span class="et-visually-hidden">Best for: </span>City exploration</p>
+            </article>
+          </li>
+          <li>
+            <article class="winter-dest" aria-labelledby="winter-dest-finland">
+              <h3 class="winter-dest__country" id="winter-dest-finland">Finland</h3>
+              <p class="winter-dest__heading">Snowy forests and the polar night</p>
+              <p class="winter-dest__text">
+                Much of Lapland enters the polar night, or <span lang="fi">kaamos</span>, in December and January,
+                and in the far north the sun does not rise for weeks. Reindeer and husky rides are classic ways to
+                explore its snowy forests.
+              </p>
+              <p class="winter-tag"><span class="et-visually-hidden">Best for: </span>Arctic nature</p>
+            </article>
+          </li>
+          <li>
+            <article class="winter-dest" aria-labelledby="winter-dest-canada">
+              <h3 class="winter-dest__country" id="winter-dest-canada">Canada</h3>
+              <p class="winter-dest__heading">Historic streets and Rocky Mountain trails</p>
+              <p class="winter-dest__text">
+                Winter looks very different across such a large country. Two well-known choices are Old Qu&eacute;bec,
+                a UNESCO World Heritage site, and Banff National Park in Alberta, with winter trails for snowshoeing
+                and cross-country skiing.
+              </p>
+              <p class="winter-tag"><span class="et-visually-hidden">Best for: </span>Cities and national parks</p>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="winter-section winter-plan" aria-labelledby="winter-plan-title">
+      <div class="et-container winter-plan__inner">
+        <div class="winter-plan__head">
+          <h2 class="winter-title" id="winter-plan-title">Before you plan</h2>
+          <p class="winter-lead">
+            In the Northern Hemisphere, winter usually means December to February, but snow, daylight and opening
+            times vary by region, altitude and year.
+          </p>
+        </div>
+
+        <ul class="winter-plan__list" role="list">
+          <li class="winter-tip">
+            <span class="winter-tip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </span>
+            <div>
+              <h3 class="winter-tip__title">Check the weather and daylight</h3>
+              <p class="winter-tip__text">
+                Mountain weather can change quickly, and days get much shorter the further north you go. Look at a
+                local forecast and sunrise and sunset times shortly before you travel.
+              </p>
+            </div>
+          </li>
+          <li class="winter-tip">
+            <span class="winter-tip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <div>
+              <h3 class="winter-tip__title">Confirm opening times and transport</h3>
+              <p class="winter-tip__text">
+                Cable cars, mountain roads, attractions and some bus or rail routes may follow seasonal timetables or
+                close in bad weather. Check with each operator before you set off.
+              </p>
+            </div>
+          </li>
+          <li class="winter-tip">
+            <span class="winter-tip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            </span>
+            <div>
+              <h3 class="winter-tip__title">Choose a city or mountain base</h3>
+              <p class="winter-tip__text">
+                A city suits museums, markets and easy connections; a mountain village suits snow and quiet views.
+                Deciding on your base first makes stays easier to compare.
+              </p>
+            </div>
+          </li>
+        </ul>
+
+        <p class="winter-note">
+          <svg class="winter-note__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>
+          <span>
+            Travel ideas are for inspiration. EasyTrip&rsquo;s stays and planners use sample content and do not
+            provide live availability or bookings.
+          </span>
         </p>
-        <a href="contact.html" class="seasonbutton">Plan my winter trip</a>
-      </footer>
+      </div>
+    </section>
+
+    <section class="winter-section winter-section--tint winter-next" aria-labelledby="winter-next-title">
+      <div class="et-container">
+        <header class="winter-section__head">
+          <h2 class="winter-title" id="winter-next-title">Continue exploring</h2>
+          <p class="winter-lead">Turn a winter idea into a rough plan with EasyTrip&rsquo;s sample stays and planning prototypes.</p>
+        </header>
+
+        <ul class="winter-next__list" role="list">
+          <li class="winter-path">
+            <img class="winter-path__img" src="assets/images/stays/chalet-snow-night.webp" width="600" height="400"
+                 alt="" loading="lazy" decoding="async" />
+            <div class="winter-path__body">
+              <h3 class="winter-path__title">Find a warm place to stay</h3>
+              <p class="winter-path__text">
+                Compare city hotels and mountain chalets in EasyTrip&rsquo;s sample collection. Prices and details
+                are examples, not live offers.
+              </p>
+              <a class="et-btn et-btn--primary winter-path__cta" href="hotels-chalets.html">
+                Browse sample stays
+                <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </li>
+          <li class="winter-path">
+            <img class="winter-path__img" src="assets/images/tickets/planning.webp" width="735" height="489"
+                 alt="" loading="lazy" decoding="async" />
+            <div class="winter-path__body">
+              <h3 class="winter-path__title">Sketch your journey</h3>
+              <p class="winter-path__text">
+                Enter a route, dates and travelers in the flight or bus and train planner to see a summary of your
+                search. The planners are prototypes: they do not return live fares or confirm reservations.
+              </p>
+              <a class="et-btn et-btn--primary winter-path__cta" href="tickets.html">
+                Try a journey planner
+                <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="winter-section winter-seasons" aria-labelledby="winter-seasons-title">
+      <div class="et-container">
+        <h2 class="winter-seasons__title" id="winter-seasons-title">Explore another season</h2>
+        <ul class="winter-seasons__list" role="list">
+          <li>
+            <a class="winter-season" href="spring.html">
+              <span class="winter-season__name">Spring destinations</span>
+              <span class="winter-season__text">Blossoms, gardens and city walks</span>
+              <svg class="winter-season__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="winter-season" href="summer.html">
+              <span class="winter-season__name">Summer destinations</span>
+              <span class="winter-season__text">Beaches, islands and hiking trails</span>
+              <svg class="winter-season__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="winter-season" href="autumn.html">
+              <span class="winter-season__name">Autumn destinations</span>
+              <span class="winter-season__text">Golden forests and scenic getaways</span>
+              <svg class="winter-season__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </li>
+          <li>
+            <a class="winter-season winter-season--all" href="destinations.html">
+              <span class="winter-season__name">Compare all seasons</span>
+              <span class="winter-season__text">See all four seasons side by side</span>
+              <svg class="winter-season__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
     </section>
   </main>
+
   <footer class="et-footer">
     <div class="et-container et-footer__top">
       <div class="et-footer__brand">

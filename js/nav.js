@@ -188,3 +188,26 @@
     initSite();
   }
 })();
+
+// Optional enhancement: fetched after load, only for a precise desktop pointer.
+(function () {
+  var source = new URL('cursor.js', document.currentScript.src).href;
+  var capable = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none)');
+  var requested = false;
+  function loadCursor() {
+    if (requested || !capable.matches || document.readyState !== 'complete') return;
+    requested = true;
+    var script = document.createElement('script');
+    script.src = source;
+    script.async = true;
+    script.fetchPriority = 'low';
+    document.head.appendChild(script);
+  }
+  function scheduleCursor() {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(loadCursor, { timeout: 1200 });
+    else window.setTimeout(loadCursor, 0);
+  }
+  capable.addEventListener('change', scheduleCursor);
+  if (document.readyState === 'complete') scheduleCursor();
+  else window.addEventListener('load', scheduleCursor, { once: true });
+})();
