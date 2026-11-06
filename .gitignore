@@ -1,5 +1,5 @@
 # EasyTrip — files that stay on your computer and are not committed.
-# Everything the site needs (HTML, CSS, JS, images, videos, 3D models and the docs)
+# Everything the site needs (HTML, CSS, JS, images, the server, the database and the docs)
 # IS committed.
 
 # Environment and local configuration
@@ -36,15 +36,9 @@ temp/
 vendor/
 node_modules/
 
-# Python caches / virtual environments (for the 3D icon script)
-__pycache__/
-*.pyc
-.venv*/
-
-# Runtime uploads and generated output
+# Runtime uploads and cache
 uploads/
 cache/
-graphify-out/
 
 # Third-party design template (copyright Bedimcode). Kept locally for reference,
 # not redistributed in this repository.

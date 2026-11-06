@@ -34,7 +34,7 @@
   box-sizing: border-box;
 }
 
-/* reset.css and styles2.css make <body> a height:100% scroll container with hidden
+/* reset.css makes <body> a height:100% scroll container with hidden
    horizontal overflow; that breaks sticky positioning and anchor offsets. */
 html,
 body {

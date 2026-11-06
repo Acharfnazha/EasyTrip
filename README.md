@@ -117,9 +117,8 @@ Easy_Trip/
 ├── css/
 │   ├── styles.css            Shared styles: header, footer, homepage, buttons
 │   ├── reset.css             Older shared base styles (loaded by several pages)
-│   ├── styles2.css           Older base styles (no longer loaded by any page)
 │   ├── listings.css          Listing components (toolbar, cards, dialog) for hotels.html and chalets.html
-│   ├── cursor.css            Custom desktop cursor (loaded by js/cursor.js, see docs/cursor.md)
+│   ├── cursor.css            Custom desktop cursor (loaded by js/cursor.js)
 │   ├── auth.css              Login, register, account and admin pages
 │   └── <page>.css            One stylesheet per page (about, why-easytrip, flight, winter, …),
 │                             each scoped under its page's <main> class (e.g. .about-page)
@@ -140,7 +139,7 @@ Easy_Trip/
 │   ├── images/
 │   │   ├── about/            About page images (WebP crops + a homepage screenshot)
 │   │   ├── why/              Why choose EasyTrip images (road band + three page screenshots)
-│   │   ├── brand/            Logo (logo.svg is used on the site)
+│   │   ├── brand/            Logo (logo.svg)
 │   │   ├── home/             Homepage images (optimized .webp + fallbacks)
 │   │   ├── destinations/     Destinations page images (optimized .webp + hero fallback)
 │   │   ├── stays/            Hotels & chalets page images (optimized .webp)
@@ -149,10 +148,8 @@ Easy_Trip/
 │   │   ├── contact/          Contact page hero (.webp of support.png)
 │   │   ├── tickets/          Tickets page images (optimized .webp)
 │   │   ├── travel/           Transport images used by bus-train.html
-│   │   ├── winter/           Winter page hero (.webp copies of faraya.png)
-│   │   └── *.png / *.jpg     Destination, hotel, chalet and page images
-│   ├── models/travel-icons/  Low-poly 3D icons (plane, train, bus, chalet) as .glb, plus the script that makes them
-│   └── videos/               About page video
+│   │   ├── winter/           Winter page hero (.webp)
+│   │   └── *.png / *.jpg     Season, destination, hotel and chalet images (.jpg fallbacks)
 │
 ├── server/
 │   ├── index.js              Starts the server and serves the website and the API
@@ -170,7 +167,6 @@ Easy_Trip/
 │
 └── docs/
     ├── app-flow/             App flow diagram (draw.io + PNG/SVG) and its explanation
-    ├── cursor.md             How the custom cursor works and how to tune it
     ├── screenshots/          Images used in this README
     └── template-reference/   Original design template (kept locally only; not in the Git repository)
 ```
@@ -279,25 +275,8 @@ The main colours are CSS variables at the top of `css/styles.css`:
 - **No social media links.** EasyTrip has no verified social accounts, so the footer doesn't link to any.
 - The header's **Book Now** button leads to the tickets overview; nothing can actually be booked.
 - The copyright year in the footer is written into each page.
-- Some pages still use older stylesheets (`reset.css`, `styles2.css`) that duplicate parts of
-  `styles.css`. The shared header and footer use their own `et-` class names, so those files
-  can't affect them.
-- The destination photos from the old Flight page's "stays by destination" tabs are no longer used
-  directly: `jeita-grotto.png`, `raouche-rock.png`, `jbayl.png`, `faraya.png`, `konyaalti-beach.png`,
-  `kaleici-old-town.png`, `lara-beach.png`, `antalya-cirali.png`, `island-*.png`, `egypt-*.png` and
-  `turkey-*.png` in `assets/images/`. (The About page uses resized WebP crops of `jbayl.png` and
-  `island-bali.png`, saved in `assets/images/about/`. The Why choose EasyTrip page uses a rotated
-  crop of `assets/images/tickets/busandtrain.jpg`, saved in `assets/images/why/`. The Winter page uses
-  resized WebP copies of `faraya.png`, saved in `assets/images/winter/`.)
-- These files are not used by any page yet: `css/styles2.css`, `assets/images/chalets-hero-detail.jpg`,
-  `assets/images/brand/logo.png`, `assets/images/contact.png`, `assets/images/train.png`,
-  `assets/images/team-1.jpg`, `assets/images/team-2.jpg`, `assets/images/about-hero.jpg` and
-  `assets/images/about-poster-video.jpg` (stock photos, removed from the About and Why pages),
-  `assets/images/travel/cartravel.png`, `assets/videos/hotels-chalets-hero.mp4` (about 24 MB) and
-  `assets/videos/about-video.mp4` (about 43 MB of stock office footage, removed from the Why page).
-- The Why choose EasyTrip page used to claim a secure reservation system, instant confirmations,
-  payment security, flexible pricing, curated deals and 24/7 support. EasyTrip has none of these,
-  so those claims were removed.
+- Some pages still use the older `reset.css`, which duplicates parts of `styles.css`. The shared
+  header and footer use their own `et-` class names, so it can't affect them.
 
 ---
 
