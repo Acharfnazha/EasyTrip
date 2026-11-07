@@ -1,23 +1,13 @@
-// Routes for the admin dashboard. Only a logged-in admin can use them.
-const express = require('express');
-const db = require('../db');
-const { requireLogin, requireAdmin } = require('../middleware/auth');
+// ROUTES for the admin dashboard. Mounted at /api/admin in server.js.
+import express from "express";
+import * as adminController from "../controllers/admin.js";
+import { isAuth, isAdmin } from "../middleware/is-auth.js";
 
 const router = express.Router();
 
-router.use(requireLogin, requireAdmin);
+// Every route in this file needs a logged-in admin.
+router.use(isAuth, isAdmin);
 
-// GET /api/admin/stats: the main totals for the dashboard.
-router.get('/stats', async (req, res) => {
-  const [rows] = await db.query(`
-    SELECT
-      (SELECT COUNT(*) FROM users WHERE role = 'customer')  AS customers,
-      (SELECT COUNT(*) FROM accommodations)                 AS accommodations,
-      (SELECT COUNT(*) FROM bookings)                       AS bookings,
-      (SELECT COUNT(*) FROM tickets)                        AS tickets,
-      (SELECT COUNT(*) FROM inquiries WHERE status = 'new') AS newInquiries
-  `);
-  res.json(rows[0]);
-});
+router.get("/stats", adminController.getStats);
 
-module.exports = router;
+export default router;

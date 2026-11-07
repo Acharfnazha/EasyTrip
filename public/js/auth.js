@@ -1,5 +1,5 @@
 // Login and register forms: checks each field in the browser, then sends the form to the server.
-// The server checks everything again (server/routes/auth.js).
+// The server checks everything again (server/validators/auth.js).
 (function () {
   'use strict';
 

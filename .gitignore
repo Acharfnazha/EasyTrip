@@ -43,3 +43,8 @@ cache/
 # Third-party design template (copyright Bedimcode). Kept locally for reference,
 # not redistributed in this repository.
 docs/template-reference/
+
+# Course documents: the proposal holds a student ID, and the brief is course material.
+# Kept locally, not published in this repository.
+EasyTrip_Project_Proposal_Web1.docx
+Project brief Web Prog 1.pdf

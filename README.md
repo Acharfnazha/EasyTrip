@@ -8,14 +8,17 @@ chalets, look at flight, bus and train tickets, and fill in a contact form.
 > can be booked or paid for yet, and the contact form doesn't send messages anywhere.
 
 **Tech stack:** HTML, CSS and vanilla JavaScript for the frontend, Node.js and Express for the server,
-and MySQL for the database.
+and MySQL for the database. The code follows the 3-tier architecture (presentation, business logic,
+data access) with MVC: see [server/README.md](server/README.md#the-3-tier-architecture).
 
 | Part | Status |
 | --- | --- |
 | Frontend (all pages) | Done |
 | [Database](database/README.md) | Part 1 done: tables, sample data and example queries |
 | [Server](server/README.md) | Part 2 done: register, log in, log out, and customer and admin roles |
-| Stays, bookings, tickets and contact form saved in the database | Next part |
+| 3-tier structure | Part 3 done: models, controllers and routes, sessions saved in MySQL |
+| Stays from the database (search, filters, sorting, pages) | Part 4, next |
+| Bookings, tickets, contact form, admin tools | Later parts |
 
 ![EasyTrip homepage on desktop](docs/screenshots/home-desktop.jpg)
 
@@ -38,6 +41,8 @@ and MySQL for the database.
 ---
 
 ## Pages
+
+All the pages are in the `public/` folder, with their `css/`, `js/` and `assets/` folders.
 
 | Page | File | What it shows |
 | --- | --- | --- |
@@ -63,8 +68,9 @@ and MySQL for the database.
 
 ## Running the project
 
-**With the server (everything works):** create the [database](#database), then run these from the
-project folder. The full steps are in [server/README.md](server/README.md#how-to-run-it).
+**With the server (everything works):** create the [database](#database), copy `.env.example` to
+`.env` and fill in your MySQL password and a session secret, then run these from the project folder.
+The full steps are in [server/README.md](server/README.md#how-to-run-it).
 
 ```bash
 npm install
@@ -76,8 +82,9 @@ npm start
 
 Then open <http://localhost:3000>.
 
-**Without the server:** open `index.html` in a modern browser (double-click it). The browsing pages and
-forms still work, but logging in doesn't. A static web host (GitHub Pages, Netlify) works the same way.
+**Without the server:** open `public/index.html` in a modern browser (double-click it). The browsing
+pages and forms still work, but logging in doesn't. A static web host (GitHub Pages, Netlify) works the
+same way if it publishes the `public/` folder.
 
 ---
 
@@ -99,67 +106,73 @@ has the steps for MySQL Workbench.
 
 ```text
 Easy_Trip/
-├── index.html                Homepage
-├── about.html                Who we are
-├── why-easytrip.html         Why choose EasyTrip
-├── contact.html              Contact form
-├── destinations.html         All destinations (by season)
-├── winter.html  spring.html  summer.html  autumn.html
-├── hotels-chalets.html       Hotels & chalets overview
-├── hotels.html  chalets.html Listings with filters
-├── tickets.html              Tickets overview
-├── flight.html  bus-train.html
-├── login.html  register.html Log in and create an account
-├── account.html  admin.html  Customer account and admin dashboard
 ├── package.json              Node.js packages and the npm start command
 ├── .env.example              Example settings (copy it to .env)
 │
-├── css/
-│   ├── styles.css            Shared styles: header, footer, homepage, buttons
-│   ├── reset.css             Older shared base styles (loaded by several pages)
-│   ├── listings.css          Listing components (toolbar, cards, dialog) for hotels.html and chalets.html
-│   ├── cursor.css            Custom desktop cursor (loaded by js/cursor.js)
-│   ├── auth.css              Login, register, account and admin pages
-│   └── <page>.css            One stylesheet per page (about, why-easytrip, flight, winter, …),
-│                             each scoped under its page's <main> class (e.g. .about-page)
+├── public/                   PRESENTATION LAYER: everything the browser downloads
+│   ├── index.html            Homepage
+│   ├── about.html            Who we are
+│   ├── why-easytrip.html     Why choose EasyTrip
+│   ├── contact.html          Contact form
+│   ├── destinations.html     All destinations (by season)
+│   ├── winter.html  spring.html  summer.html  autumn.html
+│   ├── hotels-chalets.html   Hotels & chalets overview
+│   ├── hotels.html  chalets.html  Listings with filters
+│   ├── tickets.html          Tickets overview
+│   ├── flight.html  bus-train.html
+│   ├── login.html  register.html  Log in and create an account
+│   ├── account.html  admin.html   Customer account and admin dashboard
+│   │
+│   ├── css/
+│   │   ├── styles.css            Shared styles: header, footer, homepage, buttons
+│   │   ├── reset.css             Older shared base styles (loaded by several pages)
+│   │   ├── listings.css          Listing components (toolbar, cards, dialog) for hotels.html and chalets.html
+│   │   ├── cursor.css            Custom desktop cursor (loaded by js/cursor.js)
+│   │   ├── auth.css              Login, register, account and admin pages
+│   │   └── <page>.css            One stylesheet per page (about, why-easytrip, flight, winter, …),
+│   │                             each scoped under its page's <main> class (e.g. .about-page)
+│   │
+│   ├── js/
+│   │   ├── nav.js                Navigation menu (dropdowns, mobile menu, current page); loads cursor.js after page load
+│   │   ├── cursor.js             Custom desktop cursor (fine pointer only, off for reduced motion)
+│   │   ├── home-flight.js        Homepage plane entrance animation (decorative, runs once)
+│   │   ├── script.js             Scroll reveal (plus an old "stays" tab switcher no page uses any more)
+│   │   ├── listings.js           Listing controller for hotels and chalets: filter, sort, show more, dialog
+│   │   ├── flight.js             Flight planner: trip type, swap, date limits, validation, search summary
+│   │   ├── bus-train.js          Route planner: bus/train mode, trip type, swap, validation, route summary
+│   │   ├── contact.js            Contact form: checks, error summary, confirmation, character count
+│   │   ├── auth.js               Login and register forms: checks, then sends them to the server
+│   │   └── account.js            Account and admin pages: loads the user, the totals and log out
+│   │
+│   ├── assets/
+│   │   ├── images/
+│   │   │   ├── about/            About page images (WebP crops + a homepage screenshot)
+│   │   │   ├── why/              Why choose EasyTrip images (road band + three page screenshots)
+│   │   │   ├── brand/            Logo (logo.svg)
+│   │   │   ├── home/             Homepage images (optimized .webp + fallbacks)
+│   │   │   ├── destinations/     Destinations page images (optimized .webp + hero fallback)
+│   │   │   ├── stays/            Hotels & chalets page images (optimized .webp)
+│   │   │   ├── hotels/           Hotel card images (600×400 .webp crops)
+│   │   │   ├── chalets/          Chalet card images (600×400 .webp crops)
+│   │   │   ├── contact/          Contact page hero (.webp of support.png)
+│   │   │   ├── tickets/          Tickets page images (optimized .webp)
+│   │   │   ├── travel/           Transport images used by bus-train.html
+│   │   │   ├── winter/           Winter page hero (.webp)
+│   │   │   └── *.png / *.jpg     Season, destination, hotel and chalet images (.jpg fallbacks)
 │
-├── js/
-│   ├── nav.js                Navigation menu (dropdowns, mobile menu, current page); loads cursor.js after page load
-│   ├── cursor.js             Custom desktop cursor (fine pointer only, off for reduced motion)
-│   ├── home-flight.js        Homepage plane entrance animation (decorative, runs once)
-│   ├── script.js             Scroll reveal (plus an old "stays" tab switcher no page uses any more)
-│   ├── listings.js           Listing controller for hotels and chalets: filter, sort, show more, dialog
-│   ├── flight.js             Flight planner: trip type, swap, date limits, validation, search summary
-│   ├── bus-train.js          Route planner: bus/train mode, trip type, swap, validation, route summary
-│   ├── contact.js            Contact form: checks, error summary, confirmation, character count
-│   ├── auth.js               Login and register forms: checks, then sends them to the server
-│   └── account.js            Account and admin pages: loads the user, the totals and log out
+├── server/                   BUSINESS LOGIC and DATA ACCESS LAYERS (Node.js + Express)
+│   ├── server.js             Starts the server: website, sessions, API routes, errors
+│   ├── config.js             Reads the settings from .env
+│   ├── routes/               Which URL goes to which controller (auth.js, admin.js)
+│   ├── middleware/           Checks before a controller: is-auth.js, limit-attempts.js
+│   ├── controllers/          The rules of each feature (auth.js, admin.js, error.js)
+│   ├── validators/           The server-side form checks (auth.js, common.js)
+│   ├── models/               The only files that run SQL (user.js, stats.js)
+│   ├── utils/                database.js (MySQL pool), path.js (project folder)
+│   └── README.md             The architecture, how to run it, the API and how login works
 │
-├── assets/
-│   ├── images/
-│   │   ├── about/            About page images (WebP crops + a homepage screenshot)
-│   │   ├── why/              Why choose EasyTrip images (road band + three page screenshots)
-│   │   ├── brand/            Logo (logo.svg)
-│   │   ├── home/             Homepage images (optimized .webp + fallbacks)
-│   │   ├── destinations/     Destinations page images (optimized .webp + hero fallback)
-│   │   ├── stays/            Hotels & chalets page images (optimized .webp)
-│   │   ├── hotels/           Hotel card images (600×400 .webp crops)
-│   │   ├── chalets/          Chalet card images (600×400 .webp crops)
-│   │   ├── contact/          Contact page hero (.webp of support.png)
-│   │   ├── tickets/          Tickets page images (optimized .webp)
-│   │   ├── travel/           Transport images used by bus-train.html
-│   │   ├── winter/           Winter page hero (.webp)
-│   │   └── *.png / *.jpg     Season, destination, hotel and chalet images (.jpg fallbacks)
-│
-├── server/
-│   ├── index.js              Starts the server and serves the website and the API
-│   ├── db.js                 The connection to MySQL
-│   ├── routes/               API routes (auth.js, admin.js)
-│   ├── middleware/           Login token check (auth.js)
-│   └── README.md             How to run it, the API and how login works
-│
-├── database/
-│   ├── schema.sql            Creates the database and its six tables
+├── database/                 DATABASE (MySQL)
+│   ├── schema.sql            Creates the database and its seven tables
 │   ├── seed.sql              Sample data (the site's stays and destinations, plus test records)
 │   ├── queries.sql           Example queries for each feature
 │   ├── er-diagram.svg        ER diagram

@@ -2,7 +2,7 @@
 -- Course: Web Programming I
 --
 -- Run this file first, then seed.sql. See database/README.md for the steps.
--- Running it again deletes these six tables and their data, then creates them empty.
+-- Running it again deletes these seven tables and their data, then creates them empty.
 
 CREATE DATABASE IF NOT EXISTS easytrip_db
   CHARACTER SET utf8mb4
@@ -11,6 +11,7 @@ CREATE DATABASE IF NOT EXISTS easytrip_db
 USE easytrip_db;
 
 -- Child tables are dropped first because of the foreign keys.
+DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS inquiries;
 DROP TABLE IF EXISTS tickets;
 DROP TABLE IF EXISTS bookings;
@@ -178,4 +179,23 @@ CREATE TABLE inquiries (
   CONSTRAINT fk_inquiries_user
     FOREIGN KEY (user_id) REFERENCES users (user_id)
     ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+
+-- ---------------------------------------------------------------------------
+-- SESSIONS: who is logged in, one row per logged-in browser
+-- The server's session store (express-session with express-mysql-session)
+-- writes these rows at login and deletes them at logout. The browser only
+-- keeps the signed session_id in a cookie. data holds the session as JSON
+-- (only the user's id). expires is a Unix time in seconds, and the store
+-- deletes expired rows by itself.
+-- This is the store's own table definition, so the server can also create the
+-- table when it is missing. It has no foreign key: the user's id is inside data.
+-- ---------------------------------------------------------------------------
+CREATE TABLE sessions (
+  session_id VARCHAR(128) COLLATE utf8mb4_bin NOT NULL,
+  expires    INT UNSIGNED NOT NULL,
+  data       MEDIUMTEXT   COLLATE utf8mb4_bin,
+
+  PRIMARY KEY (session_id)
 ) ENGINE=InnoDB;

@@ -5,7 +5,7 @@ database design in our project proposal. The [server](../server/README.md) conne
 
 | File | What it does |
 | --- | --- |
-| `schema.sql` | Creates the `easytrip_db` database and its six tables |
+| `schema.sql` | Creates the `easytrip_db` database and its seven tables |
 | `seed.sql` | Adds the sample data: the site's 54 stays, 60 destinations and some test records |
 | `queries.sql` | Example queries for each feature (search, bookings, "My trips", admin statistics) |
 | `er-diagram.svg` | The ER diagram of the final tables |
@@ -24,7 +24,7 @@ mysql -u root -p --default-character-set=utf8mb4 -e "source database/schema.sql;
 **With MySQL Workbench.** Choose *File > Open SQL Script*, open `schema.sql` and run it with the
 lightning button. Do the same for `seed.sql`, then for `queries.sql` to see the example results.
 
-Running `schema.sql` again deletes the six tables and their data, so run `seed.sql` after it to
+Running `schema.sql` again deletes the seven tables and their data, so run `seed.sql` after it to
 start fresh.
 
 ### Test accounts
@@ -53,6 +53,13 @@ database, so the real password can't be read from the `users` table.
 | `bookings` | Reservations of a hotel or chalet | Belongs to one user and one accommodation |
 | `tickets` | Flight, bus and train plans | Belongs to one user |
 | `inquiries` | Messages from the contact form | Can belong to one user, or none for a visitor |
+| `sessions` | Who is logged in, one row per logged-in browser | None: the server's session store uses it |
+
+The `sessions` table was added in Part 3, when login moved to sessions saved in MySQL (see the
+[server README](../server/README.md#how-login-works)). The session store writes a row at login and
+deletes it at logout. The row only holds the user's id, and the browser only gets the signed session
+ID. It has the store's own table definition, so the server can also create the table if it is
+missing. It isn't in the ER diagram because it isn't part of the travel data.
 
 ### Changes from the proposal's ER diagram
 
@@ -95,8 +102,8 @@ also in the database:
 
 ## Limits of this part
 
-- So far only accounts use the database (register, log in and the admin totals). The hotel, chalet and
-  destination pages still show their own HTML content.
+- So far only accounts and sessions use the database (register, log in and the admin totals). The
+  hotel, chalet and destination pages still show their own HTML content.
 - Two bookings for the same dates will be prevented by a query in the backend, not by a table rule. The
   query is in section 4 of `queries.sql`.
 - A place has one season per row. To feature it in another season, add another row.
@@ -104,4 +111,4 @@ also in the database:
 
 ## Next part
 
-Connect the stays, bookings, tickets and contact form to these tables.
+Connect the stays (Part 4), then the bookings, tickets and contact form, to these tables.

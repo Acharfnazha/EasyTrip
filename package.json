@@ -3,21 +3,27 @@
   "version": "1.0.0",
   "description": "EasyTrip travel website: Node.js and Express server with a MySQL database",
   "private": true,
-  "main": "server/index.js",
+  "type": "module",
+  "main": "server/server.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node --watch server/index.js"
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.11"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "cookie-parser": "^1.4.7",
     "dotenv": "^18.0.9",
     "express": "^5.3.0",
+    "express-mysql-session": "^3.0.3",
     "express-rate-limit": "^8.7.3",
-    "jsonwebtoken": "^9.0.3",
+    "express-session": "^1.19.0",
     "mysql2": "^3.24.6"
+  },
+  "overrides": {
+    "express-mysql-session": {
+      "mysql2": "$mysql2"
+    }
   }
 }
