@@ -102,8 +102,9 @@ also in the database:
 
 ## Limits of this part
 
-- So far only accounts and sessions use the database (register, log in and the admin totals). The
-  hotel, chalet and destination pages still show their own HTML content.
+- So far the website uses the `users`, `sessions`, `accommodations` and `destinations` tables
+  (accounts, the admin totals, and the hotels and chalets pages). The season and destination pages
+  still show their own HTML content, because they are travel guides, not lists.
 - Two bookings for the same dates will be prevented by a query in the backend, not by a table rule. The
   query is in section 4 of `queries.sql`.
 - A place has one season per row. To feature it in another season, add another row.
@@ -111,4 +112,5 @@ also in the database:
 
 ## Next part
 
-Connect the stays (Part 4), then the bookings, tickets and contact form, to these tables.
+The admin page manages the stays (Part 5), then the bookings, tickets and contact form are connected
+to these tables.

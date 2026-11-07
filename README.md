@@ -17,8 +17,9 @@ data access) with MVC: see [server/README.md](server/README.md#the-3-tier-archit
 | [Database](database/README.md) | Part 1 done: tables, sample data and example queries |
 | [Server](server/README.md) | Part 2 done: register, log in, log out, and customer and admin roles |
 | 3-tier structure | Part 3 done: models, controllers and routes, sessions saved in MySQL |
-| Stays from the database (search, filters, sorting, pages) | Part 4, next |
-| Bookings, tickets, contact form, admin tools | Later parts |
+| Stays from the database | Part 4 done: the Stays API with search, filters, sorting and pages; the hotels and chalets pages use it |
+| Admin page: manage stays | Part 5, next |
+| Bookings, tickets, contact form, more admin tools | Later parts |
 
 ![EasyTrip homepage on desktop](docs/screenshots/home-desktop.jpg)
 
@@ -51,8 +52,8 @@ All the pages are in the `public/` folder, with their `css/`, `js/` and `assets/
 | Winter | `winter.html` | Winter travel guide: city breaks, mountain escapes and cozy stays, four featured countries, practical tips before planning, and links to sample stays, the planners and the other seasons |
 | Spring / Summer / Autumn | `spring.html`, `summer.html`, `autumn.html` | Trip ideas and featured countries for each season |
 | Hotels & chalets | `hotels-chalets.html` | Accommodation guide: hotels vs chalets, quick comparison, what to consider |
-| Hotels | `hotels.html` | Sample hotel collection: search, max sample price, sorting, "Show more", details dialog |
-| Chalets | `chalets.html` | Sample chalets & private retreats: search, setting, max sample price, sorting, "Stays in Lebanon" shortcut, details dialog |
+| Hotels | `hotels.html` | Sample hotels from the database: search, max sample price, sorting, "Show more", details dialog |
+| Chalets | `chalets.html` | Sample chalets & private retreats from the database: search, setting, max sample price, sorting, "Stays in Lebanon" shortcut, details dialog |
 | All tickets | `tickets.html` | Transport choice: flights or bus & train, a quick comparison, a note that booking isn't connected yet |
 | Flights | `flight.html` | Flight-planning prototype: round trip / one way, validated form, search summary (no live results) |
 | Bus & train | `bus-train.html` | Ground-travel planning prototype: one form for bus or train, validation, route summary (no live results) |
@@ -82,9 +83,9 @@ npm start
 
 Then open <http://localhost:3000>.
 
-**Without the server:** open `public/index.html` in a modern browser (double-click it). The browsing
-pages and forms still work, but logging in doesn't. A static web host (GitHub Pages, Netlify) works the
-same way if it publishes the `public/` folder.
+**Without the server:** open `public/index.html` in a modern browser (double-click it). The guide
+pages and the planner forms still work, but logging in doesn't, and the hotels and chalets pages say
+that the server is needed, because the stays are in the database.
 
 ---
 
@@ -137,7 +138,7 @@ Easy_Trip/
 │   │   ├── cursor.js             Custom desktop cursor (fine pointer only, off for reduced motion)
 │   │   ├── home-flight.js        Homepage plane entrance animation (decorative, runs once)
 │   │   ├── script.js             Scroll reveal (plus an old "stays" tab switcher no page uses any more)
-│   │   ├── listings.js           Listing controller for hotels and chalets: filter, sort, show more, dialog
+│   │   ├── listings.js           Hotels and chalets: asks GET /api/stays, shows the cards, show more, dialog
 │   │   ├── flight.js             Flight planner: trip type, swap, date limits, validation, search summary
 │   │   ├── bus-train.js          Route planner: bus/train mode, trip type, swap, validation, route summary
 │   │   ├── contact.js            Contact form: checks, error summary, confirmation, character count
@@ -163,11 +164,11 @@ Easy_Trip/
 ├── server/                   BUSINESS LOGIC and DATA ACCESS LAYERS (Node.js + Express)
 │   ├── server.js             Starts the server: website, sessions, API routes, errors
 │   ├── config.js             Reads the settings from .env
-│   ├── routes/               Which URL goes to which controller (auth.js, admin.js)
+│   ├── routes/               Which URL goes to which controller (auth.js, admin.js, stays.js)
 │   ├── middleware/           Checks before a controller: is-auth.js, limit-attempts.js
-│   ├── controllers/          The rules of each feature (auth.js, admin.js, error.js)
-│   ├── validators/           The server-side form checks (auth.js, common.js)
-│   ├── models/               The only files that run SQL (user.js, stats.js)
+│   ├── controllers/          The rules of each feature (auth.js, admin.js, stays.js, error.js)
+│   ├── validators/           The server-side checks (auth.js, stays.js, common.js)
+│   ├── models/               The only files that run SQL (user.js, accommodation.js, stats.js)
 │   ├── utils/                database.js (MySQL pool), path.js (project folder)
 │   └── README.md             The architecture, how to run it, the API and how login works
 │
@@ -222,25 +223,25 @@ Edit the `<nav class="et-nav">` list in the header of every page. A dropdown is 
 <li><a class="et-nav__menu-link" href="flight.html">Flight tickets</a></li>
 ```
 
-### Add or edit a hotel
+### Add or edit a hotel or chalet
 
-Each hotel is an `<article class="lst-card">` inside the `lst-grid` in `hotels.html`. To add one,
-copy an existing card and change:
+The hotels and chalets are rows in the `accommodations` table, not HTML. `hotels.html` and
+`chalets.html` only have one card `<template>`, and `js/listings.js` fills a copy of it for each stay
+that `GET /api/stays` returns. So a new row appears on the page at once, with no HTML to change.
 
-- `data-name`, `data-location` and `data-price` (used by the search, the price filter and sorting)
-- `data-order` and the `hotel-<number>-name` id (with the matching `aria-labelledby`) to the next number
-- the image (`assets/images/hotels/hotel-<number>.webp`, a 600×400 WebP, plus the `.jpg` fallback) and its `alt` text
-- the visible name, location, description and price
+Until the admin page can manage stays (Part 5), add a row with SQL, like the ones in
+`database/seed.sql`:
 
-Then update the hotel count in `data-listing-count` ("27 hotels"). If the new price is outside the
-price slider's range, update the slider's `min`/`max`/`value` and the `$600` shown next to it.
+- `dest_id`: the destination's id in the `destinations` table (it gives the "Faraya, Lebanon" text)
+- `type`: `hotel` or `chalet`
+- `category` and `setting`: only for chalets, for the "Cabin · Mountain" label. `setting` must be one
+  of the "Setting" filter's values: `mountain`, `coastal`, `countryside`, `forest`, `desert`, `tropical`
+- `price`, `description`, `image` (a 600×400 WebP in `public/assets/images/hotels/` or `chalets/`,
+  written as `assets/images/...`) and `image_alt`
 
-### Add or edit a chalet
-
-Chalets work the same way in `chalets.html`. Each card also has a `data-setting`, which must be one
-of the values in the "Setting" filter (`mountain`, `coastal`, `countryside`, `forest`, `desert`,
-`tropical`), and a label such as "Cabin · Mountain". The "Stays in Lebanon" button fills the search
-box with "Lebanon", so it finds every chalet whose location contains that word.
+The price slider at its highest value means "any price", so a stay that costs more than the slider's
+maximum still shows. The "Stays in Lebanon" button searches for "Lebanon", so it finds every chalet
+whose destination is in Lebanon.
 
 ### Link to hotels or chalets with a search
 
@@ -280,9 +281,9 @@ The main colours are CSS variables at the top of `css/styles.css`:
 
 ## Known limitations
 
-- **No booking or payment.** The flight and bus & train planners check what the visitor enters and
-  show a summary, but there are no live routes, schedules or fares. Accounts work, but nothing is
-  saved to them yet.
+- **No booking or payment yet.** The hotels and chalets come from the database, but they can't be
+  reserved yet. The flight and bus & train planners check what the visitor enters and show a summary,
+  but there are no live routes, schedules or fares. Accounts work, but nothing is saved to them yet.
 - **The contact form doesn't send anything.** It checks each field in the browser and then shows a
   confirmation that says the message wasn't sent. Without JavaScript, sending only reloads the page.
 - **No social media links.** EasyTrip has no verified social accounts, so the footer doesn't link to any.

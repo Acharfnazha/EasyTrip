@@ -1,230 +1,298 @@
-// Hotels and chalets listings: search, filters, sorting, "Show more" and the details dialog.
-// Each card is read from its data-* attributes (data-name, data-location, data-price, data-order).
+// Hotels and chalets listings. The stays come from the server: GET /api/stays does the search,
+// the filters, the sorting and the pages (server/controllers/stays.js). This script only sends
+// the form values, shows the cards it gets back, adds the next page for "Show more", and opens
+// the details dialog.
 (function () {
   'use strict';
 
-  var ANNOUNCE_DELAY = 400;
-  var WIDE_QUERY = '(min-width: 64em)';
+  const ANNOUNCE_DELAY = 400;
+  const TYPING_DELAY = 300; // Wait until the visitor stops typing or sliding before asking the server.
+  const WIDE_QUERY = '(min-width: 64em)';
 
-  function normalise(value) {
-    return String(value || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  function capitalise(text) {
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : '';
   }
 
   function initListing(root) {
     if (root.dataset.listingReady) return;
     root.dataset.listingReady = 'true';
 
-    var q = function (sel) { return root.querySelector(sel); };
-    var form = q('[data-listing-filters]');
-    var search = q('[data-filter="search"]');
-    var price = q('[data-filter="price"]');
-    var priceOutput = q('[data-price-output]');
-    var sort = q('[data-filter="sort"]');
-    var grid = q('[data-listing-grid]');
-    var count = q('[data-listing-count]');
-    var status = q('[data-listing-status]');
-    var empty = q('[data-listing-empty]');
-    var moreWrap = q('[data-listing-more-wrap]');
-    var moreButton = q('[data-listing-more]');
-    var dialog = q('[data-listing-dialog]');
-    if (!grid) return;
+    const q = function (sel) { return root.querySelector(sel); };
+    const form = q('[data-listing-filters]');
+    const search = q('[data-filter="search"]');
+    const price = q('[data-filter="price"]');
+    const priceOutput = q('[data-price-output]');
+    const setting = q('[data-filter="setting"]');
+    const sort = q('[data-filter="sort"]');
+    const grid = q('[data-listing-grid]');
+    const template = q('[data-listing-template]');
+    const count = q('[data-listing-count]');
+    const status = q('[data-listing-status]');
+    const empty = q('[data-listing-empty]');
+    const errorBox = q('[data-listing-error]');
+    const errorText = q('[data-listing-error-text]');
+    const moreWrap = q('[data-listing-more-wrap]');
+    const moreButton = q('[data-listing-more]');
+    const dialog = q('[data-listing-dialog]');
+    const quickButtons = root.querySelectorAll('[data-quick-filter]');
+    if (!grid || !template) return;
 
-    var BUILT_IN = ['search', 'price', 'sort'];
-    var attrFilters = Array.prototype.filter.call(root.querySelectorAll('[data-filter]'), function (field) {
-      return BUILT_IN.indexOf(field.dataset.filter) === -1;
-    });
-    var quickButtons = root.querySelectorAll('[data-quick-filter]');
+    const type = root.dataset.listingType;
+    const noun = root.dataset.listingNoun || 'result';
+    const plural = function (n) { return n + ' ' + noun + (n === 1 ? '' : 's'); };
 
-    var noun = root.dataset.listingNoun || 'result';
-    var plural = function (n) { return n + ' ' + noun + (n === 1 ? '' : 's'); };
+    let page = 0; // The last page shown.
+    let limit = 0; // Cards per page: 9 on wide screens, 6 on small ones, fixed for one search.
+    let total = 0;
+    let totalPages = 0;
+    let requestNumber = 0; // Only the answer to the newest request is shown.
+    let typingTimer = null;
+    let announceTimer = null;
 
-    var items = Array.prototype.map.call(grid.querySelectorAll('[data-listing-item]'), function (el, i) {
-      var p = parseFloat(el.dataset.price);
-      return {
-        el: el,
-        name: el.dataset.name || '',
-        haystack: normalise((el.dataset.name || '') + ' ' + (el.dataset.location || '')),
-        price: isFinite(p) ? p : null,
-        order: parseInt(el.dataset.order, 10) || i + 1
-      };
-    });
-    var total = items.length;
-    var pageSize = function () { return window.matchMedia(WIDE_QUERY).matches ? 9 : 6; };
-    var visibleLimit = pageSize();
-    var announceTimer = null;
-
-    var sorters = {
-      'recommended': function (a, b) { return a.order - b.order; },
-      'price-asc': function (a, b) { return byPrice(a, b, 1); },
-      'price-desc': function (a, b) { return byPrice(a, b, -1); },
-      'name-asc': function (a, b) { return a.name.localeCompare(b.name) || a.order - b.order; }
-    };
-    function byPrice(a, b, dir) {
-      if (a.price === null || b.price === null) return (a.price === null) - (b.price === null);
-      return (a.price - b.price) * dir || a.order - b.order;
+    // The address of one page of results, for example
+    // /api/stays?type=chalet&q=Lebanon&setting=mountain&maxPrice=300&sort=price-asc&page=1&limit=9
+    function apiAddress(pageNumber) {
+      const params = new URLSearchParams();
+      params.set('type', type);
+      if (search && search.value.trim()) params.set('q', search.value.trim());
+      if (setting && setting.value) params.set('setting', setting.value);
+      // The slider at its highest value means "any price", so stays added later at a higher price
+      // still appear.
+      if (price && price.value !== price.max) params.set('maxPrice', price.value);
+      if (sort) params.set('sort', sort.value);
+      params.set('page', pageNumber);
+      params.set('limit', limit);
+      return '/api/stays?' + params.toString();
     }
 
-    function matches(item, term, maxPrice, attrs) {
-      if (term && item.haystack.indexOf(term) === -1) return false;
-      if (maxPrice !== null && item.price !== null && item.price > maxPrice) return false;
-      for (var i = 0; i < attrs.length; i++) {
-        if (normalise(item.el.getAttribute('data-' + attrs[i].name)) !== attrs[i].value) return false;
+    // One card from the template. Every value is set with textContent or a property, so a name
+    // that contains HTML is shown as text and never runs.
+    function buildCard(stay) {
+      const card = template.content.firstElementChild.cloneNode(true);
+      const nameId = type + '-' + stay.id + '-name';
+      card.setAttribute('aria-labelledby', nameId);
+
+      const img = card.querySelector('[data-card-img]');
+      img.src = stay.image;
+      img.alt = stay.imageAlt;
+
+      const name = card.querySelector('[data-card-name]');
+      name.id = nameId;
+      name.textContent = stay.name;
+
+      card.querySelector('[data-card-location]').textContent = stay.location;
+      card.querySelector('[data-card-text]').textContent = stay.description;
+      card.querySelector('[data-card-price]').prepend('$' + stay.price + ' ');
+      card.querySelector('[data-card-details-name]').textContent = ': ' + stay.name;
+
+      const meta = card.querySelector('[data-listing-meta]');
+      if (meta) fillMeta(meta, stay);
+
+      card.querySelector('[data-listing-details]').addEventListener('click', function (event) {
+        openDetails(stay, event.currentTarget);
+      });
+      return card;
+    }
+
+    // "Cabin · Mountain" for chalets. Screen readers hear "Cabin, Mountain".
+    function fillMeta(element, stay) {
+      element.textContent = '';
+      if (!stay.category && !stay.setting) {
+        element.hidden = true;
+        return;
       }
-      return true;
+      element.hidden = false;
+      element.append(stay.category || '');
+      if (stay.category && stay.setting) {
+        const dot = document.createElement('span');
+        dot.setAttribute('aria-hidden', 'true');
+        dot.textContent = ' · ';
+        const comma = document.createElement('span');
+        comma.className = 'et-visually-hidden';
+        comma.textContent = ', ';
+        element.append(dot, comma);
+      }
+      element.append(capitalise(stay.setting));
+    }
+
+    function showCount() {
+      const shown = grid.children.length;
+      if (count) {
+        count.textContent = total === 0 ? 'No ' + noun + 's found'
+          : shown < total ? 'Showing ' + shown + ' of ' + plural(total)
+          : plural(total);
+      }
+      if (empty) empty.hidden = total !== 0;
+      grid.hidden = total === 0;
+      if (moreWrap) moreWrap.hidden = page >= totalPages;
+      if (moreButton) {
+        moreButton.textContent = 'Show more ' + noun + 's';
+        moreButton.setAttribute('aria-label', 'Show more ' + noun + 's, ' + (total - shown) + ' more');
+      }
+    }
+
+    function announce(text) {
+      clearTimeout(announceTimer);
+      announceTimer = setTimeout(function () {
+        if (status) status.textContent = text;
+      }, ANNOUNCE_DELAY);
+    }
+
+    function showLoadError() {
+      grid.hidden = true;
+      if (empty) empty.hidden = true;
+      if (moreWrap) moreWrap.hidden = true;
+      if (count) count.textContent = '';
+      if (errorText) {
+        errorText.textContent = window.location.protocol === 'file:'
+          ? 'The ' + noun + 's are saved in the database. Start the server (npm start) and open http://localhost:3000.'
+          : 'Please check your connection and try again.';
+      }
+      if (errorBox) errorBox.hidden = false;
+    }
+
+    // Asks the server for a page of stays.
+    // more = false: a new search (new filters), so the list starts again at page 1.
+    // more = true: "Show more", so the next page is added under the cards already shown.
+    async function load(more, options) {
+      const thisRequest = ++requestNumber;
+      if (!more) limit = window.matchMedia(WIDE_QUERY).matches ? 9 : 6;
+      const pageToLoad = more ? page + 1 : 1;
+
+      grid.setAttribute('aria-busy', 'true');
+      if (moreButton) moreButton.disabled = true;
+
+      let result;
+      try {
+        const response = await fetch(apiAddress(pageToLoad));
+        if (!response.ok) throw new Error('The server answered ' + response.status);
+        result = await response.json();
+      } catch (err) {
+        if (thisRequest === requestNumber) {
+          grid.setAttribute('aria-busy', 'false');
+          showLoadError();
+        }
+        return null;
+      }
+
+      // An older request can answer after a newer one. Its cards would be out of date.
+      if (thisRequest !== requestNumber) return null;
+
+      if (errorBox) errorBox.hidden = true;
+      if (!more) grid.textContent = '';
+
+      page = result.pagination.page;
+      total = result.pagination.total;
+      totalPages = result.pagination.totalPages;
+
+      const newCards = result.stays.map(buildCard);
+      grid.append(...newCards);
+      grid.setAttribute('aria-busy', 'false');
+      if (moreButton) moreButton.disabled = false;
+      showCount();
+
+      if (!options || options.announce !== false) {
+        announce(total === 0
+          ? 'No ' + noun + 's match those filters.'
+          : plural(total) + ' match. Showing ' + grid.children.length + '.');
+      }
+      return newCards;
     }
 
     function syncQuickButtons() {
       quickButtons.forEach(function (button) {
-        var field = q('[data-filter="' + button.dataset.quickFilter + '"]');
-        var on = !!field && normalise(field.value) === normalise(button.dataset.quickValue);
+        const field = q('[data-filter="' + button.dataset.quickFilter + '"]');
+        const on = !!field && field.value.trim().toLowerCase() === button.dataset.quickValue.toLowerCase();
         button.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
     }
 
-    function update(options) {
-      var term = search ? normalise(search.value) : '';
-      var maxPrice = price ? parseFloat(price.value) : null;
-      var sorter = sorters[sort && sort.value] || sorters.recommended;
-      var attrs = attrFilters
-        .map(function (field) { return { name: field.dataset.filter, value: normalise(field.value) }; })
-        .filter(function (a) { return a.value !== ''; });
-
+    function showPrice() {
       if (priceOutput && price) priceOutput.textContent = '$' + price.value;
-      syncQuickButtons();
-
-      var matched = items.filter(function (item) { return matches(item, term, maxPrice, attrs); }).sort(sorter);
-      var matchedSet = new Set(matched);
-
-      // Re-order the DOM so visual order, reading order and tab order all agree.
-      var fragment = document.createDocumentFragment();
-      matched.concat(items.filter(function (item) { return !matchedSet.has(item); }))
-        .forEach(function (item) { fragment.appendChild(item.el); });
-      grid.appendChild(fragment);
-
-      items.forEach(function (item) { item.el.hidden = true; });
-      matched.slice(0, visibleLimit).forEach(function (item) { item.el.hidden = false; });
-
-      var shown = Math.min(visibleLimit, matched.length);
-      var remaining = matched.length - shown;
-
-      if (count) {
-        count.textContent = matched.length === 0 ? 'No ' + noun + 's found'
-          : shown < matched.length ? 'Showing ' + shown + ' of ' + plural(matched.length)
-          : matched.length === total ? plural(total)
-          : plural(matched.length) + ' of ' + total;
-      }
-      if (empty) empty.hidden = matched.length !== 0;
-      grid.hidden = matched.length === 0;
-      if (moreWrap) moreWrap.hidden = remaining <= 0;
-      if (moreButton) {
-        moreButton.textContent = 'Show more ' + noun + 's';
-        moreButton.setAttribute('aria-label', 'Show more ' + noun + 's, ' + remaining + ' more');
-      }
-
-      if (options && options.announce === false) return;
-      clearTimeout(announceTimer);
-      announceTimer = setTimeout(function () {
-        if (!status) return;
-        status.textContent = matched.length === 0
-          ? 'No ' + noun + 's match those filters.'
-          : plural(matched.length) + ' match. Showing ' + shown + '.';
-      }, ANNOUNCE_DELAY);
     }
 
-    function resetLimit() { visibleLimit = pageSize(); }
-
-    function clearFilters() {
-      if (form) form.reset();
-      resetLimit();
-      update();
+    // Typing and sliding wait a little; the other fields search at once.
+    function filtersChanged(waitForTyping) {
+      clearTimeout(typingTimer);
+      showPrice();
+      syncQuickButtons();
+      if (waitForTyping) {
+        typingTimer = setTimeout(function () { load(false); }, TYPING_DELAY);
+      } else {
+        load(false);
+      }
     }
 
     root.querySelectorAll('[data-listing-enhance]').forEach(function (el) { el.hidden = false; });
 
     if (form) {
       form.hidden = false;
-      form.addEventListener('submit', function (e) { e.preventDefault(); });
-      form.addEventListener('input', function () { resetLimit(); update(); });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        filtersChanged(false);
+      });
+      form.addEventListener('input', function (e) {
+        if (e.target.tagName !== 'SELECT') filtersChanged(true);
+      });
       form.addEventListener('change', function (e) {
-        if (e.target.tagName === 'SELECT') { resetLimit(); update(); }
+        if (e.target.tagName === 'SELECT') filtersChanged(false);
       });
     }
 
     quickButtons.forEach(function (button) {
       button.addEventListener('click', function () {
-        var field = q('[data-filter="' + button.dataset.quickFilter + '"]');
+        const field = q('[data-filter="' + button.dataset.quickFilter + '"]');
         if (!field) return;
         field.value = button.getAttribute('aria-pressed') === 'true' ? '' : button.dataset.quickValue;
-        resetLimit();
-        update();
+        filtersChanged(false);
       });
     });
 
     root.querySelectorAll('[data-clear-filters]').forEach(function (button) {
       button.addEventListener('click', function () {
-        var fromEmptyState = empty && empty.contains(button);
-        clearFilters();
+        const fromEmptyState = empty && empty.contains(button);
+        if (form) form.reset();
+        filtersChanged(false);
         if (fromEmptyState && search) search.focus();
       });
     });
 
+    root.querySelectorAll('[data-listing-retry]').forEach(function (button) {
+      button.addEventListener('click', function () { load(false); });
+    });
+
     if (moreButton) {
-      moreButton.addEventListener('click', function () {
-        var firstNew = visibleLimit;
-        visibleLimit += pageSize();
-        update();
-        if (moreWrap && moreWrap.hidden) {
-          var cards = Array.prototype.filter.call(grid.children, function (el) { return !el.hidden; });
-          var target = cards[firstNew] && cards[firstNew].querySelector('a:not([hidden]), button:not([hidden])');
-          if (target) target.focus();
+      moreButton.addEventListener('click', async function () {
+        const newCards = await load(true);
+        // Move the focus to the first new card, so keyboard users continue from there.
+        if (newCards && newCards.length > 0) {
+          newCards[0].querySelector('[data-listing-details]').focus();
         }
       });
     }
 
-    if (dialog && typeof dialog.showModal === 'function') {
-      var opener = null;
-      var d = function (sel) { return dialog.querySelector(sel); };
-
-      items.forEach(function (item) {
-        var fallback = item.el.querySelector('[data-listing-fallback]');
-        var button = item.el.querySelector('[data-listing-details]');
-        if (!button) return;
-        if (fallback) fallback.hidden = true;
-        button.hidden = false;
-        button.addEventListener('click', function () { openDetails(item, button); });
-      });
-
-      function openDetails(item, button) {
-        var img = item.el.querySelector('img');
-        var text = item.el.querySelector('.lst-card__text');
-        var dialogImg = d('[data-dialog-img]');
-        if (dialogImg && img) {
-          dialogImg.src = img.currentSrc || img.src;
-          dialogImg.alt = img.alt;
-        }
-        d('[data-dialog-name]').textContent = item.name;
-        var metaEl = d('[data-dialog-meta]');
-        var cardMeta = item.el.querySelector('[data-listing-meta]');
-        if (metaEl) {
-          metaEl.textContent = '';
-          if (cardMeta) {
-            Array.prototype.forEach.call(cardMeta.childNodes, function (node) {
-              metaEl.appendChild(node.cloneNode(true));
-            });
-          }
-          metaEl.hidden = !cardMeta;
-        }
-        d('[data-dialog-location]').textContent = item.el.dataset.location || '';
-        d('[data-dialog-text]').textContent = text ? text.textContent.trim() : '';
-        var priceEl = d('[data-dialog-price]');
-        if (priceEl) {
-          priceEl.parentElement.hidden = item.price === null;
-          priceEl.textContent = item.price === null ? '' : '$' + item.price + ' / night';
-        }
-        opener = button;
-        dialog.showModal();
+    // The details dialog is filled from the stay that the list already received.
+    let opener = null;
+    function openDetails(stay, button) {
+      if (!dialog || typeof dialog.showModal !== 'function') return;
+      const d = function (sel) { return dialog.querySelector(sel); };
+      const dialogImg = d('[data-dialog-img]');
+      if (dialogImg) {
+        dialogImg.src = stay.image;
+        dialogImg.alt = stay.imageAlt;
       }
+      d('[data-dialog-name]').textContent = stay.name;
+      const metaEl = d('[data-dialog-meta]');
+      if (metaEl) fillMeta(metaEl, stay);
+      d('[data-dialog-location]').textContent = stay.location;
+      d('[data-dialog-text]').textContent = stay.description;
+      const priceEl = d('[data-dialog-price]');
+      if (priceEl) priceEl.textContent = '$' + stay.price + ' / night';
+      opener = button;
+      dialog.showModal();
+    }
 
+    if (dialog && typeof dialog.showModal === 'function') {
       dialog.querySelectorAll('[data-dialog-close]').forEach(function (b) {
         b.addEventListener('click', function () { dialog.close(); });
       });
@@ -238,10 +306,12 @@
     }
 
     // Links from other pages can fill the search box, e.g. chalets.html?q=Lebanon
-    var linkedSearch = new URLSearchParams(window.location.search).get('q');
+    const linkedSearch = new URLSearchParams(window.location.search).get('q');
     if (search && linkedSearch) search.value = linkedSearch;
 
-    update({ announce: false });
+    showPrice();
+    syncQuickButtons();
+    load(false, { announce: false });
   }
 
   function init() {

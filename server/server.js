@@ -16,6 +16,7 @@ import rootDir from "./utils/path.js";
 import db, { explainDatabaseError } from "./utils/database.js";
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
+import stayRoutes from "./routes/stays.js";
 import * as errorController from "./controllers/error.js";
 
 if (!config.sessionSecret) {
@@ -61,6 +62,7 @@ app.use("/api", (req, res, next) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/stays", stayRoutes);
 
 // 5. Not found and errors
 app.use("/api", errorController.apiNotFound);
