@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flights — EasyTrip</title>
+  <meta name="description" content="Plan your next flight with EasyTrip: enter your route, dates, travelers and cabin preference to preview the flight-search experience." />
+  <link rel="preload" as="image" href="assets/images/tickets/flight-sky-1200.webp" media="(min-width: 48em)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/images/tickets/flight-sky-800.webp" media="(max-width: 47.99em)" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/flight.css" />
+  <link rel="stylesheet" href="css/ticket-buy.css" />
+</head>
+<body class="flight-page">
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="destinations.html">Destinations</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the seasons</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="winter.html">Winter</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="hotels-chalets.html">Hotels &amp; Chalets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show hotels and chalets</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="tickets.html">Tickets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the ticket types</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="flight.html">Flights</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="about.html">About</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show more about EasyTrip</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="login.html" data-account-link>Log in</a>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="flight-hero" aria-labelledby="flight-hero-title">
+      <picture class="flight-hero__media">
+        <source type="image/webp" media="(max-width: 47.99em)" srcset="assets/images/tickets/flight-sky-800.webp" />
+        <source type="image/webp" srcset="assets/images/tickets/flight-sky-1200.webp" />
+        <img class="flight-hero__img" src="assets/images/tickets/flight.jpg" width="1199" height="669"
+             alt="" fetchpriority="high" decoding="async" />
+      </picture>
+      <div class="et-container flight-hero__inner">
+        <nav class="flight-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="tickets.html">Tickets</a></li>
+            <li><span aria-current="page">Flights</span></li>
+          </ol>
+        </nav>
+        <h1 class="flight-hero__title" id="flight-hero-title">Plan your next flight</h1>
+        <p class="flight-hero__text">
+          Enter your route, dates and travelers, see the fare, and buy the ticket with your account credit.
+        </p>
+        <div class="flight-hero__actions">
+          <a class="et-btn et-btn--primary et-btn--lg" href="#flight-planner">
+            Start planning
+            <svg class="et-btn__icon flight-icon-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg>
+          </a>
+          <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.html">Other ticket options</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="flight-planner-section" id="flight-planner" aria-labelledby="flight-planner-title">
+      <div class="et-container">
+        <header class="flight-section-head">
+          <h2 class="flight-section-head__title" id="flight-planner-title">Build your flight search</h2>
+          <p class="flight-section-head__text">
+            Check your trip, see the sample fare, and buy the ticket with your account credit. Live flight results are not connected.
+          </p>
+        </header>
+
+        <form class="flight-planner" action="flight.html#flight-planner" method="get" data-flight-planner>
+          <p class="flight-planner__required-note">All fields are required unless marked optional.</p>
+
+          <fieldset class="flight-planner__group flight-planner__trip">
+            <legend class="flight-planner__legend">Trip type</legend>
+            <div class="flight-planner__segments">
+              <label class="flight-planner__segment">
+                <input type="radio" name="trip" value="round" checked data-trip />
+                <span>Round trip</span>
+              </label>
+              <label class="flight-planner__segment">
+                <input type="radio" name="trip" value="oneway" data-trip />
+                <span>One way</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="flight-planner__route">
+            <div class="flight-planner__field">
+              <label class="flight-planner__label" for="flight-from">From</label>
+              <input class="flight-planner__input" type="text" id="flight-from" name="from" required
+                     autocomplete="off" maxlength="80" placeholder="e.g. Beirut" aria-describedby="flight-from-error" data-field="from" />
+              <p class="flight-planner__error" id="flight-from-error" hidden></p>
+            </div>
+            <button class="flight-planner__swap" type="button" aria-label="Swap origin and destination" hidden data-swap>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>
+            </button>
+            <div class="flight-planner__field">
+              <label class="flight-planner__label" for="flight-to">To</label>
+              <input class="flight-planner__input" type="text" id="flight-to" name="to" required
+                     autocomplete="off" maxlength="80" placeholder="e.g. Paris" aria-describedby="flight-to-error" data-field="to" />
+              <p class="flight-planner__error" id="flight-to-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="flight-planner__dates">
+            <div class="flight-planner__field">
+              <label class="flight-planner__label" for="flight-depart">Departure date</label>
+              <input class="flight-planner__input" type="date" id="flight-depart" name="depart" required
+                     aria-describedby="flight-depart-error" data-field="depart" />
+              <p class="flight-planner__error" id="flight-depart-error" hidden></p>
+            </div>
+            <div class="flight-planner__field" data-return-field>
+              <label class="flight-planner__label" for="flight-return">
+                Return date <span class="flight-planner__optional">(round trip only)</span>
+              </label>
+              <input class="flight-planner__input" type="date" id="flight-return" name="return"
+                     aria-describedby="flight-return-error" data-field="return" />
+              <p class="flight-planner__error" id="flight-return-error" hidden></p>
+            </div>
+          </div>
+
+          <div class="flight-planner__prefs">
+            <div class="flight-planner__field">
+              <label class="flight-planner__label" for="flight-travelers">Travelers</label>
+              <select class="flight-planner__input" id="flight-travelers" name="travelers" required
+                      aria-describedby="flight-travelers-error" data-field="travelers">
+                <option value="1">1 traveler</option>
+                <option value="2">2 travelers</option>
+                <option value="3">3 travelers</option>
+                <option value="4">4 travelers</option>
+                <option value="5">5 travelers</option>
+                <option value="6">6 travelers</option>
+                <option value="7">7 travelers</option>
+                <option value="8">8 travelers</option>
+                <option value="9">9 travelers</option>
+              </select>
+              <p class="flight-planner__error" id="flight-travelers-error" hidden></p>
+            </div>
+            <div class="flight-planner__field">
+              <label class="flight-planner__label" for="flight-cabin">Cabin preference</label>
+              <select class="flight-planner__input" id="flight-cabin" name="cabin" required
+                      aria-describedby="flight-cabin-error" data-field="cabin">
+                <option value="">Choose a cabin</option>
+                <option value="economy">Economy</option>
+                <option value="premium">Premium Economy</option>
+                <option value="business">Business</option>
+                <option value="first">First</option>
+              </select>
+              <p class="flight-planner__error" id="flight-cabin-error" hidden></p>
+            </div>
+          </div>
+
+          <fieldset class="flight-planner__group flight-planner__options">
+            <legend class="flight-planner__legend">Preferences <span class="flight-planner__optional">(optional)</span></legend>
+            <label class="flight-planner__check">
+              <input type="checkbox" name="nonstop" value="yes" data-pref="Non-stop flights preferred" />
+              <span>Prefer non-stop flights</span>
+            </label>
+            <label class="flight-planner__check">
+              <input type="checkbox" name="flexible" value="yes" data-pref="Flexible travel dates" />
+              <span>My dates are flexible</span>
+            </label>
+          </fieldset>
+
+          <div class="flight-planner__submit">
+            <button class="et-btn et-btn--primary et-btn--lg" type="submit">Review search</button>
+            <p class="flight-planner__submit-note">
+              Nothing is bought yet. You'll see a summary and the fare first.
+            </p>
+            <noscript>
+              <p class="flight-planner__submit-note flight-planner__submit-note--noscript">
+                Turn on JavaScript to see the search summary on this page.
+              </p>
+            </noscript>
+          </div>
+        </form>
+
+        <section class="flight-summary" aria-labelledby="flight-summary-title" hidden data-flight-summary>
+          <h3 class="flight-summary__title" id="flight-summary-title" tabindex="-1">Your flight search is ready</h3>
+          <p class="flight-summary__route" data-summary-route></p>
+          <dl class="flight-summary__details">
+            <div><dt>Trip type</dt><dd data-summary="trip"></dd></div>
+            <div><dt>From</dt><dd data-summary="from"></dd></div>
+            <div><dt>To</dt><dd data-summary="to"></dd></div>
+            <div><dt>Departure</dt><dd data-summary="depart"></dd></div>
+            <div data-summary-return-row><dt>Return</dt><dd data-summary="return"></dd></div>
+            <div><dt>Travelers</dt><dd data-summary="travelers"></dd></div>
+            <div><dt>Cabin preference</dt><dd data-summary="cabin"></dd></div>
+            <div><dt>Preferences</dt><dd data-summary="prefs"></dd></div>
+          </dl>
+          <p class="flight-summary__stale" hidden data-summary-stale>
+            You've changed the search since this summary was made. Select “Review search” to update it.
+          </p>
+          <p class="flight-summary__notice">
+            Live schedules and availability are not connected yet, so this is a sample ticket at a sample fare.
+            You can buy it with the credit on your account.
+          </p>
+          <!-- Buying this ticket with credit: js/ticket-buy.js shows the sample fare (GET
+               /api/tickets/fares), the user's credit, and sends POST /api/tickets. -->
+          <div class="ticket-buy" data-ticket-buy hidden>
+            <dl class="ticket-buy__sum">
+              <div><dt data-buy="fare"></dt><dd data-buy="total"></dd></div>
+              <div class="ticket-buy__discount" data-buy-discount-row hidden><dt data-buy="discount-label"></dt><dd data-buy="discount"></dd></div>
+              <div class="ticket-buy__final" data-buy-final-row hidden><dt>Total to pay</dt><dd data-buy="final"></dd></div>
+              <div data-buy-credit-row><dt>Your credit</dt><dd data-buy="credit"></dd></div>
+              <div class="ticket-buy__left" data-buy-left-row><dt>Credit left after buying</dt><dd data-buy="left"></dd></div>
+            </dl>
+            <p class="ticket-buy__status" role="status" tabindex="-1" data-buy-status hidden></p>
+            <div class="ticket-buy__actions">
+              <button class="et-btn et-btn--primary" type="button" data-buy-submit>Buy with my credit</button>
+              <a class="et-btn et-btn--primary" href="login.html" data-buy-login hidden>Log in to buy</a>
+              <a class="et-btn et-btn--outline" href="contact.html?topic=flights" data-buy-ask hidden>Ask for credit</a>
+              <a class="et-btn et-btn--primary" href="account.html" data-buy-account hidden>See my tickets</a>
+            </div>
+          </div>
+          <div class="flight-summary__actions">
+            <button class="et-btn et-btn--outline" type="button" data-edit-search>Edit search</button>
+            <a class="et-btn et-btn--outline" href="contact.html?topic=flights">Ask about this route</a>
+            <a class="flight-text-link" href="tickets.html">View other ticket options</a>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="flight-demo" aria-labelledby="flight-demo-title">
+      <div class="et-container">
+        <header class="flight-section-head">
+          <h2 class="flight-section-head__title" id="flight-demo-title">How the flight planner works</h2>
+        </header>
+        <ol class="flight-steps">
+          <li class="flight-steps__item">
+            <h3 class="flight-steps__title">An accessible search form</h3>
+            <p class="flight-steps__text">Visible labels, clear choices and keyboard-friendly controls for route, dates, travelers and cabin.</p>
+          </li>
+          <li class="flight-steps__item">
+            <h3 class="flight-steps__title">Helpful validation</h3>
+            <p class="flight-steps__text">Checks for a different origin and destination, a departure from today onwards and a return after departure.</p>
+          </li>
+          <li class="flight-steps__item">
+            <h3 class="flight-steps__title">A summary, then the ticket</h3>
+            <p class="flight-steps__text">Review your trip and its sample fare, then buy the ticket with the credit on your account.</p>
+          </li>
+        </ol>
+        <p class="flight-handoff">
+          <strong>About the fares:</strong> EasyTrip is a university project, so fares are samples set per cabin, not
+          live prices from airlines. Our team confirms each ticket, and you can cancel it before the departure day.
+        </p>
+      </div>
+    </section>
+
+    <section class="flight-inspire" aria-labelledby="flight-inspire-title">
+      <div class="et-container flight-inspire__inner">
+        <div class="flight-inspire__copy">
+          <h2 class="flight-section-head__title" id="flight-inspire-title">Still choosing where to go?</h2>
+          <p class="flight-section-head__text">Explore seasonal destination ideas before preparing your flight search.</p>
+          <a class="et-btn et-btn--outline et-btn--lg" href="destinations.html">
+            Explore destinations
+            <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+          </a>
+        </div>
+        <ul class="flight-seasons">
+          <li>
+            <a class="flight-seasons__link" href="winter.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/winter.webp" width="600" height="420"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Winter ideas</span>
+            </a>
+          </li>
+          <li>
+            <a class="flight-seasons__link" href="spring.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/spring.webp" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Spring ideas</span>
+            </a>
+          </li>
+          <li>
+            <a class="flight-seasons__link" href="summer.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/summer.webp" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Summer ideas</span>
+            </a>
+          </li>
+          <li>
+            <a class="flight-seasons__link" href="autumn.html">
+              <img class="flight-seasons__img" src="assets/images/destinations/autumn.webp" width="600" height="400"
+                   alt="" loading="lazy" decoding="async" />
+              <span class="flight-seasons__label">Autumn ideas</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="flight-cta" aria-labelledby="flight-cta-title">
+      <div class="et-container">
+        <div class="flight-cta__panel">
+          <h2 class="flight-cta__title" id="flight-cta-title">Need help planning the journey?</h2>
+          <p class="flight-cta__text">Our team can help you think through routes and dates, or you can compare other ways to travel.</p>
+          <div class="flight-cta__actions">
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="contact.html">Contact EasyTrip</a>
+            <a class="et-btn et-btn--on-dark et-btn--lg" href="tickets.html">See all ticket options</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/flight.js"></script>
+  <script src="js/ticket-buy.js"></script>
+</body>
+</html>

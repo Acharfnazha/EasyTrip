@@ -1,0 +1,272 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1670 1136" width="1670" height="1136" font-family="Arial, Helvetica, sans-serif" role="img" aria-labelledby="er-title er-desc">
+  <title id="er-title">EasyTrip database ER diagram</title>
+  <desc id="er-desc">Nine tables. A user has many bookings, tickets, inquiries and credit transactions, and at most one identity document. A destination has many accommodations, and an accommodation has many bookings. A booking or a ticket can have credit transactions (its payment and its refund). An inquiry has many replies, each written by an admin user.</desc>
+  <rect width="1670" height="1136" fill="#ffffff"/>
+  <path d="M470 100 H340" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="456" y="90" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="354" y="90" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M470 250 H405 V500 H340" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="456" y="240" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="354" y="490" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M190 333 V420" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="204" y="353" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="204" y="410" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M620 306 V400" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="634" y="326" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="634" y="390" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <path d="M770 100 H900" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="784" y="90" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="886" y="90" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M770 200 H850 V480 H900" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="784" y="190" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="886" y="470" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M770 260 H810 V780 H1330" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="784" y="250" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="1316" y="770" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M1480 198 V290" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="1494" y="218" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="1494" y="280" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M1330 400 H1265 V200 H1200" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="1316" y="390" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="1214" y="190" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M1050 333 V420" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="1064" y="353" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="1064" y="410" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <path d="M1330 720 H1200" fill="none" stroke="#222222" stroke-width="2.5"/>
+  <text x="1316" y="710" font-size="17" fill="#444444" text-anchor="middle">1</text>
+  <text x="1214" y="710" font-size="17" fill="#444444" text-anchor="middle">N</text>
+  <g>
+    <rect x="45" y="45" width="300" height="293" fill="#e6e6e6"/>
+    <rect x="40" y="40" width="300" height="293" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="40" y="40" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="190" y="67" font-size="19" fill="#222222" text-anchor="middle">INQUIRIES</text>
+    <text x="54" y="102" font-size="15" fill="#222222" font-weight="bold">inquiry_id (PK)</text>
+    <text x="328" y="102" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="54" y="129" font-size="15" fill="#222222">user_id (FK)</text>
+    <text x="328" y="129" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="54" y="156" font-size="15" fill="#222222">name</text>
+    <text x="328" y="156" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(120)</text>
+    <text x="54" y="183" font-size="15" fill="#222222">email</text>
+    <text x="328" y="183" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(190)</text>
+    <text x="54" y="210" font-size="15" fill="#222222">phone</text>
+    <text x="328" y="210" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(40)</text>
+    <text x="54" y="237" font-size="15" fill="#222222">topic</text>
+    <text x="328" y="237" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="54" y="264" font-size="15" fill="#222222">message</text>
+    <text x="328" y="264" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(2000)</text>
+    <text x="54" y="291" font-size="15" fill="#222222">status</text>
+    <text x="328" y="291" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="54" y="318" font-size="15" fill="#222222">created_at</text>
+    <text x="328" y="318" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+  <g>
+    <rect x="45" y="425" width="300" height="185" fill="#e6e6e6"/>
+    <rect x="40" y="420" width="300" height="185" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="40" y="420" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="190" y="447" font-size="19" fill="#222222" text-anchor="middle">INQUIRY_REPLIES</text>
+    <text x="54" y="482" font-size="15" fill="#222222" font-weight="bold">reply_id (PK)</text>
+    <text x="328" y="482" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="54" y="509" font-size="15" fill="#222222">inquiry_id (FK)</text>
+    <text x="328" y="509" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="54" y="536" font-size="15" fill="#222222">admin_id (FK)</text>
+    <text x="328" y="536" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="54" y="563" font-size="15" fill="#222222">message</text>
+    <text x="328" y="563" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(2000)</text>
+    <text x="54" y="590" font-size="15" fill="#222222">created_at</text>
+    <text x="328" y="590" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+  <g>
+    <rect x="475" y="45" width="300" height="266" fill="#e6e6e6"/>
+    <rect x="470" y="40" width="300" height="266" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="470" y="40" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="620" y="67" font-size="19" fill="#222222" text-anchor="middle">USERS</text>
+    <text x="484" y="102" font-size="15" fill="#222222" font-weight="bold">user_id (PK)</text>
+    <text x="758" y="102" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="484" y="129" font-size="15" fill="#222222">first_name</text>
+    <text x="758" y="129" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(50)</text>
+    <text x="484" y="156" font-size="15" fill="#222222">last_name</text>
+    <text x="758" y="156" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(50)</text>
+    <text x="484" y="183" font-size="15" fill="#222222">email (UNIQUE)</text>
+    <text x="758" y="183" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(190)</text>
+    <text x="484" y="210" font-size="15" fill="#222222">password_hash</text>
+    <text x="758" y="210" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(255)</text>
+    <text x="484" y="237" font-size="15" fill="#222222">role</text>
+    <text x="758" y="237" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="484" y="264" font-size="15" fill="#222222">credit</text>
+    <text x="758" y="264" font-size="12.5" fill="#6b6b6b" text-anchor="end">DECIMAL(10,2)</text>
+    <text x="484" y="291" font-size="15" fill="#222222">created_at</text>
+    <text x="758" y="291" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+  <g>
+    <rect x="475" y="405" width="300" height="644" fill="#e6e6e6"/>
+    <rect x="470" y="400" width="300" height="644" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="470" y="400" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="620" y="427" font-size="19" fill="#222222" text-anchor="middle">ID_DOCUMENTS</text>
+    <text x="484" y="462" font-size="15" fill="#222222" font-weight="bold">document_id (PK)</text>
+    <text x="758" y="462" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="484" y="489" font-size="15" fill="#222222">user_id (FK, UNIQUE)</text>
+    <text x="758" y="489" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="484" y="516" font-size="15" fill="#222222">document_type</text>
+    <text x="758" y="516" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="484" y="543" font-size="15" fill="#222222">surname</text>
+    <text x="758" y="543" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(50)</text>
+    <text x="484" y="570" font-size="15" fill="#222222">given_names</text>
+    <text x="758" y="570" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(50)</text>
+    <text x="484" y="597" font-size="15" fill="#222222">document_number</text>
+    <text x="758" y="597" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(20)</text>
+    <text x="484" y="624" font-size="15" fill="#222222">issuing_country</text>
+    <text x="758" y="624" font-size="12.5" fill="#6b6b6b" text-anchor="end">CHAR(3)</text>
+    <text x="484" y="651" font-size="15" fill="#222222">nationality</text>
+    <text x="758" y="651" font-size="12.5" fill="#6b6b6b" text-anchor="end">CHAR(3)</text>
+    <text x="484" y="678" font-size="15" fill="#222222">date_of_birth</text>
+    <text x="758" y="678" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATE</text>
+    <text x="484" y="705" font-size="15" fill="#222222">expiry_date</text>
+    <text x="758" y="705" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATE</text>
+    <text x="484" y="732" font-size="15" fill="#222222">read_method</text>
+    <text x="758" y="732" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="484" y="759" font-size="15" fill="#222222">same_as_read</text>
+    <text x="758" y="759" font-size="12.5" fill="#6b6b6b" text-anchor="end">BOOLEAN</text>
+    <text x="484" y="786" font-size="15" fill="#222222">check_digits_valid</text>
+    <text x="758" y="786" font-size="12.5" fill="#6b6b6b" text-anchor="end">BOOLEAN</text>
+    <text x="484" y="813" font-size="15" fill="#222222">found_on_photo</text>
+    <text x="758" y="813" font-size="12.5" fill="#6b6b6b" text-anchor="end">SET</text>
+    <text x="484" y="840" font-size="15" fill="#222222">status</text>
+    <text x="758" y="840" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="484" y="867" font-size="15" fill="#222222">selfie_file</text>
+    <text x="758" y="867" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(100)</text>
+    <text x="484" y="894" font-size="15" fill="#222222">submitted_at</text>
+    <text x="758" y="894" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+    <text x="484" y="921" font-size="15" fill="#222222">reviewed_by (FK)</text>
+    <text x="758" y="921" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="484" y="948" font-size="15" fill="#222222">reviewed_at</text>
+    <text x="758" y="948" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+    <text x="484" y="975" font-size="15" fill="#222222">review_note</text>
+    <text x="758" y="975" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(255)</text>
+    <text x="484" y="1002" font-size="15" fill="#222222">created_at</text>
+    <text x="758" y="1002" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+    <text x="484" y="1029" font-size="15" fill="#222222">updated_at</text>
+    <text x="758" y="1029" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+  <g>
+    <rect x="905" y="45" width="300" height="293" fill="#e6e6e6"/>
+    <rect x="900" y="40" width="300" height="293" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="900" y="40" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="1050" y="67" font-size="19" fill="#222222" text-anchor="middle">BOOKINGS</text>
+    <text x="914" y="102" font-size="15" fill="#222222" font-weight="bold">booking_id (PK)</text>
+    <text x="1188" y="102" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="129" font-size="15" fill="#222222">user_id (FK)</text>
+    <text x="1188" y="129" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="156" font-size="15" fill="#222222">acc_id (FK)</text>
+    <text x="1188" y="156" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="183" font-size="15" fill="#222222">start_date</text>
+    <text x="1188" y="183" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATE</text>
+    <text x="914" y="210" font-size="15" fill="#222222">end_date</text>
+    <text x="1188" y="210" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATE</text>
+    <text x="914" y="237" font-size="15" fill="#222222">travelers</text>
+    <text x="1188" y="237" font-size="12.5" fill="#6b6b6b" text-anchor="end">TINYINT</text>
+    <text x="914" y="264" font-size="15" fill="#222222">total_price</text>
+    <text x="1188" y="264" font-size="12.5" fill="#6b6b6b" text-anchor="end">DECIMAL(10,2)</text>
+    <text x="914" y="291" font-size="15" fill="#222222">status</text>
+    <text x="1188" y="291" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="914" y="318" font-size="15" fill="#222222">created_at</text>
+    <text x="1188" y="318" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+  <g>
+    <rect x="905" y="425" width="300" height="320" fill="#e6e6e6"/>
+    <rect x="900" y="420" width="300" height="320" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="900" y="420" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="1050" y="447" font-size="19" fill="#222222" text-anchor="middle">CREDIT_TRANSACTIONS</text>
+    <text x="914" y="482" font-size="15" fill="#222222" font-weight="bold">transaction_id (PK)</text>
+    <text x="1188" y="482" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="509" font-size="15" fill="#222222">user_id (FK)</text>
+    <text x="1188" y="509" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="536" font-size="15" fill="#222222">type</text>
+    <text x="1188" y="536" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="914" y="563" font-size="15" fill="#222222">amount</text>
+    <text x="1188" y="563" font-size="12.5" fill="#6b6b6b" text-anchor="end">DECIMAL(10,2)</text>
+    <text x="914" y="590" font-size="15" fill="#222222">balance_after</text>
+    <text x="1188" y="590" font-size="12.5" fill="#6b6b6b" text-anchor="end">DECIMAL(10,2)</text>
+    <text x="914" y="617" font-size="15" fill="#222222">booking_id (FK)</text>
+    <text x="1188" y="617" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="644" font-size="15" fill="#222222">ticket_id (FK)</text>
+    <text x="1188" y="644" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="671" font-size="15" fill="#222222">admin_id (FK)</text>
+    <text x="1188" y="671" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="914" y="698" font-size="15" fill="#222222">note</text>
+    <text x="1188" y="698" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(255)</text>
+    <text x="914" y="725" font-size="15" fill="#222222">created_at</text>
+    <text x="1188" y="725" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+  <g>
+    <rect x="1335" y="45" width="300" height="158" fill="#e6e6e6"/>
+    <rect x="1330" y="40" width="300" height="158" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="1330" y="40" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="1480" y="67" font-size="19" fill="#222222" text-anchor="middle">DESTINATIONS</text>
+    <text x="1344" y="102" font-size="15" fill="#222222" font-weight="bold">dest_id (PK)</text>
+    <text x="1618" y="102" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="1344" y="129" font-size="15" fill="#222222">name</text>
+    <text x="1618" y="129" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(80)</text>
+    <text x="1344" y="156" font-size="15" fill="#222222">season</text>
+    <text x="1618" y="156" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="183" font-size="15" fill="#222222">country</text>
+    <text x="1618" y="183" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(60)</text>
+  </g>
+  <g>
+    <rect x="1335" y="295" width="300" height="320" fill="#e6e6e6"/>
+    <rect x="1330" y="290" width="300" height="320" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="1330" y="290" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="1480" y="317" font-size="19" fill="#222222" text-anchor="middle">ACCOMMODATIONS</text>
+    <text x="1344" y="352" font-size="15" fill="#222222" font-weight="bold">acc_id (PK)</text>
+    <text x="1618" y="352" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="1344" y="379" font-size="15" fill="#222222">dest_id (FK)</text>
+    <text x="1618" y="379" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="1344" y="406" font-size="15" fill="#222222">name</text>
+    <text x="1618" y="406" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(100)</text>
+    <text x="1344" y="433" font-size="15" fill="#222222">type</text>
+    <text x="1618" y="433" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="460" font-size="15" fill="#222222">category</text>
+    <text x="1618" y="460" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(30)</text>
+    <text x="1344" y="487" font-size="15" fill="#222222">setting</text>
+    <text x="1618" y="487" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="514" font-size="15" fill="#222222">price</text>
+    <text x="1618" y="514" font-size="12.5" fill="#6b6b6b" text-anchor="end">DECIMAL(8,2)</text>
+    <text x="1344" y="541" font-size="15" fill="#222222">description</text>
+    <text x="1618" y="541" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(255)</text>
+    <text x="1344" y="568" font-size="15" fill="#222222">image</text>
+    <text x="1618" y="568" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(255)</text>
+    <text x="1344" y="595" font-size="15" fill="#222222">image_alt</text>
+    <text x="1618" y="595" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(255)</text>
+  </g>
+  <g>
+    <rect x="1335" y="695" width="300" height="401" fill="#e6e6e6"/>
+    <rect x="1330" y="690" width="300" height="401" fill="#ffffff" stroke="#222222" stroke-width="2.5"/>
+    <rect x="1330" y="690" width="300" height="42" fill="#dae3f3" stroke="#222222" stroke-width="2.5"/>
+    <text x="1480" y="717" font-size="19" fill="#222222" text-anchor="middle">TICKETS</text>
+    <text x="1344" y="752" font-size="15" fill="#222222" font-weight="bold">ticket_id (PK)</text>
+    <text x="1618" y="752" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="1344" y="779" font-size="15" fill="#222222">user_id (FK)</text>
+    <text x="1618" y="779" font-size="12.5" fill="#6b6b6b" text-anchor="end">INT</text>
+    <text x="1344" y="806" font-size="15" fill="#222222">type</text>
+    <text x="1618" y="806" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="833" font-size="15" fill="#222222">origin</text>
+    <text x="1618" y="833" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(80)</text>
+    <text x="1344" y="860" font-size="15" fill="#222222">destination</text>
+    <text x="1618" y="860" font-size="12.5" fill="#6b6b6b" text-anchor="end">VARCHAR(80)</text>
+    <text x="1344" y="887" font-size="15" fill="#222222">trip_type</text>
+    <text x="1618" y="887" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="914" font-size="15" fill="#222222">depart_date</text>
+    <text x="1618" y="914" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATE</text>
+    <text x="1344" y="941" font-size="15" fill="#222222">return_date</text>
+    <text x="1618" y="941" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATE</text>
+    <text x="1344" y="968" font-size="15" fill="#222222">travelers</text>
+    <text x="1618" y="968" font-size="12.5" fill="#6b6b6b" text-anchor="end">TINYINT</text>
+    <text x="1344" y="995" font-size="15" fill="#222222">seat_class</text>
+    <text x="1618" y="995" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="1022" font-size="15" fill="#222222">total_price</text>
+    <text x="1618" y="1022" font-size="12.5" fill="#6b6b6b" text-anchor="end">DECIMAL(10,2)</text>
+    <text x="1344" y="1049" font-size="15" fill="#222222">status</text>
+    <text x="1618" y="1049" font-size="12.5" fill="#6b6b6b" text-anchor="end">ENUM</text>
+    <text x="1344" y="1076" font-size="15" fill="#222222">created_at</text>
+    <text x="1618" y="1076" font-size="12.5" fill="#6b6b6b" text-anchor="end">DATETIME</text>
+  </g>
+</svg>

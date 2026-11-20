@@ -1,0 +1,1450 @@
+/* Admin dashboard (admin.html): the side menu, the overview, and the database viewer.
+   It is loaded after styles.css and auth.css, and reuses their colours, buttons, form fields,
+   tables and dialogs. */
+
+.admin-app {
+  --admin-side-w: 248px;
+  --admin-side-text: #c5d6ea;
+  --admin-mono: Consolas, "SF Mono", Menlo, "Liberation Mono", monospace;
+  min-height: 100vh;
+}
+
+/* Many boxes here set "display", which would show an element that has the hidden attribute. */
+.admin-app [hidden] {
+  display: none !important;
+}
+
+.admin-app__wait {
+  max-width: 560px;
+  margin: 64px auto 0;
+  padding-inline: 24px;
+}
+
+.admin-app__wait.auth-status {
+  padding: 14px 16px;
+}
+
+/* ---------- The layout: side menu and content ---------- */
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: var(--admin-side-w) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.admin-side {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100vh;
+  padding: 22px 14px 18px;
+  overflow-y: auto;
+  background: var(--et-navy);
+  color: var(--admin-side-text);
+}
+
+.admin-side :focus-visible {
+  outline-color: var(--et-focus-on-dark);
+}
+
+.admin-side__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px;
+}
+
+.admin-side__logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.auth-page a.admin-side__brand,
+.auth-page a.admin-side__brand:hover {
+  color: #fff;
+}
+
+.admin-side__name {
+  font: 700 19px/1.1 var(--et-display);
+}
+
+.admin-side__name span {
+  display: block;
+  margin-top: 4px;
+  color: var(--admin-side-text);
+  font: 600 12px/1 var(--et-font);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.admin-nav {
+  position: relative; /* js/admin-nav.js measures the links from this box */
+  display: grid;
+  gap: 4px;
+}
+
+/* .auth-page colours every link blue. These rules give the menu its own colours. */
+.auth-page a.admin-nav__link,
+.auth-page a.admin-side__action,
+.admin-side__action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--admin-side-text);
+  font: 500 15.5px/1.2 var(--et-font);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.auth-page a.admin-nav__link:hover,
+.auth-page a.admin-side__action:hover,
+.admin-side__action:hover {
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+}
+
+/* The section on screen: a lighter row with a sky-blue marker on its left edge. */
+.auth-page a.admin-nav__link[aria-current="page"] {
+  background: rgba(255, 255, 255, .12);
+  box-shadow: inset 3px 0 0 #5cc8f2;
+  color: #fff;
+  font-weight: 600;
+}
+
+.admin-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.admin-nav__count {
+  min-width: 24px;
+  margin-left: auto;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #ffd9a8;
+  color: #5c2500;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.admin-nav__count[data-value="0"],
+.admin-nav__count:empty {
+  display: none;
+}
+
+.admin-side__foot {
+  display: grid;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}
+
+.admin-side__user {
+  padding: 0 12px 10px;
+  overflow-wrap: anywhere;
+}
+
+.admin-side__user-name {
+  display: block;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.admin-side__user-email {
+  display: block;
+  margin-top: 2px;
+  font-size: 13.5px;
+}
+
+.admin-main {
+  min-width: 0;
+  padding: 36px 40px 64px;
+}
+
+.admin-main:focus {
+  outline: none;
+}
+
+.admin-main > section {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+/* ---------- The top of a section ---------- */
+
+.admin-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.admin-head__title {
+  color: var(--et-navy);
+  font: 700 30px/1.15 var(--et-display);
+}
+
+.admin-head__text {
+  max-width: 62ch;
+  margin-top: 6px;
+  color: var(--et-muted);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+/* ---------- Cards ---------- */
+
+.admin-card {
+  padding: 22px 24px 24px;
+  border: 1px solid var(--et-line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.admin-card__title {
+  color: var(--et-navy);
+  font: 700 18px/1.25 var(--et-display);
+}
+
+.admin-card__text {
+  margin-top: 6px;
+  color: var(--et-muted);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.auth-page a.admin-card__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  font-size: 14.5px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* minmax(0, ...) lets a card shrink instead of overflowing */
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* ---------- Overview: the totals ---------- */
+
+.admin-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-kpi {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  border: 1px solid var(--et-line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.admin-kpi__label {
+  color: var(--et-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-kpi__value {
+  margin-top: 10px;
+  color: var(--et-navy);
+  font: 700 34px/1 var(--et-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-kpi__note {
+  margin-top: 10px;
+  color: var(--et-muted);
+  font-size: 13.5px;
+  line-height: 1.35;
+}
+
+/* The inbox total is the one that asks for an action, so it gets the warm marker that the
+   "New" badge uses in the messages table. With nothing new it looks like the other totals. */
+.admin-kpi--inbox:not(:has([data-value="0"])) {
+  box-shadow: inset 0 3px 0 #e58a2b;
+}
+
+/* ---------- Overview: the bar charts ---------- */
+
+.admin-bars {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-bars__row {
+  display: grid;
+  grid-template-columns: minmax(84px, 9.5em) minmax(0, 1fr) 2.5em;
+  gap: 12px;
+  align-items: center;
+  font-size: 14.5px;
+}
+
+.admin-bars__label {
+  overflow: hidden;
+  color: var(--et-ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The track's left edge is the chart's zero line. */
+.admin-bars__track {
+  display: block;
+  height: 14px;
+  border-left: 1px solid #b9c7d6;
+}
+
+.admin-bars__bar {
+  display: block;
+  min-width: 2px;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background: var(--et-primary);
+  transition: width .5s cubic-bezier(.2, .7, .2, 1);
+}
+
+.admin-bars__row:hover .admin-bars__bar {
+  background: var(--et-royal);
+}
+
+.admin-bars__value {
+  color: var(--et-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---------- Overview: newest accounts and latest messages ---------- */
+
+.admin-feed {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-feed__item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--et-line);
+}
+
+.admin-feed__text {
+  min-width: 0;
+}
+
+.admin-feed__title {
+  display: block;
+  overflow: hidden;
+  color: var(--et-ink);
+  font-size: 15px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-feed__sub {
+  display: block;
+  overflow: hidden;
+  color: var(--et-muted);
+  font-size: 13.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-feed__side {
+  flex-shrink: 0;
+  color: var(--et-muted);
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+
+.admin-feed .messages-badge {
+  flex-shrink: 0;
+}
+
+/* ---------- Stays and messages: tighter than the public forms ---------- */
+
+.admin-app .admin-filters .auth-form__input,
+.db-view__order .auth-form__input {
+  min-height: 44px;
+}
+
+.admin-app .admin-filters .auth-form__label,
+.db-view__order .auth-form__label {
+  font-size: 14px;
+}
+
+.admin-app .admin-table thead th {
+  color: var(--et-muted);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.admin-app .admin-table tbody tr:hover {
+  background: #f8fbfd;
+}
+
+/* ---------- Bookings and customers ---------- */
+
+.admin-filters--one {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 520px;
+}
+
+/* Search, then two choices (the tickets list). On a phone they stack, like the other filters. */
+@media (min-width: 40em) {
+  .admin-filters--three {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.admin-table__credit {
+  color: var(--et-navy);
+  font-weight: 700;
+}
+
+/* An account that can't book: its credit is 0. */
+.admin-table__credit--none {
+  color: var(--et-muted);
+  font-weight: 400;
+}
+
+/* The credit dialog (js/admin-users.js) */
+
+.admin-credit__now {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: 1px solid var(--et-line);
+  border-radius: 12px;
+  color: var(--et-muted);
+  font-size: 15px;
+}
+
+.admin-credit__now strong {
+  color: var(--et-navy);
+  font: 700 28px/1 var(--et-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-credit__action {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.admin-credit__action legend {
+  padding: 0;
+}
+
+.admin-credit__action label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  color: var(--et-ink);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.admin-credit__action input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--et-primary);
+}
+
+.admin-credit__action .auth-form__error {
+  flex-basis: 100%;
+  margin-top: 0;
+}
+
+.admin-feed__amount {
+  flex-shrink: 0;
+  color: var(--et-ink);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.admin-feed__amount--in {
+  color: #11603a;
+}
+
+/* ---------- Verifications (js/admin-verifications.js) ---------- */
+
+.admin-dialog--wide {
+  width: min(900px, calc(100% - 24px));
+}
+
+.verify-review {
+  display: grid;
+  gap: 20px;
+  align-items: start;
+}
+
+.verify-review__photo {
+  margin: 0;
+}
+
+.verify-review__photo img {
+  display: block;
+  width: 100%;
+  max-height: 460px;
+  border: 1px solid var(--et-line);
+  border-radius: 12px;
+  background: var(--auth-surface);
+  object-fit: contain;
+}
+
+/* The camera check's four photos, under the selfie. They are mirrored, like the camera
+   check showed them, so "Turned left" looks like a turn to the left. */
+.verify-review__frames {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.verify-review__frames[hidden] {
+  display: none;
+}
+
+.verify-review__frame {
+  margin: 0;
+}
+
+.verify-review__frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  background: var(--auth-surface);
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.verify-review__frame figcaption {
+  margin-top: 2px;
+  color: var(--et-muted);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.verify-review__details {
+  margin-top: 0;
+}
+
+/* A check that didn't pass, written next to the detail. */
+.verify-review__warn {
+  display: block;
+  margin-top: 2px;
+  color: #7a2e0e;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.verify-review__actions {
+  margin-top: 14px;
+}
+
+@media (min-width: 46em) {
+  .verify-review {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+/* The identity column of the customers table, and the badges of the verifications list. */
+.messages-badge--unverified,
+.messages-badge--none {
+  color: var(--et-muted);
+}
+
+.messages-badge--verified {
+  background: #e7f6ec;
+  color: #11603a;
+}
+
+.messages-badge--rejected {
+  background: #fef3f2;
+  color: #b42318;
+}
+
+.admin-dest__count {
+  margin-top: 14px;
+  text-align: left;
+}
+
+/* The customers table has three buttons per row: they wrap instead of making the row wide. */
+.admin-app .admin-table__actions--wrap {
+  white-space: normal;
+}
+
+.admin-table__actions--wrap .admin-btn {
+  margin: 3px 0 3px 6px;
+}
+
+/* Links that are easy to tap: at least 24px high, with the touch area around the text. */
+.auth-page a.admin-kpi__note {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin-top: 4px;
+}
+
+.auth-page a.db-key--link {
+  padding-block: 3px;
+}
+
+/* ---------- Database viewer ---------- */
+
+.db-code {
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--et-ice);
+  color: var(--et-navy);
+  font: 600 14px/1.4 var(--admin-mono);
+}
+
+.db-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.db-tables__title {
+  margin-bottom: 8px;
+  color: var(--et-muted);
+  font: 600 13px/1.3 var(--et-font);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.db-tables__list {
+  position: relative; /* js/admin-database.js measures the links from this box */
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0 0 6px;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.auth-page a.db-tables__link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--et-line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--et-ink);
+  font: 500 14px/1.2 var(--admin-mono);
+  white-space: nowrap;
+}
+
+.auth-page a.db-tables__link:hover {
+  border-color: var(--et-primary);
+  color: var(--et-navy);
+}
+
+.auth-page a.db-tables__link[aria-current="true"] {
+  border-color: var(--et-navy);
+  background: var(--et-navy);
+  color: #fff;
+}
+
+.db-tables__count {
+  color: var(--et-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.db-tables__link[aria-current="true"] .db-tables__count {
+  color: var(--admin-side-text);
+}
+
+.db-view {
+  min-width: 0;
+}
+
+.db-view__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.db-view__name {
+  color: var(--et-navy);
+  font: 700 20px/1.25 var(--admin-mono);
+  overflow-wrap: anywhere;
+}
+
+.db-view__name:focus {
+  outline: none;
+}
+
+.db-view__summary {
+  margin-top: 4px;
+  color: var(--et-muted);
+  font-size: 14.5px;
+}
+
+.db-view__order {
+  min-width: 180px;
+}
+
+.db-grid-wrap {
+  max-height: 68vh;
+  overflow: auto;
+}
+
+.db-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font: 13.5px/1.45 var(--admin-mono);
+}
+
+.db-grid th,
+.db-grid td {
+  max-width: 300px;
+  padding: 9px 14px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--et-line);
+  color: var(--et-ink);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The column names stay in view while the rows scroll under them. */
+.db-grid thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--auth-surface);
+  vertical-align: top;
+}
+
+.db-grid tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.db-grid tbody tr:hover td {
+  background: #f8fbfd;
+}
+
+.db-grid__column {
+  display: block;
+  color: var(--et-navy);
+  font-weight: 700;
+}
+
+.db-grid__type {
+  display: block;
+  margin-top: 2px;
+  color: var(--et-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.db-grid .db-grid__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.db-grid .db-grid__protected,
+.db-null {
+  color: #6b7890;
+  font-style: italic;
+}
+
+/* What kind of key a column is. The foreign key is a link to the table it points to. */
+.db-key,
+.auth-page a.db-key {
+  display: inline-block;
+  margin: 6px 4px 0 0;
+  padding: 1px 7px;
+  border: 1px solid var(--et-line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--et-muted);
+  font: 600 11.5px/1.5 var(--et-font);
+}
+
+.db-key--primary {
+  border-color: var(--et-navy);
+  background: var(--et-navy);
+  color: #fff;
+}
+
+.auth-page a.db-key--link {
+  border-color: var(--et-primary);
+  color: var(--et-primary);
+}
+
+.auth-page a.db-key--link:hover {
+  background: var(--et-ice);
+  color: var(--et-royal);
+}
+
+/* ---------- Wider screens ---------- */
+
+@media (min-width: 52em) {
+  .admin-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72em) {
+  .db-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .db-tables__list {
+    display: grid;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+}
+
+/* ---------- Phones and tablets: the side menu becomes a bar on top ---------- */
+
+@media (max-width: 60em) {
+  .admin-shell {
+    display: block;
+  }
+
+  .admin-side {
+    position: static;
+    flex-flow: row wrap;
+    gap: 12px 16px;
+    align-items: center;
+    height: auto;
+    padding: 12px 16px;
+  }
+
+  .admin-side__brand {
+    margin-right: auto;
+    padding: 0;
+  }
+
+  .admin-side__foot {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  /* The logo already leads to the website, so only "Log out" stays in the bar. */
+  .admin-side__user,
+  .auth-page a.admin-side__action {
+    display: none;
+  }
+
+  .admin-side__action {
+    width: auto;
+  }
+
+  .admin-nav {
+    display: flex;
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .auth-page a.admin-nav__link {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .auth-page a.admin-nav__link[aria-current="page"] {
+    box-shadow: inset 0 -3px 0 #5cc8f2;
+  }
+
+  .admin-main {
+    padding: 24px 16px 48px;
+  }
+
+  .admin-head__title {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-bars__bar,
+  .auth-page a.admin-nav__link,
+  .admin-side__action {
+    transition: none;
+  }
+}
+
+/* ---------- Phones: the admin tables show each row as a card ----------
+   A table of five or six columns doesn't fit 390px, so each row becomes a card, and each value
+   gets the name of its column (data-label, set by js/admin-nav.js). The database viewer keeps
+   its real table: there, the columns are the point. */
+@media (max-width: 40em) {
+  .admin-app .admin-table-wrap:not(.db-grid-wrap) {
+    overflow: visible;
+    border: 0;
+  }
+
+  .admin-app .admin-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .admin-app .admin-table,
+  .admin-app .admin-table tbody,
+  .admin-app .admin-table tr,
+  .admin-app .admin-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-app .admin-table tr {
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--et-line);
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  .admin-app .admin-table tbody tr:hover {
+    background: #fff;
+  }
+
+  .admin-app .admin-table td,
+  .admin-app .admin-table tbody tr:last-child td {
+    padding: 4px 0;
+    border: 0;
+    text-align: left;
+  }
+
+  .admin-app .admin-table td[data-label]::before {
+    display: block;
+    color: var(--et-muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    content: attr(data-label);
+  }
+
+  .admin-app .admin-table td.credit-amount {
+    text-align: left;
+  }
+
+  /* The buttons: a row under the values, wrapping when they don't fit. */
+  .admin-app .admin-table td.admin-table__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .admin-app .admin-table__actions .admin-btn,
+  .admin-app .admin-table__actions .admin-btn + .admin-btn,
+  .admin-table__actions--wrap .admin-btn {
+    margin: 0;
+  }
+
+  .admin-app .admin-table__img {
+    width: 100%;
+    height: 140px;
+  }
+}
+
+/* Phones: inside a card, the short values sit two by two; the first column (the name) and the
+   buttons take the whole width. */
+@media (max-width: 40em) {
+  .admin-app .admin-table tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 14px;
+  }
+
+  .admin-app .admin-table td:first-child,
+  .admin-app .admin-table td.admin-table__actions {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- One message (admin.html, js/admin-messages.js) ----------
+   Like an email client: the sender at the top, the conversation in the middle (the customer on
+   the left, the team on the right), the reply box at the bottom. Only the middle scrolls. */
+
+.admin-dialog.msg-dialog {
+  width: min(760px, calc(100% - 24px));
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
+  padding: 0;
+  overflow: hidden;
+}
+
+.msg-dialog[open] {
+  display: flex;
+}
+
+.msg {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.msg__head {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px 20px 16px 24px;
+  border-bottom: 1px solid var(--et-line);
+}
+
+.msg__avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--et-navy);
+  color: #fff;
+  font: 700 17px/1 var(--et-display);
+}
+
+.msg__who {
+  flex: 1;
+  min-width: 0;
+}
+
+.msg__title {
+  margin: 0;
+  color: var(--et-navy);
+  font: 700 21px/1.25 var(--et-display);
+  overflow-wrap: anywhere;
+}
+
+.msg__title:focus {
+  outline: none;
+}
+
+.msg__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  margin: 3px 0 0;
+  font-size: 14.5px;
+}
+
+.auth-page a.msg__email {
+  color: var(--et-primary);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.msg__phone {
+  color: var(--et-muted);
+}
+
+.msg__phone:empty {
+  display: none;
+}
+
+.msg__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 10px 0 0;
+}
+
+.msg__chip {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--et-ice);
+  color: var(--et-navy);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.msg__chip--quiet {
+  background: none;
+  border: 1px solid var(--et-line);
+  color: var(--et-muted);
+  font-weight: 500;
+}
+
+.msg__close {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--et-muted);
+  cursor: pointer;
+}
+
+.msg__close:hover {
+  background: var(--auth-surface);
+  color: var(--et-navy);
+}
+
+.msg__close svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* The conversation: the only part that scrolls. */
+.msg__body {
+  flex: 1;
+  min-height: 120px;
+  padding: 20px 24px;
+  overflow-y: auto;
+  background: var(--auth-surface);
+}
+
+.msg__body > .auth-status {
+  margin: 0 0 14px;
+}
+
+.msg__thread,
+.msg__replies {
+  display: grid;
+  gap: 14px;
+}
+
+.msg__bubble {
+  max-width: 88%;
+  padding: 12px 16px;
+  border-radius: 4px 16px 16px 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 27, 72, .08);
+}
+
+/* The team's replies, on the right. */
+.msg__bubble--out {
+  justify-self: end;
+  border-radius: 16px 4px 16px 16px;
+  background: #e3f1f8;
+}
+
+.msg__by {
+  margin: 0 0 4px;
+  color: var(--et-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* The text keeps the line breaks the person typed. */
+.msg__text {
+  margin: 0;
+  color: var(--et-ink);
+  font-size: 15.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* The reply box. */
+.msg__composer {
+  display: grid;
+  gap: 8px;
+  padding: 16px 24px 18px;
+  border-top: 1px solid var(--et-line);
+  background: #fff;
+}
+
+.msg__warning {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 4px solid #b54708;
+  border-radius: 8px;
+  background: #fff4e5;
+  color: #7a2e0e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.msg__warning[hidden],
+.msg-dialog .auth-form__error[hidden] {
+  display: none;
+}
+
+.msg__label {
+  color: var(--et-ink);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.msg__input {
+  width: 100%;
+  min-height: 96px;
+  max-height: 260px;
+  padding: 12px 14px;
+  border: 1px solid #b9c7d6;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--et-ink);
+  font: 15.5px/1.5 var(--et-font);
+  resize: vertical;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.msg__input:focus {
+  border-color: var(--et-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 119, 168, .18);
+}
+
+.msg__input[aria-invalid="true"] {
+  border: 2px solid #b42318;
+}
+
+.msg-dialog .auth-form__error {
+  margin: 0;
+}
+
+.msg__hint {
+  margin: 0;
+  color: var(--et-muted);
+  font-size: 13.5px;
+}
+
+/* The buttons: the quiet ones on the left, sending on the right. */
+.msg__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.msg__secondary,
+.msg__send {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  align-items: center;
+}
+
+.msg__action {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  color: var(--et-navy);
+  font: 600 14.5px/1 var(--et-font);
+  cursor: pointer;
+}
+
+.msg__action:hover {
+  border-color: var(--et-line);
+  background: var(--auth-surface);
+}
+
+.msg__action--danger {
+  color: #b42318;
+}
+
+.msg__action--danger:hover {
+  border-color: #f2c9c4;
+  background: #fef3f2;
+}
+
+.msg__count {
+  color: var(--et-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.msg__count.is-near {
+  color: #b54708;
+  font-weight: 600;
+}
+
+@media (max-width: 40em) {
+  .admin-dialog.msg-dialog {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .msg__head,
+  .msg__body,
+  .msg__composer {
+    padding-inline: 16px;
+  }
+
+  .msg__bubble {
+    max-width: 96%;
+  }
+
+  .msg__send {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg__input {
+    transition: none;
+  }
+}
+
+/* ---------- Discounts ---------- */
+.discount-row__who {
+  display: block;
+  font-weight: 600;
+}
+
+.discount-row__note {
+  display: block;
+  color: #5b6b80;
+  font-size: 13px;
+}
+
+.discount-form__note {
+  margin-top: -6px;
+}
+
+.discount-exclude {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.discount-exclude[hidden] {
+  display: none;
+}
+
+.discount-exclude__search {
+  margin: 6px 0 8px;
+}
+
+.discount-exclude__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 8px;
+  border: 1px solid #d5dee8;
+  border-radius: 10px;
+}
+
+.discount-exclude__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.discount-exclude__item:hover {
+  background: #f1f6fa;
+}
+
+.discount-exclude__item input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: 0 0 auto;
+}
+
+.discount-exclude__name {
+  display: block;
+  color: var(--et-ink);
+  font-weight: 600;
+}
+
+.discount-form__active {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.discount-form__active input {
+  width: 18px;
+  height: 18px;
+}
+
+.auth-form__optional {
+  color: #5b6b80;
+  font-weight: 400;
+}

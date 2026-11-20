@@ -1,0 +1,119 @@
+/* Loaded only by the optional desktop cursor module, after the page loads. */
+.et-cursor {
+  --et-cursor-ready: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.et-cursor,
+.et-cursor * {
+  pointer-events: none !important;
+}
+
+/* JS adds this only after CSS loads and the cursor has a real mouse position. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  html.et-cursor-active,
+  html.et-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+.et-cursor__dot,
+.et-cursor__ring,
+.et-cursor__trail,
+.et-cursor__pulse,
+.et-cursor__spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.et-cursor__dot,
+.et-cursor__ring {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.et-cursor.is-visible .et-cursor__dot,
+.et-cursor.is-visible .et-cursor__ring {
+  opacity: 1;
+}
+
+.et-cursor__dot::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px;
+  border: 1px solid rgba(20, 79, 106, .75);
+  border-radius: 50%;
+  background: #f2fbff;
+  transition: transform 160ms ease;
+}
+
+.et-cursor__ring::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: -14px;
+  border: 1px solid rgba(83, 159, 190, .65);
+  border-radius: 50%;
+  background: rgba(157, 214, 236, .05);
+  box-shadow: 0 0 12px rgba(110, 194, 225, .08);
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.et-cursor[data-kind="button"] .et-cursor__ring::before {
+  transform: scale(1.4);
+  background: rgba(157, 214, 236, .10);
+}
+
+.et-cursor[data-kind="link"] .et-cursor__ring::before,
+.et-cursor[data-kind="image"] .et-cursor__ring::before {
+  transform: scale(1.25);
+}
+
+.et-cursor[data-kind="link"] .et-cursor__dot::before {
+  transform: scale(.45);
+}
+
+.et-cursor__trail {
+  width: 12px;
+  height: 12px;
+  margin: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #8dcde5, transparent 70%);
+  opacity: 0;
+}
+
+.et-cursor__pulse {
+  width: 18px;
+  height: 18px;
+  margin: -9px;
+  border: 1px solid rgba(90, 166, 198, .7);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.et-cursor__spotlight {
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.et-cursor__light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  /* A static, low-opacity gradient; only its transform changes on movement. */
+  background: radial-gradient(circle, rgba(157, 214, 236, .10), transparent 70%);
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .et-cursor { display: none; }
+}

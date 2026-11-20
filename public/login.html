@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Log in — EasyTrip</title>
+  <meta name="description" content="Log in to your EasyTrip account." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="destinations.html">Destinations</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the seasons</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="winter.html">Winter</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="hotels-chalets.html">Hotels &amp; Chalets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show hotels and chalets</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="tickets.html">Tickets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the ticket types</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="flight.html">Flights</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="about.html">About</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show more about EasyTrip</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="login.html" data-account-link>Log in</a>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" class="auth-page" tabindex="-1">
+    <div class="et-container auth-layout">
+      <section class="auth-card" aria-label="Log in">
+        <!-- Step 1: the email and password, or Google. -->
+        <div data-login-step="password">
+        <h1 class="auth-card__title" id="auth-title">Log in</h1>
+        <p class="auth-card__intro">
+          Welcome back. Enter your email and password, or continue with Google. We then email you a
+          code to confirm it's you.
+        </p>
+
+        <p class="auth-status auth-status--success" role="status" data-auth-success hidden>Your account was created. Log in to get your code by email.</p>
+        <p class="auth-status auth-status--error" role="alert" tabindex="-1" data-auth-error hidden></p>
+        <noscript>
+          <p class="auth-status auth-status--error">Please turn on JavaScript to use this form.</p>
+        </noscript>
+
+        <form class="auth-form" method="post" data-auth-form="login">
+          <div class="auth-form__field">
+            <label class="auth-form__label" for="login-email">Email address</label>
+            <input class="auth-form__input" type="email" id="login-email" name="email" required
+                   autocomplete="email" maxlength="190" spellcheck="false"
+                   aria-describedby="login-email-error"
+                   data-field="email" />
+            <p class="auth-form__error" id="login-email-error" hidden></p>
+          </div>
+
+          <div class="auth-form__field">
+            <label class="auth-form__label" for="login-password">Password</label>
+            <input class="auth-form__input" type="password" id="login-password" name="password" required
+                   autocomplete="current-password"
+                   aria-describedby="login-password-error"
+                   data-field="password" />
+            <p class="auth-form__error" id="login-password-error" hidden></p>
+            <p class="auth-form__forgot"><a href="forgot-password.html">Forgot your password?</a></p>
+          </div>
+
+          <button class="et-btn et-btn--primary et-btn--lg auth-form__submit" type="submit">Log in</button>
+        </form>
+
+        <p class="auth-divider"><span>or</span></p>
+        <!-- A normal link: the server sends the browser to Google (GET /api/auth/google). -->
+        <a class="et-btn et-btn--lg auth-google" href="/api/auth/google">
+          <svg class="auth-google__logo" viewBox="0 0 48 48" width="20" height="20" aria-hidden="true">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          Continue with Google
+        </a>
+
+        <p class="auth-card__switch">New to EasyTrip? <a href="register.html">Create an account</a></p>
+        </div>
+
+        <!-- Step 2: the 6-digit code sent by email (js/login-code.js). -->
+        <div data-login-step="code" hidden>
+          <h1 class="auth-card__title">Check your email</h1>
+          <p class="auth-card__intro">
+            We sent a 6-digit code to <strong data-code-email></strong>. It works for 10 minutes.
+          </p>
+          <p class="auth-status" data-code-terminal hidden>
+            This code can't be sent by email (email isn't set up on this server, or this is a
+            test address), so it is printed in the server's terminal instead.
+          </p>
+          <p class="auth-status" role="status" tabindex="-1" data-code-status hidden></p>
+
+          <form class="auth-form" method="post" novalidate data-code-form>
+            <div class="auth-form__field">
+              <label class="auth-form__label" for="login-code">Login code</label>
+              <input class="auth-form__input auth-code__input" type="text" id="login-code" name="code"
+                     inputmode="numeric" autocomplete="one-time-code" maxlength="7" spellcheck="false"
+                     aria-describedby="login-code-error" />
+              <p class="auth-form__error" id="login-code-error" hidden></p>
+            </div>
+
+            <button class="et-btn et-btn--primary et-btn--lg auth-form__submit" type="submit" data-code-submit>Confirm and log in</button>
+          </form>
+
+          <div class="auth-card__switch auth-code__actions">
+            <button class="auth-link" type="button" data-code-resend>Send a new code</button>
+            <button class="auth-link" type="button" data-code-restart>Use a different account</button>
+          </div>
+        </div>
+      </section>
+
+      <picture class="auth-photo">
+        <img src="assets/images/home/join-800.webp" width="800" height="600" alt="" decoding="async" />
+      </picture>
+    </div>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/login-code.js"></script>
+</body>
+</html>

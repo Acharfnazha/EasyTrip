@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin dashboard — EasyTrip</title>
+  <meta name="description" content="The EasyTrip admin dashboard." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+
+  <!-- The dashboard has its own layout (a side menu instead of the site's header and footer).
+       It stays hidden until js/account.js has checked with the server that an admin is logged in. -->
+  <div class="auth-page admin-app">
+    <p class="auth-card__intro admin-app__wait" role="status" data-account-loading>Loading the dashboard...</p>
+    <p class="auth-status auth-status--error admin-app__wait" role="alert" data-account-problem hidden></p>
+    <noscript>
+      <p class="auth-status auth-status--error admin-app__wait">Please turn on JavaScript to see this page.</p>
+    </noscript>
+
+    <div class="admin-shell" data-account-page="admin" hidden>
+      <aside class="admin-side">
+        <a class="admin-side__brand" href="index.html" aria-label="EasyTrip home">
+          <span class="admin-side__logo">
+            <img src="assets/images/brand/logo.svg" alt="" width="30" height="28">
+          </span>
+          <span class="admin-side__name">EasyTrip <span>Admin</span></span>
+        </a>
+
+        <!-- Each link shows one section of the page (js/admin-nav.js). -->
+        <nav class="admin-nav" aria-label="Dashboard">
+          <a class="admin-nav__link" href="#overview" data-admin-link="overview">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/>
+              <rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>
+            </svg>
+            Overview
+          </a>
+          <a class="admin-nav__link" href="#stays" data-admin-link="stays">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-7h6v7"/>
+            </svg>
+            Hotels &amp; chalets
+          </a>
+          <a class="admin-nav__link" href="#messages" data-admin-link="messages">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-5 4v-4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+            </svg>
+            Messages
+            <span class="admin-nav__count" data-stat="newInquiries"></span>
+            <span class="et-visually-hidden">new</span>
+          </a>
+          <a class="admin-nav__link" href="#bookings" data-admin-link="bookings">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/>
+            </svg>
+            Bookings
+          </a>
+          <a class="admin-nav__link" href="#tickets" data-admin-link="tickets">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 9V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a3 3 0 0 0 0 6v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a3 3 0 0 0 0-6z"/>
+              <path d="M14 6v2"/><path d="M14 11v2"/><path d="M14 16v2"/>
+            </svg>
+            Tickets
+          </a>
+          <a class="admin-nav__link" href="#customers" data-admin-link="customers">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5"/>
+              <path d="M16 4.8a3.5 3.5 0 0 1 0 6.4"/><path d="M18.5 14.9c1.7.8 2.7 2.5 3 5.1"/>
+            </svg>
+            Customers
+          </a>
+          <a class="admin-nav__link" href="#verifications" data-admin-link="verifications">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.2"/>
+              <path d="M5.8 16c.5-1.6 1.7-2.5 3.2-2.5s2.7.9 3.2 2.5"/><path d="M15 10h3"/><path d="M15 13.5h3"/>
+            </svg>
+            Verifications
+            <span class="admin-nav__count" data-stat="pendingVerifications"></span>
+            <span class="et-visually-hidden">waiting</span>
+          </a>
+          <a class="admin-nav__link" href="#destinations" data-admin-link="destinations">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>
+            </svg>
+            Destinations
+          </a>
+          <a class="admin-nav__link" href="#discounts" data-admin-link="discounts">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3.5 12.5V4.5a1 1 0 0 1 1-1h8l8 8-9 9z"/><circle cx="8.5" cy="8.5" r="1.6"/>
+            </svg>
+            Discounts
+          </a>
+          <a class="admin-nav__link" href="#database" data-admin-link="database">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <ellipse cx="12" cy="6" rx="8" ry="3"/>
+              <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>
+            </svg>
+            Database
+          </a>
+        </nav>
+
+        <div class="admin-side__foot">
+          <p class="admin-side__user">
+            <span class="admin-side__user-name" data-user="fullName"></span>
+            <span class="admin-side__user-email" data-user="email"></span>
+          </p>
+          <a class="admin-side__action" href="index.html">
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+            </svg>
+            View the website
+          </a>
+          <button class="admin-side__action" type="button" data-logout>
+            <svg class="admin-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/>
+            </svg>
+            Log out
+          </button>
+        </div>
+      </aside>
+
+      <main id="main" class="admin-main" tabindex="-1">
+
+        <!-- OVERVIEW: the totals (js/account.js, GET /api/admin/stats), then the charts and the
+             latest lists (js/admin-overview.js, GET /api/admin/overview). -->
+        <section data-admin-section="overview" data-admin-title="Overview" aria-labelledby="overview-title">
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="overview-title">Overview</h1>
+              <p class="admin-head__text">Hello <span data-user="firstName"></span>. This is what the database holds right now.</p>
+            </div>
+          </header>
+
+          <ul class="admin-kpis" role="list">
+            <li class="admin-kpi">
+              <span class="admin-kpi__label">Customers</span>
+              <span class="admin-kpi__value" data-stat="customers"></span>
+              <span class="admin-kpi__note">Accounts with the customer role</span>
+            </li>
+            <li class="admin-kpi">
+              <span class="admin-kpi__label">Hotels &amp; chalets</span>
+              <span class="admin-kpi__value" data-stat="accommodations"></span>
+              <span class="admin-kpi__note" data-overview-note="stays">&nbsp;</span>
+            </li>
+            <li class="admin-kpi">
+              <span class="admin-kpi__label">Bookings</span>
+              <span class="admin-kpi__value" data-stat="bookings"></span>
+              <span class="admin-kpi__note" data-overview-note="bookings">&nbsp;</span>
+            </li>
+            <li class="admin-kpi">
+              <span class="admin-kpi__label">Tickets</span>
+              <span class="admin-kpi__value" data-stat="tickets"></span>
+              <span class="admin-kpi__note">Flight, bus and train plans</span>
+            </li>
+            <li class="admin-kpi admin-kpi--inbox">
+              <span class="admin-kpi__label">New messages</span>
+              <span class="admin-kpi__value" data-stat="newInquiries"></span>
+              <a class="admin-kpi__note" href="#messages">Open the inbox</a>
+            </li>
+          </ul>
+
+          <p class="auth-status auth-status--error" role="alert" data-overview-problem hidden></p>
+
+          <div class="admin-grid">
+            <section class="admin-card" aria-labelledby="chart-countries-title">
+              <h2 class="admin-card__title" id="chart-countries-title">Stays by country</h2>
+              <p class="admin-card__text">The six countries with the most hotels and chalets.</p>
+              <ul class="admin-bars" role="list" data-bars="staysByCountry"></ul>
+            </section>
+
+            <section class="admin-card" aria-labelledby="chart-messages-title">
+              <h2 class="admin-card__title" id="chart-messages-title">Messages by status</h2>
+              <p class="admin-card__text">Every contact message, from new to closed.</p>
+              <ul class="admin-bars" role="list" data-bars="inquiriesByStatus"></ul>
+            </section>
+
+            <section class="admin-card" aria-labelledby="latest-users-title">
+              <h2 class="admin-card__title" id="latest-users-title">Newest accounts</h2>
+              <ul class="admin-feed" role="list" data-latest="users"></ul>
+              <a class="admin-card__more" href="#customers">Open the customers and their credit</a>
+            </section>
+
+            <section class="admin-card" aria-labelledby="latest-messages-title">
+              <h2 class="admin-card__title" id="latest-messages-title">Latest messages</h2>
+              <ul class="admin-feed" role="list" data-latest="inquiries"></ul>
+              <p class="admin-card__text" data-latest-empty="inquiries" hidden>No messages yet.</p>
+              <a class="admin-card__more" href="#messages">Open the inbox</a>
+            </section>
+          </div>
+        </section>
+
+        <!-- HOTELS AND CHALETS: js/admin-stays.js uses GET /api/stays to list them, and POST, PUT
+             and DELETE /api/stays to add, edit and delete them. -->
+        <section data-admin-section="stays" data-admin-title="Hotels and chalets" aria-labelledby="admin-stays-title" data-admin-stays hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-stays-title">Hotels and chalets</h1>
+              <p class="admin-head__text">Add, edit and delete the stays shown on the hotels and chalets pages.</p>
+            </div>
+            <button class="et-btn et-btn--primary" type="button" data-stay-add>Add a stay</button>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters" role="search" aria-label="Find a stay" data-stay-filters>
+              <div>
+                <label class="auth-form__label" for="stay-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="stay-filter-q" name="q"
+                       placeholder="Name, place or country" autocomplete="off" />
+              </div>
+              <div>
+                <label class="auth-form__label" for="stay-filter-type">Type</label>
+                <select class="auth-form__input" id="stay-filter-type" name="type">
+                  <option value="">Hotels and chalets</option>
+                  <option value="hotel">Hotels</option>
+                  <option value="chalet">Chalets</option>
+                </select>
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-stay-message hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Hotels and chalets</caption>
+                <thead>
+                  <tr>
+                    <th scope="col"><span class="et-visually-hidden">Image</span></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Place</th>
+                    <th scope="col">Price / night</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-stay-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-stay-empty hidden>No stays match this search.</p>
+
+            <div class="admin-pager">
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-stay-prev>Previous</button>
+              <p class="admin-pager__text" data-stay-page></p>
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-stay-next>Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- MESSAGES: js/admin-messages.js uses GET /api/admin/inquiries for the list, and GET, PATCH
+             and DELETE /api/admin/inquiries/:id and POST /api/admin/inquiries/:id/replies to read,
+             answer, close or reopen, and delete a message. -->
+        <section data-admin-section="messages" data-admin-title="Messages" aria-labelledby="admin-messages-title" data-admin-messages hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-messages-title">Messages</h1>
+              <p class="admin-head__text">Messages sent from the contact page. Open one to read it, reply, close it or delete it.</p>
+            </div>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters" role="search" aria-label="Find a message" data-message-filters>
+              <div>
+                <label class="auth-form__label" for="message-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="message-filter-q" name="q"
+                       placeholder="Name, email or words in the message" autocomplete="off" />
+              </div>
+              <div>
+                <label class="auth-form__label" for="message-filter-status">Status</label>
+                <select class="auth-form__input" id="message-filter-status" name="status">
+                  <option value="">All messages</option>
+                  <option value="new">New</option>
+                  <option value="read">Read</option>
+                  <option value="answered">Answered</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-message-status hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Messages</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Received</th>
+                    <th scope="col">From</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-message-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-message-empty hidden>No messages match this search.</p>
+
+            <div class="admin-pager">
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-message-prev>Previous</button>
+              <p class="admin-pager__text" data-message-page></p>
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-message-next>Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOOKINGS: js/admin-bookings.js uses GET /api/admin/bookings for the list, and
+             PATCH /api/admin/bookings/:id to confirm or cancel one. Cancelling gives the
+             customer's credit back. -->
+        <section data-admin-section="bookings" data-admin-title="Bookings" aria-labelledby="admin-bookings-title" data-admin-bookings hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-bookings-title">Bookings</h1>
+              <p class="admin-head__text">
+                The stays customers booked with their credit. Confirm a pending booking, or cancel
+                one: its price then goes back to the customer's credit.
+              </p>
+            </div>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters" role="search" aria-label="Find a booking" data-booking-filters>
+              <div>
+                <label class="auth-form__label" for="booking-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="booking-filter-q" name="q"
+                       placeholder="Customer, email or stay" autocomplete="off" />
+              </div>
+              <div>
+                <label class="auth-form__label" for="booking-filter-status">Status</label>
+                <select class="auth-form__input" id="booking-filter-status" name="status">
+                  <option value="">All bookings</option>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-booking-status hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Bookings</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Booked on</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Stay</th>
+                    <th scope="col" class="credit-amount">Total</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-booking-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-booking-empty hidden>No bookings match this search.</p>
+
+            <div class="admin-pager">
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-booking-prev>Previous</button>
+              <p class="admin-pager__text" data-booking-page></p>
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-booking-next>Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- TICKETS: js/admin-tickets.js uses GET /api/admin/tickets for the list, and
+             PATCH /api/admin/tickets/:id to confirm or cancel one. Cancelling gives the
+             customer's credit back. -->
+        <section data-admin-section="tickets" data-admin-title="Tickets" aria-labelledby="admin-tickets-title" data-admin-tickets hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-tickets-title">Tickets</h1>
+              <p class="admin-head__text">
+                The flight, bus and train tickets customers bought with their credit. Confirm a
+                pending ticket, or cancel one: its price then goes back to the customer's credit.
+              </p>
+            </div>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters admin-filters--three" role="search" aria-label="Find a ticket" data-ticket-filters>
+              <div>
+                <label class="auth-form__label" for="ticket-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="ticket-filter-q" name="q"
+                       placeholder="Customer, email or place" autocomplete="off" />
+              </div>
+              <div>
+                <label class="auth-form__label" for="ticket-filter-type">Transport</label>
+                <select class="auth-form__input" id="ticket-filter-type" name="type">
+                  <option value="">All transport</option>
+                  <option value="flight">Flights</option>
+                  <option value="bus">Buses</option>
+                  <option value="train">Trains</option>
+                </select>
+              </div>
+              <div>
+                <label class="auth-form__label" for="ticket-filter-status">Status</label>
+                <select class="auth-form__input" id="ticket-filter-status" name="status">
+                  <option value="">All tickets</option>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-ticket-status hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Tickets</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Bought on</th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Ticket</th>
+                    <th scope="col" class="credit-amount">Total</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-ticket-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-ticket-empty hidden>No tickets match this search.</p>
+
+            <div class="admin-pager">
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-ticket-prev>Previous</button>
+              <p class="admin-pager__text" data-ticket-page></p>
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-ticket-next>Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- CUSTOMERS: js/admin-users.js uses GET /api/admin/users for the list, and for one
+             account GET and POST /api/admin/users/:id/credit to see its credit history and to
+             add or remove credit. -->
+        <section data-admin-section="customers" data-admin-title="Customers" aria-labelledby="admin-users-title" data-admin-users hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-users-title">Customers</h1>
+              <p class="admin-head__text">
+                Every account, its identity check and its credit. Customers pay for their bookings
+                and tickets with credit, so an account with no credit left can't buy anything until
+                you add some. You can also make an account an admin, or delete it.
+              </p>
+            </div>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters admin-filters--one" role="search" aria-label="Find an account" data-user-filters>
+              <div>
+                <label class="auth-form__label" for="user-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="user-filter-q" name="q"
+                       placeholder="Name or email" autocomplete="off" />
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-user-status hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Accounts and their credit</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Account</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Identity</th>
+                    <th scope="col" class="credit-amount">Bookings &amp; tickets</th>
+                    <th scope="col" class="credit-amount">Credit</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-user-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-user-empty hidden>No accounts match this search.</p>
+
+            <div class="admin-pager">
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-user-prev>Previous</button>
+              <p class="admin-pager__text" data-user-page></p>
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-user-next>Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- VERIFICATIONS: js/admin-verifications.js. GET /api/admin/verifications lists the saved
+             identity documents; for one, GET /api/admin/verifications/:userId (its details),
+             .../selfie (the photo) and POST to approve or reject it. -->
+        <section data-admin-section="verifications" data-admin-title="Verifications" aria-labelledby="admin-verify-title" data-admin-verifications hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-verify-title">Verifications</h1>
+              <p class="admin-head__text">
+                Customers send a selfie holding their identity document. Compare the face and the
+                document in the photo with the saved details, then approve or reject. Only verified
+                customers can book stays and buy tickets.
+              </p>
+            </div>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters" role="search" aria-label="Find a verification" data-verify-filters>
+              <div>
+                <label class="auth-form__label" for="verify-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="verify-filter-q" name="q"
+                       placeholder="Name, email or surname on the document" autocomplete="off" />
+              </div>
+              <div>
+                <label class="auth-form__label" for="verify-filter-status">Status</label>
+                <select class="auth-form__input" id="verify-filter-status" name="status">
+                  <option value="pending" selected>Waiting for a review</option>
+                  <option value="">All documents</option>
+                  <option value="unverified">No selfie yet</option>
+                  <option value="verified">Verified</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-verify-status hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Identity documents</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Document</th>
+                    <th scope="col">Sent</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-verify-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-verify-empty hidden>No documents match. When a customer sends a selfie, it appears here.</p>
+
+            <div class="admin-pager">
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-verify-prev>Previous</button>
+              <p class="admin-pager__text" data-verify-page></p>
+              <button class="et-btn et-btn--outline admin-btn" type="button" data-verify-next>Next</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- DESTINATIONS: js/admin-destinations.js uses GET /api/admin/destinations for the list
+             (with each one's stays), and POST, PUT and DELETE to add, edit and delete one. -->
+        <section data-admin-section="destinations" data-admin-title="Destinations" aria-labelledby="admin-dest-title" data-admin-destinations hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-dest-title">Destinations</h1>
+              <p class="admin-head__text">
+                The places a hotel or chalet can be in, each for one season. A destination that still
+                has stays can't be deleted.
+              </p>
+            </div>
+            <button class="et-btn et-btn--primary" type="button" data-dest-add>Add a destination</button>
+          </header>
+
+          <div class="admin-card">
+            <form class="admin-filters" role="search" aria-label="Find a destination" data-dest-filters>
+              <div>
+                <label class="auth-form__label" for="dest-filter-q">Search</label>
+                <input class="auth-form__input" type="search" id="dest-filter-q" name="q"
+                       placeholder="Place or country" autocomplete="off" />
+              </div>
+              <div>
+                <label class="auth-form__label" for="dest-filter-season">Season</label>
+                <select class="auth-form__input" id="dest-filter-season" name="season">
+                  <option value="">Every season</option>
+                  <option value="winter">Winter</option>
+                  <option value="spring">Spring</option>
+                  <option value="summer">Summer</option>
+                  <option value="autumn">Autumn</option>
+                </select>
+              </div>
+            </form>
+
+            <p class="auth-status" role="status" tabindex="-1" data-dest-status hidden></p>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Destinations</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Place</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Season</th>
+                    <th scope="col" class="credit-amount">Stays</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-dest-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-dest-empty hidden>No destinations match this search.</p>
+            <p class="admin-pager__text admin-dest__count" data-dest-count></p>
+          </div>
+        </section>
+
+        <!-- DISCOUNTS: js/admin-discounts.js uses GET /api/admin/discounts for the list (with the
+             stays and customers the form offers), and POST, PUT and DELETE to add, edit and delete one. -->
+        <section data-admin-section="discounts" data-admin-title="Discounts" aria-labelledby="admin-discounts-title" data-admin-discounts hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-discounts-title">Discounts</h1>
+              <p class="admin-head__text">
+                A percentage off for every customer or for one customer, on everything, the stays, the
+                hotels, the chalets or the tickets. You can leave some stays out. When several discounts
+                fit, the customer gets only the biggest one.
+              </p>
+            </div>
+            <button class="et-btn et-btn--primary" type="button" data-discount-add>Add a discount</button>
+          </header>
+
+          <div class="admin-card">
+            <p class="auth-status" role="status" tabindex="-1" data-discount-status hidden></p>
+            <div class="admin-table-wrap" data-discount-table hidden>
+              <table class="admin-table">
+                <caption class="et-visually-hidden">Discounts</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Discount</th>
+                    <th scope="col" class="credit-amount">Off</th>
+                    <th scope="col">On</th>
+                    <th scope="col">For</th>
+                    <th scope="col">Dates</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="et-visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody data-discount-rows></tbody>
+              </table>
+            </div>
+            <p class="admin-card__text" data-discount-empty hidden>
+              No discounts yet. Use "Add a discount" to make the first one.
+            </p>
+          </div>
+        </section>
+
+        <!-- DATABASE: a read-only view of every table (js/admin-database.js). GET /api/admin/database
+             lists the tables, and GET /api/admin/database/:table gives one table's columns and rows. -->
+        <section data-admin-section="database" data-admin-title="Database" aria-labelledby="admin-database-title" data-admin-database hidden>
+          <header class="admin-head">
+            <div>
+              <h1 class="admin-head__title" id="admin-database-title">Database</h1>
+              <p class="admin-head__text">
+                Every table of <code class="db-code" data-db-name>the database</code>, read only. Password
+                hashes, session IDs and document numbers stay hidden.
+              </p>
+            </div>
+            <button class="et-btn et-btn--outline" type="button" data-db-refresh>Refresh</button>
+          </header>
+
+          <p class="auth-status" role="status" tabindex="-1" data-db-status hidden></p>
+
+          <div class="db-layout">
+            <nav class="db-tables" aria-label="Tables">
+              <h2 class="db-tables__title">Tables</h2>
+              <ul class="db-tables__list" role="list" data-db-tables></ul>
+            </nav>
+
+            <div class="admin-card db-view">
+              <div class="db-view__head">
+                <div>
+                  <h2 class="db-view__name" tabindex="-1" data-db-title>Choose a table</h2>
+                  <p class="db-view__summary" data-db-summary></p>
+                </div>
+                <div class="db-view__order">
+                  <label class="auth-form__label" for="db-order">Order</label>
+                  <select class="auth-form__input" id="db-order" data-db-order>
+                    <option value="oldest">Oldest first</option>
+                    <option value="newest">Newest first</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="admin-table-wrap db-grid-wrap" tabindex="0" role="region" aria-label="The table's rows" data-db-wrap hidden>
+                <table class="db-grid">
+                  <caption class="et-visually-hidden" data-db-caption></caption>
+                  <thead><tr data-db-head></tr></thead>
+                  <tbody data-db-rows></tbody>
+                </table>
+              </div>
+              <p class="admin-card__text" data-db-empty hidden>This table has no rows yet.</p>
+
+              <div class="admin-pager">
+                <button class="et-btn et-btn--outline admin-btn" type="button" data-db-prev disabled>Previous</button>
+                <p class="admin-pager__text" data-db-page></p>
+                <button class="et-btn et-btn--outline admin-btn" type="button" data-db-next disabled>Next</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- The form to add or edit a stay. It is sent as multipart/form-data, because it has a file. -->
+    <dialog class="admin-dialog" aria-labelledby="stay-form-title" data-stay-dialog>
+      <form class="auth-form admin-form" novalidate data-stay-form>
+        <h2 class="account-head__title admin-dialog__title" id="stay-form-title" data-stay-form-title>Add a stay</h2>
+        <p class="auth-status auth-status--error" role="alert" tabindex="-1" data-stay-form-error hidden></p>
+
+        <div class="auth-form__row">
+          <div>
+            <label class="auth-form__label" for="stay-name">Name</label>
+            <input class="auth-form__input" id="stay-name" name="name" maxlength="100"
+                   aria-describedby="stay-name-error" />
+            <p class="auth-form__error" id="stay-name-error" data-error-for="name" hidden></p>
+          </div>
+          <div>
+            <label class="auth-form__label" for="stay-type">Type</label>
+            <select class="auth-form__input" id="stay-type" name="type" aria-describedby="stay-type-error">
+              <option value="hotel">Hotel</option>
+              <option value="chalet">Chalet</option>
+            </select>
+            <p class="auth-form__error" id="stay-type-error" data-error-for="type" hidden></p>
+          </div>
+        </div>
+
+        <div>
+          <label class="auth-form__label" for="stay-dest">Destination</label>
+          <select class="auth-form__input" id="stay-dest" name="destId" aria-describedby="stay-destId-error"
+                  data-stay-destinations>
+            <option value="">Choose a destination</option>
+          </select>
+          <p class="auth-form__error" id="stay-destId-error" data-error-for="destId" hidden></p>
+        </div>
+
+        <div class="auth-form__row" data-chalet-only hidden>
+          <div>
+            <label class="auth-form__label" for="stay-category">Kind of chalet</label>
+            <input class="auth-form__input" id="stay-category" name="category" maxlength="30"
+                   list="stay-category-list" aria-describedby="stay-category-error" />
+            <datalist id="stay-category-list">
+              <option value="Cabin"></option>
+              <option value="Chalet"></option>
+              <option value="Villa"></option>
+              <option value="House"></option>
+              <option value="Retreat"></option>
+              <option value="Beach house"></option>
+              <option value="Guesthouse"></option>
+            </datalist>
+            <p class="auth-form__error" id="stay-category-error" data-error-for="category" hidden></p>
+          </div>
+          <div>
+            <label class="auth-form__label" for="stay-setting">Setting</label>
+            <select class="auth-form__input" id="stay-setting" name="setting" aria-describedby="stay-setting-error">
+              <option value="">Choose a setting</option>
+              <option value="mountain">Mountain</option>
+              <option value="coastal">Coastal</option>
+              <option value="countryside">Countryside</option>
+              <option value="forest">Forest</option>
+              <option value="desert">Desert</option>
+              <option value="tropical">Tropical</option>
+            </select>
+            <p class="auth-form__error" id="stay-setting-error" data-error-for="setting" hidden></p>
+          </div>
+        </div>
+
+        <div>
+          <label class="auth-form__label" for="stay-price">Price per night (US dollars)</label>
+          <input class="auth-form__input admin-form__price" id="stay-price" name="price" type="number"
+                 min="1" max="10000" step="0.01" inputmode="decimal" aria-describedby="stay-price-error" />
+          <p class="auth-form__error" id="stay-price-error" data-error-for="price" hidden></p>
+        </div>
+
+        <div>
+          <label class="auth-form__label" for="stay-description">Short description</label>
+          <p class="auth-form__hint" id="stay-description-hint">One or two sentences, up to 255 characters.</p>
+          <textarea class="auth-form__input admin-form__text" id="stay-description" name="description" rows="3"
+                    maxlength="255" aria-describedby="stay-description-hint stay-description-error"></textarea>
+          <p class="auth-form__error" id="stay-description-error" data-error-for="description" hidden></p>
+        </div>
+
+        <div>
+          <label class="auth-form__label" for="stay-image">Image</label>
+          <p class="auth-form__hint" id="stay-image-hint" data-stay-image-hint>
+            A JPG, PNG or WebP photo, 2 MB or smaller. Landscape photos (3 by 2) fit the cards best.
+          </p>
+          <input class="auth-form__input admin-form__file" id="stay-image" name="image" type="file"
+                 accept="image/jpeg,image/png,image/webp" aria-describedby="stay-image-hint stay-image-error" />
+          <div class="admin-form__current" data-stay-current hidden>
+            <img src="data:," alt="" width="96" height="64" data-stay-current-img />
+            <span>The current image stays unless you choose a new file.</span>
+          </div>
+          <p class="auth-form__error" id="stay-image-error" data-error-for="image" hidden></p>
+        </div>
+
+        <div>
+          <label class="auth-form__label" for="stay-alt">Image description</label>
+          <p class="auth-form__hint" id="stay-alt-hint">What the photo shows, for visitors who use a screen reader.</p>
+          <input class="auth-form__input" id="stay-alt" name="imageAlt" maxlength="255"
+                 aria-describedby="stay-alt-hint stay-imageAlt-error" />
+          <p class="auth-form__error" id="stay-imageAlt-error" data-error-for="imageAlt" hidden></p>
+        </div>
+
+        <div class="admin-form__actions">
+          <button class="et-btn et-btn--primary" type="submit" data-stay-save>Save</button>
+          <button class="et-btn et-btn--outline" type="button" data-stay-cancel>Cancel</button>
+        </div>
+      </form>
+    </dialog>
+    <!-- One account's credit: add or remove an amount, and see the latest changes. -->
+    <dialog class="admin-dialog" aria-labelledby="credit-dialog-title" data-credit-dialog>
+      <form class="auth-form admin-form" novalidate data-credit-form>
+        <div>
+          <h2 class="account-head__title admin-dialog__title" id="credit-dialog-title" tabindex="-1" data-credit-title>Credit</h2>
+          <p class="account-head__text" data-credit-email></p>
+        </div>
+        <p class="admin-credit__now">Credit now <strong data-credit-now></strong></p>
+        <p class="auth-status" role="status" tabindex="-1" data-credit-status hidden></p>
+
+        <fieldset class="admin-credit__action">
+          <legend class="auth-form__label">What do you want to do?</legend>
+          <label><input type="radio" name="action" value="add" checked /> Add credit</label>
+          <label><input type="radio" name="action" value="remove" /> Remove credit</label>
+          <p class="auth-form__error" data-error-for="action" hidden></p>
+        </fieldset>
+
+        <div>
+          <label class="auth-form__label" for="credit-amount">Amount (US dollars)</label>
+          <input class="auth-form__input admin-form__price" id="credit-amount" name="amount" inputmode="decimal"
+                 autocomplete="off" placeholder="200" aria-describedby="credit-amount-error" />
+          <p class="auth-form__error" id="credit-amount-error" data-error-for="amount" hidden></p>
+        </div>
+
+        <div>
+          <label class="auth-form__label" for="credit-note">Note (optional)</label>
+          <p class="auth-form__hint" id="credit-note-hint">The customer sees it in their credit history.</p>
+          <input class="auth-form__input" id="credit-note" name="note" maxlength="255"
+                 aria-describedby="credit-note-hint credit-note-error" />
+          <p class="auth-form__error" id="credit-note-error" data-error-for="note" hidden></p>
+        </div>
+
+        <div class="admin-form__actions">
+          <button class="et-btn et-btn--primary" type="submit" data-credit-save>Save</button>
+          <button class="et-btn et-btn--outline" type="button" data-credit-close>Close</button>
+        </div>
+
+        <div>
+          <h3 class="admin-card__title">Latest changes</h3>
+          <ul class="admin-feed" role="list" data-credit-list></ul>
+          <p class="admin-card__text" data-credit-none hidden>This account's credit has never changed.</p>
+        </div>
+      </form>
+    </dialog>
+    <!-- One identity document: its details, the selfie, and the decision. -->
+    <dialog class="admin-dialog admin-dialog--wide" aria-labelledby="verify-dialog-title" data-verify-dialog>
+      <form class="auth-form admin-form" novalidate data-verify-form>
+        <div>
+          <h2 class="account-head__title admin-dialog__title" id="verify-dialog-title" tabindex="-1" data-verify-title>Identity</h2>
+          <p class="account-head__text" data-verify-email></p>
+        </div>
+        <p class="auth-status" role="status" tabindex="-1" data-verify-dialog-status hidden></p>
+
+        <div class="verify-review">
+          <figure class="verify-review__photo">
+            <img alt="" data-verify-selfie hidden />
+            <figcaption class="admin-card__text" data-verify-no-selfie hidden>No selfie to show. It is deleted once a decision is made.</figcaption>
+            <!-- The camera check: one photo per movement. A printed photo can't turn its head. -->
+            <div class="verify-review__frames" data-verify-frames hidden></div>
+          </figure>
+          <dl class="account-details verify-review__details" data-verify-details></dl>
+        </div>
+
+        <div data-verify-decide>
+          <div>
+            <label class="auth-form__label" for="verify-note">Note to the customer</label>
+            <p class="auth-form__hint" id="verify-note-hint">Needed to reject: say what to fix. It is emailed to the customer.</p>
+            <input class="auth-form__input" id="verify-note" name="note" maxlength="255"
+                   aria-describedby="verify-note-hint verify-note-error" />
+            <p class="auth-form__error" id="verify-note-error" data-error-for="note" hidden></p>
+          </div>
+          <div class="admin-form__actions verify-review__actions">
+            <button class="et-btn et-btn--primary" type="button" data-verify-approve>Approve</button>
+            <button class="et-btn et-btn--outline admin-btn--danger" type="button" data-verify-reject>Reject</button>
+          </div>
+        </div>
+
+        <div class="admin-form__actions">
+          <button class="et-btn et-btn--outline" type="button" data-verify-close>Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Add or edit a destination. -->
+    <dialog class="admin-dialog" aria-labelledby="dest-form-title" data-dest-dialog>
+      <form class="auth-form admin-form" novalidate data-dest-form>
+        <h2 class="account-head__title admin-dialog__title" id="dest-form-title" data-dest-form-title>Add a destination</h2>
+        <p class="auth-status auth-status--error" role="alert" tabindex="-1" data-dest-form-error hidden></p>
+        <div class="auth-form__row">
+          <div>
+            <label class="auth-form__label" for="dest-name">Place</label>
+            <p class="auth-form__hint" id="dest-name-hint">A city or region. For a whole country, write the country again.</p>
+            <input class="auth-form__input" id="dest-name" name="name" maxlength="80"
+                   aria-describedby="dest-name-hint dest-name-error" />
+            <p class="auth-form__error" id="dest-name-error" data-error-for="name" hidden></p>
+          </div>
+          <div>
+            <label class="auth-form__label" for="dest-country">Country</label>
+            <p class="auth-form__hint" id="dest-country-hint">Like Lebanon or France.</p>
+            <input class="auth-form__input" id="dest-country" name="country" maxlength="60"
+                   aria-describedby="dest-country-hint dest-country-error" />
+            <p class="auth-form__error" id="dest-country-error" data-error-for="country" hidden></p>
+          </div>
+        </div>
+        <div>
+          <label class="auth-form__label" for="dest-season">Season</label>
+          <select class="auth-form__input admin-form__price" id="dest-season" name="season" aria-describedby="dest-season-error">
+            <option value="">Choose a season</option>
+            <option value="winter">Winter</option>
+            <option value="spring">Spring</option>
+            <option value="summer">Summer</option>
+            <option value="autumn">Autumn</option>
+          </select>
+          <p class="auth-form__error" id="dest-season-error" data-error-for="season" hidden></p>
+        </div>
+        <div class="admin-form__actions">
+          <button class="et-btn et-btn--primary" type="submit" data-dest-save>Save</button>
+          <button class="et-btn et-btn--outline" type="button" data-dest-cancel>Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Add or edit a discount. -->
+    <dialog class="admin-dialog admin-dialog--wide" aria-labelledby="discount-form-title" data-discount-dialog>
+      <form class="auth-form admin-form" novalidate data-discount-form>
+        <h2 class="account-head__title admin-dialog__title" id="discount-form-title" data-discount-form-title>Add a discount</h2>
+        <p class="auth-status auth-status--error" role="alert" tabindex="-1" data-discount-form-error hidden></p>
+
+        <div class="auth-form__row">
+          <div>
+            <label class="auth-form__label" for="discount-name">Name</label>
+            <p class="auth-form__hint" id="discount-name-hint">The customer sees it next to the price.</p>
+            <input class="auth-form__input" id="discount-name" name="name" maxlength="80"
+                   placeholder="Winter chalet sale" aria-describedby="discount-name-hint discount-name-error" />
+            <p class="auth-form__error" id="discount-name-error" data-error-for="name" hidden></p>
+          </div>
+          <div>
+            <label class="auth-form__label" for="discount-percent">Discount (%)</label>
+            <p class="auth-form__hint" id="discount-percent-hint">From 1 to 90.</p>
+            <input class="auth-form__input admin-form__price" id="discount-percent" name="percent" type="number"
+                   min="1" max="90" step="1" inputmode="numeric" aria-describedby="discount-percent-hint discount-percent-error" />
+            <p class="auth-form__error" id="discount-percent-error" data-error-for="percent" hidden></p>
+          </div>
+        </div>
+
+        <div class="auth-form__row">
+          <div>
+            <label class="auth-form__label" for="discount-applies">On</label>
+            <select class="auth-form__input" id="discount-applies" name="appliesTo" aria-describedby="discount-appliesTo-error">
+              <option value="everything">Everything (stays and tickets)</option>
+              <option value="stays">All stays (hotels and chalets)</option>
+              <option value="hotels">Hotels only</option>
+              <option value="chalets">Chalets only</option>
+              <option value="tickets">Tickets only (flights, bus and train)</option>
+            </select>
+            <p class="auth-form__error" id="discount-appliesTo-error" data-error-for="appliesTo" hidden></p>
+          </div>
+          <div>
+            <label class="auth-form__label" for="discount-customer">For</label>
+            <p class="auth-form__hint" id="discount-customer-hint">Leave empty for every customer, or enter one customer's email.</p>
+            <input class="auth-form__input" id="discount-customer" name="customerEmail" type="email" maxlength="254"
+                   list="discount-customer-list" autocomplete="off" placeholder="Every customer"
+                   aria-describedby="discount-customer-hint discount-customerEmail-error" />
+            <datalist id="discount-customer-list" data-discount-customers></datalist>
+            <p class="auth-form__error" id="discount-customerEmail-error" data-error-for="customerEmail" hidden></p>
+          </div>
+        </div>
+
+        <div class="auth-form__row">
+          <div>
+            <label class="auth-form__label" for="discount-start">First day <span class="auth-form__optional">(optional)</span></label>
+            <input class="auth-form__input" id="discount-start" name="startDate" type="date" aria-describedby="discount-startDate-error" />
+            <p class="auth-form__error" id="discount-startDate-error" data-error-for="startDate" hidden></p>
+          </div>
+          <div>
+            <label class="auth-form__label" for="discount-end">Last day <span class="auth-form__optional">(optional)</span></label>
+            <input class="auth-form__input" id="discount-end" name="endDate" type="date" aria-describedby="discount-endDate-error" />
+            <p class="auth-form__error" id="discount-endDate-error" data-error-for="endDate" hidden></p>
+          </div>
+        </div>
+        <p class="auth-form__hint discount-form__note">The dates are the days a customer can book or buy with this discount.</p>
+
+        <fieldset class="discount-exclude" data-discount-exclude>
+          <legend class="auth-form__label">Leave these stays out <span class="auth-form__optional">(optional)</span></legend>
+          <p class="auth-form__hint" id="discount-exclude-hint">Tick the stays that keep their full price.</p>
+          <input class="auth-form__input discount-exclude__search" type="search" placeholder="Find a stay or a place"
+                 aria-label="Find a stay to leave out" autocomplete="off" data-discount-exclude-search />
+          <div class="discount-exclude__list" data-discount-exclude-list aria-describedby="discount-exclude-hint"></div>
+          <p class="auth-form__hint" aria-live="polite" data-discount-exclude-count></p>
+          <p class="auth-form__error" id="discount-excluded-error" data-error-for="excluded" hidden></p>
+        </fieldset>
+
+        <label class="discount-form__active">
+          <input type="checkbox" name="active" checked />
+          <span>On: customers get this discount now (untick to pause it)</span>
+        </label>
+
+        <div class="admin-form__actions">
+          <button class="et-btn et-btn--primary" type="submit" data-discount-save>Save</button>
+          <button class="et-btn et-btn--outline" type="button" data-discount-cancel>Cancel</button>
+        </div>
+      </form>
+    </dialog>
+    <!-- One message: who sent it, the conversation (the message, then the replies), and the reply
+         box. The header and the reply box stay in place; the conversation scrolls between them. -->
+    <dialog class="admin-dialog msg-dialog" aria-labelledby="message-dialog-title" data-message-dialog>
+      <div class="msg">
+        <header class="msg__head">
+          <span class="msg__avatar" aria-hidden="true" data-message-avatar></span>
+          <div class="msg__who">
+            <h2 class="msg__title" id="message-dialog-title" tabindex="-1" data-message-title>Message</h2>
+            <p class="msg__contact">
+              <a class="msg__email" href="mailto:" data-message-field="email"></a>
+              <span class="msg__phone" data-message-field="phone"></span>
+            </p>
+            <p class="msg__tags">
+              <span class="msg__chip" data-message-field="topic"></span>
+              <span class="msg__chip msg__chip--quiet" data-message-field="from"></span>
+              <span data-message-field="status"></span>
+            </p>
+          </div>
+          <button class="msg__close" type="button" aria-label="Close the message" data-message-back>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </header>
+
+        <div class="msg__body">
+          <p class="auth-status" role="status" tabindex="-1" data-message-dialog-status hidden></p>
+          <!-- The customer's message on the left, the team's replies on the right. -->
+          <div class="msg__thread">
+            <article class="msg__bubble msg__bubble--in">
+              <p class="msg__by"><span data-message-sender></span> · <span data-message-field="received"></span></p>
+              <p class="msg__text" data-message-text></p>
+            </article>
+            <div class="msg__replies" data-message-replies></div>
+          </div>
+        </div>
+
+        <form class="msg__composer" novalidate data-reply-form>
+          <p class="msg__warning" role="note" data-email-warning hidden></p>
+          <label class="msg__label" for="reply-text" data-reply-label>Your reply</label>
+          <textarea class="msg__input" id="reply-text" name="message" maxlength="2000" rows="4"
+                    placeholder="Write your reply..." aria-describedby="reply-hint reply-error"></textarea>
+          <p class="auth-form__error" id="reply-error" data-error-for="message" hidden></p>
+          <p class="msg__hint" id="reply-hint" data-reply-hint></p>
+          <div class="msg__bar">
+            <div class="msg__secondary">
+              <button class="msg__action" type="button" data-message-toggle>Mark as closed</button>
+              <button class="msg__action msg__action--danger" type="button" data-message-delete>Delete</button>
+            </div>
+            <div class="msg__send">
+              <span class="msg__count" aria-live="polite" data-reply-count>0 / 2,000</span>
+              <button class="et-btn et-btn--primary" type="submit" data-reply-send>Send reply</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </dialog>
+  </div>
+
+  <script src="js/account.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script src="js/admin-overview.js"></script>
+  <script src="js/admin-stays.js"></script>
+  <script src="js/admin-messages.js"></script>
+  <script src="js/admin-bookings.js"></script>
+  <script src="js/admin-tickets.js"></script>
+  <script src="js/admin-users.js"></script>
+  <script src="js/admin-verifications.js"></script>
+  <script src="js/admin-destinations.js"></script>
+  <script src="js/admin-discounts.js"></script>
+  <script src="js/admin-database.js"></script>
+</body>
+</html>

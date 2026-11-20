@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EasyTrip — Travel Made Simple</title>
+  <meta name="description" content="EasyTrip helps you explore seasonal destinations, find hotels and chalets, and browse flight, bus and train tickets." />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <link rel="preload" as="image" href="assets/images/home/hero-1200.webp" imagesrcset="assets/images/home/hero-800.webp 800w, assets/images/home/hero-1200.webp 1199w" imagesizes="100vw" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="home-page">
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="destinations.html">Destinations</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the seasons</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="winter.html">Winter</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="hotels-chalets.html">Hotels &amp; Chalets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show hotels and chalets</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="tickets.html">Tickets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the ticket types</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="flight.html">Flights</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="about.html">About</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show more about EasyTrip</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="login.html" data-account-link>Log in</a>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="home-hero" aria-labelledby="home-hero-title">
+      <picture>
+        <source type="image/webp" srcset="assets/images/home/hero-800.webp 800w, assets/images/home/hero-1200.webp 1199w" sizes="100vw" />
+        <img class="home-hero__image" src="assets/images/home/hero.png" width="1199" height="672"
+             alt="" fetchpriority="high" decoding="async" />
+      </picture>
+
+      <div class="home-flight" aria-hidden="true" hidden>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 60ms; --smoke-opacity: .20; --smoke-size: 7px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 120ms; --smoke-opacity: .15; --smoke-size: 9px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 180ms; --smoke-opacity: .10; --smoke-size: 11px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 240ms; --smoke-opacity: .06; --smoke-size: 13px"></span>
+        <span class="home-flight__traveler home-flight__smoke" style="--delay: 300ms; --smoke-opacity: .03; --smoke-size: 15px"></span>
+        <span class="home-flight__traveler home-flight__plane">
+          <svg viewBox="0 0 40 40" width="32" height="32" focusable="false">
+            <path fill="currentColor" d="M36 18c4 1 4 3 0 4l-12 2-9 13h-5l5-13-8-1-4 5H0l3-8-3-8h3l4 5 8-1L10 3h5l9 13z"/>
+          </svg>
+        </span>
+      </div>
+
+      <div class="et-container home-hero__inner">
+        <div class="home-hero__content">
+          <p class="home-hero__eyebrow">Welcome to EasyTrip</p>
+          <h1 class="home-hero__title" id="home-hero-title">Explore <br>the world</h1>
+          <p class="home-hero__text">
+            Discover destinations that inspire, stories that move you, and adventures that stay with you forever.
+          </p>
+        </div>
+
+        <!-- The search, like a booking app: one card with three tabs. Each tab is a normal form, so it
+             works even without JavaScript: it opens its page with the search already filled in.
+             js/home-search.js switches the tabs and checks the dates. -->
+        <div class="home-search" role="search" aria-labelledby="home-search-title">
+            <div class="home-search__card">
+              <h2 class="et-visually-hidden" id="home-search-title">Search stays and tickets</h2>
+              <div class="home-search__tabs" role="tablist" aria-label="What are you looking for?" data-search-tabs>
+                <button class="home-search__tab" type="button" role="tab" id="tab-stays" aria-controls="panel-stays" aria-selected="true" data-tab="stays">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V9l9-6 9 6v11"/><path d="M9 20v-6h6v6"/></svg>
+                  Stays
+                </button>
+                <button class="home-search__tab" type="button" role="tab" id="tab-flights" aria-controls="panel-flights" aria-selected="false" tabindex="-1" data-tab="flights">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5 13.5 11V5.5a1.5 1.5 0 0 0-3 0V11L3 15.5v2l7.5-2.3V19l-2 1.5V22l3.5-1 3.5 1v-1.5l-2-1.5v-3.8l7.5 2.3z"/></svg>
+                  Flights
+                </button>
+                <button class="home-search__tab" type="button" role="tab" id="tab-ground" aria-controls="panel-ground" aria-selected="false" tabindex="-1" data-tab="ground">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-2-4m10 4-2-4"/><circle cx="9" cy="14" r=".6"/><circle cx="15" cy="14" r=".6"/></svg>
+                  Bus &amp; train
+                </button>
+              </div>
+
+              <!-- Stays: stays.html shows only the stays free on these dates. -->
+              <form class="home-search__form" id="panel-stays" role="tabpanel" aria-labelledby="tab-stays" action="stays.html" method="get" data-search-form="stays">
+                <div class="home-search__field home-search__field--wide">
+                  <label class="home-search__label" for="hs-where">Where</label>
+                  <input class="home-search__input" id="hs-where" name="q" type="search" placeholder="Country, city or stay" autocomplete="off" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hs-start">Check-in</label>
+                  <input class="home-search__input" id="hs-start" name="start" type="date" data-date="start" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hs-end">Check-out</label>
+                  <input class="home-search__input" id="hs-end" name="end" type="date" data-date="end" />
+                </div>
+                <div class="home-search__field home-search__field--small">
+                  <label class="home-search__label" for="hs-guests">Guests</label>
+                  <input class="home-search__input" id="hs-guests" name="guests" type="number" min="1" max="9" step="1" value="2" inputmode="numeric" data-guest-picker="guest" />
+                </div>
+                <button class="et-btn et-btn--primary home-search__go" type="submit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+                  Search stays
+                </button>
+                <p class="home-search__error" role="alert" data-search-error hidden></p>
+              </form>
+
+              <!-- Flights: flight.html fills its form, and shows the fare at once. -->
+              <form class="home-search__form" id="panel-flights" role="tabpanel" aria-labelledby="tab-flights" action="flight.html" method="get" data-search-form="flights" hidden>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hf-from">From</label>
+                  <input class="home-search__input" id="hf-from" name="from" placeholder="e.g. Beirut" autocomplete="off" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hf-to">To</label>
+                  <input class="home-search__input" id="hf-to" name="to" placeholder="e.g. Paris" autocomplete="off" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hf-depart">Depart</label>
+                  <input class="home-search__input" id="hf-depart" name="depart" type="date" data-date="start" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hf-return">Return <span class="home-search__optional">(optional)</span></label>
+                  <input class="home-search__input" id="hf-return" name="return" type="date" data-date="end" data-date-optional />
+                </div>
+                <div class="home-search__field home-search__field--small">
+                  <label class="home-search__label" for="hf-travelers">Travelers</label>
+                  <input class="home-search__input" id="hf-travelers" name="travelers" type="number" min="1" max="9" step="1" value="1" inputmode="numeric" data-guest-picker="traveler" />
+                </div>
+                <button class="et-btn et-btn--primary home-search__go" type="submit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+                  Search flights
+                </button>
+                <p class="home-search__error" role="alert" data-search-error hidden></p>
+              </form>
+
+              <!-- Bus & train: bus-train.html fills its form, and shows the fare at once. -->
+              <form class="home-search__form" id="panel-ground" role="tabpanel" aria-labelledby="tab-ground" action="bus-train.html" method="get" data-search-form="ground" hidden>
+                <div class="home-search__field home-search__field--small">
+                  <label class="home-search__label" for="hg-mode">By</label>
+                  <select class="home-search__input" id="hg-mode" name="mode">
+                    <option value="bus">Bus</option>
+                    <option value="train">Train</option>
+                  </select>
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hg-from">From</label>
+                  <input class="home-search__input" id="hg-from" name="from" placeholder="e.g. Beirut" autocomplete="off" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hg-to">To</label>
+                  <input class="home-search__input" id="hg-to" name="to" placeholder="e.g. Tripoli" autocomplete="off" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hg-depart">Depart</label>
+                  <input class="home-search__input" id="hg-depart" name="depart" type="date" data-date="start" />
+                </div>
+                <div class="home-search__field">
+                  <label class="home-search__label" for="hg-return">Return <span class="home-search__optional">(optional)</span></label>
+                  <input class="home-search__input" id="hg-return" name="return" type="date" data-date="end" data-date-optional />
+                </div>
+                <div class="home-search__field home-search__field--small">
+                  <label class="home-search__label" for="hg-travelers">Travelers</label>
+                  <input class="home-search__input" id="hg-travelers" name="travelers" type="number" min="1" max="9" step="1" value="1" inputmode="numeric" data-guest-picker="traveler" />
+                </div>
+                <button class="et-btn et-btn--primary home-search__go" type="submit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+                  Search
+                </button>
+                <p class="home-search__error" role="alert" data-search-error hidden></p>
+              </form>
+            </div>
+        </div>
+
+        <div class="hero-dest" id="destinations">
+          <h2 class="hero-dest__title">Top destinations</h2>
+          <ul class="hero-dest__list" role="list">
+            <li>
+              <a class="hero-card" href="chalets.html?q=Lebanon">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/lebanon-card.webp" />
+                  <img class="hero-card__img" src="assets/images/lebanon.png" width="480" height="320" alt="" decoding="async" />
+                </picture>
+                <span class="hero-card__name">Lebanon</span>
+                <span class="hero-card__meta">Chalets in Faraya, Jbeil and Batroun</span>
+              </a>
+            </li>
+            <li>
+              <a class="hero-card" href="chalets.html?q=Iceland">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/iceland-card.webp" />
+                  <img class="hero-card__img" src="assets/images/iceland.png" width="480" height="320" alt="" decoding="async" />
+                </picture>
+                <span class="hero-card__name">Iceland</span>
+                <span class="hero-card__meta">Geothermal cabin stays near Reykjavik</span>
+              </a>
+            </li>
+            <li>
+              <a class="hero-card" href="spring.html">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/italy-card.webp" />
+                  <img class="hero-card__img" src="assets/images/italy.png" width="480" height="320" alt="" decoding="async" />
+                </picture>
+                <span class="hero-card__name">Italy</span>
+                <span class="hero-card__meta">Featured in our spring trip ideas</span>
+              </a>
+            </li>
+            <li>
+              <a class="hero-card" href="hotels.html?q=Dubai">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/dubai-card.webp" />
+                  <img class="hero-card__img" src="assets/images/dubai.png" width="480" height="320" alt="" decoding="async" />
+                </picture>
+                <span class="hero-card__name">Dubai</span>
+                <span class="hero-card__meta">Beachfront hotels and city stays</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="home-section" aria-labelledby="about-title">
+      <div class="et-container split">
+        <div class="split__copy reveal">
+          <p class="home-kicker">About us</p>
+          <h2 class="home-title" id="about-title">Learn more <br>about EasyTrip</h2>
+          <p class="home-lead">
+            Our goal is simple: to make travel easier for everyone. Whether it's your first trip or your next
+            adventure, we share destination highlights, travel tips and curated recommendations, backed by
+            real people you can contact.
+          </p>
+          <a class="et-btn et-btn--primary et-btn--lg" href="about.html">
+            Who we are
+            <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="split__media reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/images/home/about-800.webp" />
+            <img class="split__img" src="assets/images/home/about-beach.jpg" width="800" height="800"
+                 alt="Aerial view of a sandy spit curving into turquoise water" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section home-section--tint" aria-labelledby="seasons-title">
+      <div class="et-container">
+        <header class="home-section__head">
+          <p class="home-kicker">Trip ideas</p>
+          <h2 class="home-title" id="seasons-title">Enjoy the beauty <br>of every season</h2>
+        </header>
+
+        <ul class="season-list" role="list">
+          <li class="reveal">
+            <a class="season-card" href="winter.html">
+              <span class="season-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/winter-600.webp" />
+                  <img class="season-card__img" src="assets/images/winter.jpg" width="600" height="420" alt="" loading="lazy" decoding="async" />
+                </picture>
+              </span>
+              <span class="season-card__title">Winter destinations</span>
+              <span class="season-card__place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Switzerland, Austria, Finland, Canada
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="season-card" href="spring.html">
+              <span class="season-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/spring-600.webp" />
+                  <img class="season-card__img" src="assets/images/spring.jpg" width="600" height="400" alt="" loading="lazy" decoding="async" />
+                </picture>
+              </span>
+              <span class="season-card__title">Spring destinations</span>
+              <span class="season-card__place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Japan, France, Netherlands, Italy
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="season-card" href="summer.html">
+              <span class="season-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/summer-600.webp" />
+                  <img class="season-card__img" src="assets/images/summer.png" width="600" height="900" alt="" loading="lazy" decoding="async" />
+                </picture>
+              </span>
+              <span class="season-card__title">Summer destinations</span>
+              <span class="season-card__place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Greece, Italy, Spain, Costa Rica
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="season-card" href="autumn.html">
+              <span class="season-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/images/home/autumn-600.webp" />
+                  <img class="season-card__img" src="assets/images/autumn.png" width="600" height="800" alt="" loading="lazy" decoding="async" />
+                </picture>
+              </span>
+              <span class="season-card__title">Autumn destinations</span>
+              <span class="season-card__place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                Canada, Germany, Croatia, Turkey
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="home-section" id="services" aria-labelledby="services-title">
+      <div class="et-container">
+        <header class="home-section__head">
+          <p class="home-kicker">What we offer</p>
+          <h2 class="home-title" id="services-title">Our services</h2>
+        </header>
+
+        <ul class="service-list" role="list">
+          <li class="service-item reveal">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 0 0 4v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-3a2 2 0 0 1 0-4V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1z"/><path d="M14 5v2m0 3v2m0 3v2"/></svg>
+            </span>
+            <h3 class="service-item__title">Ticket booking</h3>
+            <p class="service-item__text">Browse flight, bus and train tickets and plan how you get there.</p>
+            <a class="service-item__link" href="tickets.html">Browse tickets <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="service-item reveal">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 20V8l9-5 9 5v12"/><path d="M3 20h18M9 20v-6h6v6"/></svg>
+            </span>
+            <h3 class="service-item__title">Hotels &amp; chalets</h3>
+            <p class="service-item__text">Find the right stay, from city hotels to cozy mountain chalets.</p>
+            <a class="service-item__link" href="hotels-chalets.html">Find a place to stay <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="service-item reveal">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>
+            </span>
+            <h3 class="service-item__title">Seasonal destinations</h3>
+            <p class="service-item__text">Discover the best places by season: winter, spring, summer or autumn.</p>
+            <a class="service-item__link" href="destinations.html">Explore by season <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="service-item reveal">
+            <span class="service-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>
+            </span>
+            <h3 class="service-item__title">Travel support</h3>
+            <p class="service-item__text">Have a question about a trip or booking? Send our team a message.</p>
+            <a class="service-item__link" href="contact.html">Contact support <span aria-hidden="true">&rarr;</span></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="explore" aria-labelledby="explore-title">
+      <picture>
+        <source type="image/webp" media="(max-width: 40em)" srcset="assets/images/home/explore-800.webp" />
+        <source type="image/webp" srcset="assets/images/home/explore-1920.webp" />
+        <img class="explore__img" src="assets/images/home/explore-beach.jpg" width="1920" height="800"
+             alt="" loading="lazy" decoding="async" />
+      </picture>
+      <div class="et-container explore__content">
+        <div class="explore__copy reveal">
+          <h2 class="home-title home-title--light" id="explore-title">Explore the <br>best paradises</h2>
+          <p class="explore__text">
+            From the Maldives and Bali to Santorini, browse sample hotel stays and find your next
+            island escape.
+          </p>
+        </div>
+        <a class="et-btn et-btn--on-dark et-btn--lg explore__cta" href="hotels.html">
+          Browse hotel stays
+          <svg class="et-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="journey-title">
+      <div class="et-container split split--reverse">
+        <div class="split__media reveal">
+          <picture>
+            <source type="image/webp" srcset="assets/images/home/join-800.webp" />
+            <img class="split__img" src="assets/images/home/join-island.jpg" width="800" height="800"
+                 alt="Limestone cliffs above a turquoise bay with a sandy beach" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="split__copy reveal">
+          <p class="home-kicker">Plan your trip</p>
+          <h2 class="home-title" id="journey-title">Your journey <br>starts here</h2>
+          <p class="home-lead">
+            Pick your tickets now, or tell us where you want to go and our team will help you plan it.
+          </p>
+          <div class="split__actions">
+            <a class="et-btn et-btn--primary et-btn--lg" href="tickets.html">Book tickets</a>
+            <a class="et-btn et-btn--outline et-btn--lg" href="contact.html">Contact us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/guest-picker.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/home-search.js"></script>
+  <script src="js/home-flight.js" async fetchpriority="low"></script>
+</body>
+</html>

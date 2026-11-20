@@ -1,0 +1,116 @@
+/* Buying a ticket with credit, in the summary of flight.html and bus-train.html
+   (js/ticket-buy.js). It is loaded after the page's own stylesheet. */
+
+.ticket-buy {
+  display: grid;
+  gap: 16px;
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid var(--et-line);
+  border-radius: var(--et-radius);
+  background: #fff;
+}
+
+/* Several boxes here set "display", which would show an element that has the hidden attribute. */
+.ticket-buy[hidden],
+.ticket-buy [hidden] {
+  display: none;
+}
+
+/* The fare and what it leaves of the credit, like a receipt. */
+.ticket-buy__sum {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  font-size: 15.5px;
+}
+
+.ticket-buy__sum div {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.ticket-buy__sum dt {
+  color: var(--et-muted);
+}
+
+.ticket-buy__sum dd {
+  margin: 0;
+  color: var(--et-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ticket-buy__left {
+  padding-top: 10px;
+  border-top: 1px solid var(--et-line);
+}
+
+.ticket-buy__left dt,
+.ticket-buy__left dd {
+  color: var(--et-navy);
+  font-weight: 700;
+}
+
+.ticket-buy__status {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--et-line);
+  border-left: 5px solid var(--et-primary);
+  border-radius: 10px;
+  background: var(--et-ice);
+  color: var(--et-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.ticket-buy__status:focus {
+  outline: none;
+}
+
+.ticket-buy__status--error {
+  border-color: #b42318;
+  background: #fef3f2;
+}
+
+.ticket-buy__status--success {
+  border-color: #067647;
+  background: #ecfdf3;
+}
+
+.ticket-buy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ticket-buy .et-btn[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 30em) {
+  .ticket-buy {
+    padding: 16px;
+  }
+
+  .ticket-buy__actions .et-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* An admin's discount on tickets, and the total after it. */
+.ticket-buy__discount dt,
+.ticket-buy__discount dd {
+  color: #0b6b3a;
+  font-weight: 600;
+}
+
+.ticket-buy__final dt,
+.ticket-buy__final dd {
+  color: var(--et-navy);
+  font-weight: 700;
+}

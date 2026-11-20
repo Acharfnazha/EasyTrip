@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="assets/images/brand/logo.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My account — EasyTrip</title>
+  <meta name="description" content="Your EasyTrip account." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+  <a class="et-skip-link" href="#main">Skip to main content</a>
+  <header class="et-header" data-et-header>
+    <div class="et-container et-header__bar">
+      <a class="et-header__brand" href="index.html" aria-label="EasyTrip home">
+        <img class="et-header__logo" src="assets/images/brand/logo.svg" alt="" width="43" height="40">
+        <span class="et-header__wordmark" aria-hidden="true">Easy<span>Trip</span></span>
+      </a>
+
+      <button class="et-nav-toggle" type="button" aria-expanded="false" aria-controls="et-nav-panel" data-et-nav-toggle>
+        <span class="et-nav-toggle__bars" aria-hidden="true"></span>
+        <span class="et-visually-hidden">Menu</span>
+      </button>
+
+      <nav class="et-nav" id="et-nav-panel" aria-label="Main">
+        <ul class="et-nav__list">
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="index.html">Home</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="destinations.html">Destinations</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-destinations">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the seasons</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-destinations">
+              <li><a class="et-nav__menu-link" href="winter.html">Winter</a></li>
+              <li><a class="et-nav__menu-link" href="spring.html">Spring</a></li>
+              <li><a class="et-nav__menu-link" href="summer.html">Summer</a></li>
+              <li><a class="et-nav__menu-link" href="autumn.html">Autumn</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="hotels-chalets.html">Hotels &amp; Chalets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-stays">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show hotels and chalets</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-stays">
+              <li><a class="et-nav__menu-link" href="hotels.html">Hotels</a></li>
+              <li><a class="et-nav__menu-link" href="chalets.html">Chalets</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="tickets.html">Tickets</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-tickets">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show the ticket types</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-tickets">
+              <li><a class="et-nav__menu-link" href="flight.html">Flights</a></li>
+              <li><a class="et-nav__menu-link" href="bus-train.html">Bus &amp; train</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="contact.html">Contact</a>
+          </li>
+          <li class="et-nav__item et-nav__item--has-menu et-nav__item--split">
+            <a class="et-nav__link et-nav__link--parent" href="about.html">About</a>
+            <button class="et-nav__link et-nav__trigger et-nav__trigger--caret" type="button" aria-expanded="false" aria-controls="et-menu-about">
+              <span class="et-nav__caret" aria-hidden="true"></span>
+              <span class="et-visually-hidden">Show more about EasyTrip</span>
+            </button>
+            <ul class="et-nav__menu" id="et-menu-about">
+              <li><a class="et-nav__menu-link" href="about.html">Who we are</a></li>
+              <li><a class="et-nav__menu-link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            </ul>
+          </li>
+          <li class="et-nav__item">
+            <a class="et-nav__link" href="login.html" data-account-link>Log in</a>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="et-btn et-btn--primary et-header__cta" href="tickets.html">Book Now</a>
+    </div>
+  </header>
+
+  <main id="main" class="auth-page" tabindex="-1">
+    <div class="et-container account-layout">
+      <p class="auth-card__intro" role="status" data-account-loading>Loading your account...</p>
+      <p class="auth-status auth-status--error" role="alert" data-account-problem hidden></p>
+      <noscript>
+        <p class="auth-status auth-status--error">Please turn on JavaScript to see this page.</p>
+      </noscript>
+
+      <div data-account-page="customer" hidden>
+        <div class="account-head">
+          <div>
+            <h1 class="account-head__title">Hello, <span data-user="firstName"></span></h1>
+            <p class="account-head__text">This is your EasyTrip account.</p>
+          </div>
+          <button class="et-btn et-btn--outline" type="button" data-logout>Log out</button>
+        </div>
+
+        <div class="account-grid">
+          <section class="auth-card" aria-labelledby="account-details-title">
+            <h2 class="account-card__title" id="account-details-title">Your details</h2>
+            <dl class="account-details">
+              <div>
+                <dt>Name</dt>
+                <dd data-user="fullName"></dd>
+              </div>
+              <div>
+                <dt>Email</dt>
+                <dd data-user="email"></dd>
+              </div>
+              <div>
+                <dt>Member since</dt>
+                <dd data-user="memberSince"></dd>
+              </div>
+            </dl>
+          </section>
+
+          <!-- My credit: the money the EasyTrip team added to this account. Bookings are paid
+               from it (js/my-bookings.js, GET /api/credit/mine). -->
+          <section class="auth-card" aria-labelledby="account-credit-title">
+            <h2 class="account-card__title" id="account-credit-title">My credit</h2>
+            <p class="account-credit" data-credit-balance>$0</p>
+            <p class="account-card__text">
+              Credit pays for your bookings and tickets. The EasyTrip team adds it to your account,
+              and a cancelled booking or ticket gives it back.
+            </p>
+            <div class="account-card__actions">
+              <a class="et-btn et-btn--primary" href="hotels-chalets.html">Browse stays</a>
+              <a class="et-btn et-btn--outline" href="contact.html?topic=stays">Ask for credit</a>
+            </div>
+          </section>
+        </div>
+
+        <!-- My bookings: js/my-bookings.js uses GET /api/bookings/mine, and
+             POST /api/bookings/:id/cancel to cancel one before it starts. -->
+        <section class="auth-card messages-panel" aria-labelledby="my-bookings-title" data-my-bookings>
+          <div class="admin-panel__head">
+            <div>
+              <h2 class="account-card__title" id="my-bookings-title">My bookings</h2>
+              <p class="account-card__text">
+                The stays you booked with your credit. You can cancel one before it starts, and
+                its price goes back to your credit.
+              </p>
+            </div>
+          </div>
+          <p class="auth-status" role="status" tabindex="-1" data-list-status hidden></p>
+          <ul class="messages-list" data-list></ul>
+        </section>
+
+        <!-- My tickets: js/my-bookings.js uses GET /api/tickets/mine, and
+             POST /api/tickets/:id/cancel to cancel one before the departure day. -->
+        <section class="auth-card messages-panel" aria-labelledby="my-tickets-title" data-my-tickets>
+          <div class="admin-panel__head">
+            <div>
+              <h2 class="account-card__title" id="my-tickets-title">My tickets</h2>
+              <p class="account-card__text">
+                The flight, bus and train tickets you bought with your credit. You can cancel one
+                before the departure day, and its price goes back to your credit.
+              </p>
+            </div>
+            <a class="et-btn et-btn--outline" href="tickets.html">Plan a trip</a>
+          </div>
+          <p class="auth-status" role="status" tabindex="-1" data-list-status hidden></p>
+          <ul class="messages-list" data-list></ul>
+        </section>
+
+        <!-- Credit history: every time credit was added, removed, used or given back. -->
+        <section class="auth-card messages-panel" aria-labelledby="credit-history-title" data-credit-history>
+          <h2 class="account-card__title" id="credit-history-title">Credit history</h2>
+          <p class="account-card__text" data-credit-empty hidden>
+            No credit has been added to your account yet.
+          </p>
+          <div class="admin-table-wrap" data-credit-wrap hidden>
+            <table class="admin-table credit-table">
+              <caption class="et-visually-hidden">Credit history</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">What happened</th>
+                  <th scope="col" class="credit-amount">Amount</th>
+                  <th scope="col" class="credit-amount">Credit after</th>
+                </tr>
+              </thead>
+              <tbody data-credit-rows></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Identity document: js/id-document.js uses POST /api/id-document/scan to read a photo,
+             then PUT, GET and DELETE /api/id-document to save, show and delete the details. -->
+        <section class="auth-card id-doc-panel" aria-labelledby="id-doc-title" data-id-doc>
+          <h2 class="account-card__title" id="id-doc-title">Identity document</h2>
+          <p class="account-card__text">
+            Add your passport, ID card or driving licence: send a photo, check the details, then save
+            them. The photo is only read: it is never saved.
+          </p>
+
+          <p class="auth-status" role="status" tabindex="-1" data-id-doc-message hidden></p>
+
+          <!-- The saved details -->
+          <div data-id-doc-saved hidden>
+            <dl class="account-details id-doc-details">
+              <div>
+                <dt>Document</dt>
+                <dd data-saved="type"></dd>
+              </div>
+              <div>
+                <dt>Name</dt>
+                <dd data-saved="name" dir="auto"></dd>
+              </div>
+              <div>
+                <dt>Number</dt>
+                <dd data-saved="number"></dd>
+              </div>
+              <div>
+                <dt>Issued by</dt>
+                <dd data-saved="issuingCountry"></dd>
+              </div>
+              <div data-saved-nationality>
+                <dt>Nationality</dt>
+                <dd data-saved="nationality"></dd>
+              </div>
+              <div>
+                <dt>Date of birth</dt>
+                <dd data-saved="dateOfBirth"></dd>
+              </div>
+              <div>
+                <dt>Expiry date</dt>
+                <dd data-saved="expiryDate"></dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd data-saved="status"></dd>
+              </div>
+            </dl>
+            <p class="id-doc-note" data-id-doc-notice></p>
+            <div class="account-card__actions">
+              <button class="et-btn et-btn--outline" type="button" data-id-doc-rescan>Scan another document</button>
+              <button class="et-btn et-btn--outline admin-btn--danger" type="button" data-id-doc-delete>
+                Delete my document details
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 1: the type and the photo -->
+          <form class="auth-form" novalidate data-id-doc-upload hidden>
+            <div>
+              <label class="auth-form__label" for="id-doc-type">Document</label>
+              <select class="auth-form__input" id="id-doc-type" name="documentType" aria-describedby="id-doc-type-error">
+                <option value="passport">Passport</option>
+                <option value="id_card">ID card</option>
+                <option value="driving_licence">Driving licence</option>
+              </select>
+              <p class="auth-form__error" id="id-doc-type-error" data-id-doc-type-error hidden></p>
+            </div>
+            <div>
+              <label class="auth-form__label" for="id-doc-photo">Photo of the document</label>
+              <p class="auth-form__hint" id="id-doc-photo-hint" data-id-doc-photo-hint></p>
+              <input class="auth-form__input id-doc-file" id="id-doc-photo" name="document" type="file"
+                     accept="image/jpeg,image/png,image/webp" aria-describedby="id-doc-photo-hint id-doc-photo-error" />
+              <p class="auth-form__error" id="id-doc-photo-error" data-id-doc-photo-error hidden></p>
+            </div>
+            <!-- On a phone or a tablet: take the photo with the back camera, inside a see-through
+                 outline of the document (js/document-camera.js). On a computer this stays hidden:
+                 the photo is uploaded. -->
+            <div class="doc-cam" data-doc-cam hidden>
+              <p class="doc-cam__or"><span>or</span></p>
+              <button class="et-btn et-btn--primary doc-cam__start" type="button" data-doc-cam-start>
+                <svg class="doc-cam__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                Take the photo with the camera
+              </button>
+
+              <div class="doc-cam__view" data-doc-cam-view hidden>
+                <div class="doc-cam__stage" data-doc-cam-stage>
+                  <video class="doc-cam__video" data-doc-cam-video playsinline muted></video>
+                  <!-- The outline: its shape is the chosen document's (a passport page or a card). -->
+                  <div class="doc-cam__frame" data-doc-cam-frame aria-hidden="true"></div>
+                </div>
+                <p class="doc-cam__say" role="status" aria-live="polite" data-doc-cam-say></p>
+                <div class="account-card__actions doc-cam__actions">
+                  <button class="et-btn et-btn--primary" type="button" data-doc-cam-shoot>Take the photo</button>
+                  <button class="et-btn et-btn--outline" type="button" data-doc-cam-cancel>Cancel</button>
+                </div>
+              </div>
+
+              <div class="doc-cam__preview" data-doc-cam-preview hidden>
+                <img class="doc-cam__shot" alt="The photo you took of your document" data-doc-cam-shot />
+                <p class="auth-form__hint">Check that the whole document is in the photo, sharp and without glare.</p>
+                <div class="account-card__actions">
+                  <button class="et-btn et-btn--primary" type="button" data-doc-cam-use>Use this photo</button>
+                  <button class="et-btn et-btn--outline" type="button" data-doc-cam-retake>Take it again</button>
+                </div>
+              </div>
+            </div>
+            <div class="account-card__actions">
+              <button class="et-btn et-btn--primary" type="submit" data-id-doc-read>Read the document</button>
+              <button class="et-btn et-btn--outline" type="button" data-id-doc-upload-cancel hidden>Cancel</button>
+            </div>
+          </form>
+
+          <!-- Step 2: check (or type), correct and save -->
+          <form class="auth-form" novalidate data-id-doc-review hidden>
+            <h3 class="id-doc-step__title" tabindex="-1" data-id-doc-review-title>Check the details</h3>
+            <p class="id-doc-note" data-id-doc-review-notice></p>
+            <ul class="id-doc-checks" data-id-doc-checks></ul>
+            <ul class="id-doc-checks" data-id-doc-warnings></ul>
+            <p class="auth-status auth-status--error" role="alert" tabindex="-1" data-id-doc-review-error hidden></p>
+            <p class="auth-form__hint" id="id-doc-names-hint">
+              Type the names exactly as they are printed on the document, in Arabic or English letters.
+            </p>
+
+            <div class="auth-form__row">
+              <div>
+                <label class="auth-form__label" for="id-doc-surname">Surname</label>
+                <input class="auth-form__input" id="id-doc-surname" name="surname" maxlength="50" autocomplete="off" dir="auto"
+                       aria-describedby="id-doc-names-hint id-doc-surname-error" />
+                <p class="auth-form__error" id="id-doc-surname-error" data-error-for="surname" hidden></p>
+              </div>
+              <div>
+                <label class="auth-form__label" for="id-doc-given">Given names</label>
+                <input class="auth-form__input" id="id-doc-given" name="givenNames" maxlength="50" autocomplete="off" dir="auto"
+                       aria-describedby="id-doc-names-hint id-doc-givenNames-error" />
+                <p class="auth-form__error" id="id-doc-givenNames-error" data-error-for="givenNames" hidden></p>
+              </div>
+            </div>
+            <div class="auth-form__row">
+              <div>
+                <label class="auth-form__label" for="id-doc-number" data-id-doc-number-label>Document number</label>
+                <input class="auth-form__input" id="id-doc-number" name="documentNumber" maxlength="20" autocomplete="off"
+                       aria-describedby="id-doc-documentNumber-error" />
+                <p class="auth-form__error" id="id-doc-documentNumber-error" data-error-for="documentNumber" hidden></p>
+              </div>
+              <div>
+                <label class="auth-form__label" for="id-doc-issuer">Issuing country (3-letter code)</label>
+                <input class="auth-form__input" id="id-doc-issuer" name="issuingCountry" maxlength="3" autocomplete="off"
+                       aria-describedby="id-doc-issuingCountry-error" />
+                <p class="auth-form__error" id="id-doc-issuingCountry-error" data-error-for="issuingCountry" hidden></p>
+              </div>
+            </div>
+            <div class="auth-form__row">
+              <div>
+                <label class="auth-form__label" for="id-doc-birth">Date of birth</label>
+                <input class="auth-form__input" id="id-doc-birth" name="dateOfBirth" type="date"
+                       aria-describedby="id-doc-dateOfBirth-error" />
+                <p class="auth-form__error" id="id-doc-dateOfBirth-error" data-error-for="dateOfBirth" hidden></p>
+              </div>
+              <div>
+                <label class="auth-form__label" for="id-doc-expiry">Expiry date</label>
+                <input class="auth-form__input" id="id-doc-expiry" name="expiryDate" type="date"
+                       aria-describedby="id-doc-expiryDate-error" />
+                <p class="auth-form__error" id="id-doc-expiryDate-error" data-error-for="expiryDate" hidden></p>
+                <!-- Some ID cards and driving licences never expire; a passport always does. -->
+                <label class="id-doc-check" data-id-doc-no-expiry-field>
+                  <input type="checkbox" name="noExpiry" data-id-doc-no-expiry /> No expiry date
+                </label>
+              </div>
+            </div>
+            <!-- A driving licence doesn't say the holder's nationality, so this is hidden for it. -->
+            <div data-id-doc-nationality>
+              <label class="auth-form__label" for="id-doc-nationality">Nationality (3-letter code)</label>
+              <input class="auth-form__input" id="id-doc-nationality" name="nationality" maxlength="3" autocomplete="off"
+                     aria-describedby="id-doc-nationality-error" />
+              <p class="auth-form__error" id="id-doc-nationality-error" data-error-for="nationality" hidden></p>
+            </div>
+
+            <div class="account-card__actions">
+              <button class="et-btn et-btn--primary" type="submit" data-id-doc-save>Save these details</button>
+              <button class="et-btn et-btn--outline" type="button" data-id-doc-review-cancel>Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Identity verification: js/verification.js. After saving the document above, the user
+             sends a selfie holding it (POST /api/id-document/selfie); an admin compares the two
+             and approves or rejects. Booking and buying need a verified identity. -->
+        <section class="auth-card id-doc-panel" id="verify" aria-labelledby="verify-title" data-verify>
+          <h2 class="account-card__title" id="verify-title">Identity verification</h2>
+          <p class="verify-status" data-verify-badge></p>
+          <p class="account-card__text" data-verify-text></p>
+          <p class="auth-status" role="status" tabindex="-1" data-verify-message hidden></p>
+
+          <!-- The camera check (js/verification.js and js/liveness-pose.mjs). face-api finds the
+               face in the camera's picture, in the browser; the page asks for four movements,
+               keeps one photo of each, then a photo holding the document. Nothing is sent until
+               the user presses "Send". -->
+          <div class="liveness" data-verify-form hidden>
+            <div class="liveness__intro" data-live-intro>
+              <ol class="verify-steps">
+                <li>Look straight at the camera, turn your head to the left, then to the right, and move closer.</li>
+                <li>Hold your identity document next to your face, with its photo and details facing the camera.</li>
+                <li>Check the photos and send them. Our team compares them with your document, usually within a day.</li>
+              </ol>
+              <p class="auth-form__hint">
+                Use good light and remove sunglasses or a hat. The photos are only seen by our team, and are deleted
+                as soon as they decide.
+              </p>
+              <div class="account-card__actions">
+                <button class="et-btn et-btn--primary" type="button" data-live-start>Start the camera check</button>
+              </div>
+            </div>
+
+            <!-- The camera. The picture is mirrored, like a mirror, so turning left looks natural. -->
+            <div class="liveness__camera" data-live-camera hidden>
+              <div class="liveness__stage">
+                <video class="liveness__video" data-live-video playsinline muted></video>
+                <div class="liveness__oval" data-live-oval aria-hidden="true"></div>
+                <p class="liveness__arrow" data-live-arrow aria-hidden="true"></p>
+              </div>
+              <p class="liveness__say" role="status" aria-live="polite" data-live-say>Starting the camera...</p>
+              <p class="liveness__hint" data-live-hint></p>
+              <ol class="liveness__steps" data-live-steps>
+                <li data-step="straight">Look straight</li>
+                <li data-step="left">Turn left</li>
+                <li data-step="right">Turn right</li>
+                <li data-step="closer">Move closer</li>
+                <li data-step="document">Show your document</li>
+              </ol>
+              <div class="account-card__actions">
+                <button class="et-btn et-btn--primary" type="button" data-live-shoot hidden>Take the photo</button>
+                <button class="et-btn et-btn--outline" type="button" data-live-cancel>Cancel</button>
+              </div>
+            </div>
+
+            <!-- The photos, to check before sending. -->
+            <div class="liveness__review" data-live-review hidden>
+              <h3 class="id-doc-step__title" tabindex="-1" data-live-review-title>Check your photos</h3>
+              <div class="liveness__photos" data-live-photos></div>
+              <div class="account-card__actions">
+                <button class="et-btn et-btn--primary" type="button" data-verify-send>Send my photos</button>
+                <button class="et-btn et-btn--outline" type="button" data-live-again>Start again</button>
+              </div>
+            </div>
+
+            <!-- Without a camera (or if it can't be used): one uploaded photo. The admin sees
+                 that it had no camera check. -->
+            <details class="liveness__upload" data-live-upload>
+              <summary>No camera? Upload a photo instead</summary>
+              <form class="auth-form" novalidate data-upload-form>
+                <p class="auth-form__hint" id="verify-selfie-hint">
+                  A photo of your face holding your document: JPG, PNG or WebP, 5 MB or smaller. Without the camera
+                  check, our team may ask you to do it with a camera.
+                </p>
+                <div>
+                  <label class="auth-form__label" for="verify-selfie">Selfie holding your document</label>
+                  <input class="auth-form__input id-doc-file" id="verify-selfie" name="selfie" type="file"
+                         accept="image/jpeg,image/png,image/webp" capture="user"
+                         aria-describedby="verify-selfie-hint verify-selfie-error" />
+                  <p class="auth-form__error" id="verify-selfie-error" data-error-for="selfie" hidden></p>
+                </div>
+                <div class="account-card__actions">
+                  <button class="et-btn et-btn--outline" type="submit" data-upload-send>Send this photo</button>
+                </div>
+              </form>
+            </details>
+          </div>
+        </section>
+
+        <!-- My messages: js/my-messages.js uses GET /api/inquiries/mine. It shows the messages
+             sent from contact.html while logged in, and the EasyTrip team's replies. -->
+        <section class="auth-card messages-panel" aria-labelledby="my-messages-title" data-my-messages>
+          <div class="admin-panel__head">
+            <div>
+              <h2 class="account-card__title" id="my-messages-title">My messages</h2>
+              <p class="account-card__text">The messages you sent us while logged in, and our replies.</p>
+            </div>
+            <a class="et-btn et-btn--outline" href="contact.html">Send a message</a>
+          </div>
+          <p class="auth-status" role="status" data-my-messages-status hidden></p>
+          <ul class="messages-list" data-my-messages-list></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="et-footer">
+    <div class="et-container et-footer__top">
+      <div class="et-footer__brand">
+        <a class="et-footer__brand-link" href="index.html" aria-label="EasyTrip home">
+          <span class="et-footer__logo-tile">
+            <img class="et-footer__logo" src="assets/images/brand/logo.svg" alt="" width="34" height="32" loading="lazy">
+          </span>
+          <span class="et-footer__wordmark" aria-hidden="true">EasyTrip</span>
+        </a>
+        <p class="et-footer__tagline">
+          Seasonal trip ideas, hotels, chalets and tickets for flights, buses and trains, all in one place.
+        </p>
+        <a class="et-footer__contact" href="contact.html">Visit the contact page <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <nav class="et-footer__nav" aria-label="Footer">
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Explore</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="index.html">Home</a></li>
+            <li><a class="et-footer__link" href="destinations.html">All destinations</a></li>
+            <li><a class="et-footer__link" href="winter.html">Winter</a></li>
+            <li><a class="et-footer__link" href="spring.html">Spring</a></li>
+            <li><a class="et-footer__link" href="summer.html">Summer</a></li>
+            <li><a class="et-footer__link" href="autumn.html">Autumn</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Stays</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="hotels-chalets.html">Hotels &amp; chalets</a></li>
+            <li><a class="et-footer__link" href="hotels.html">Hotels</a></li>
+            <li><a class="et-footer__link" href="chalets.html">Chalets</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Tickets</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="tickets.html">All tickets</a></li>
+            <li><a class="et-footer__link" href="flight.html">Flights</a></li>
+            <li><a class="et-footer__link" href="bus-train.html">Bus &amp; train</a></li>
+          </ul>
+        </div>
+        <div class="et-footer__group">
+          <h2 class="et-footer__heading">Company</h2>
+          <ul class="et-footer__list">
+            <li><a class="et-footer__link" href="about.html">Who we are</a></li>
+            <li><a class="et-footer__link" href="why-easytrip.html">Why choose EasyTrip</a></li>
+            <li><a class="et-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="et-container et-footer__bottom">
+      <p class="et-footer__copy">&copy; 2026 EasyTrip. All rights reserved.</p>
+      <a class="et-footer__top-link" href="#main">Back to top <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/account.js"></script>
+  <script src="js/id-document.js"></script>
+  <script src="js/document-camera.js"></script>
+  <script src="js/verification.js"></script>
+  <script src="js/my-bookings.js"></script>
+  <script src="js/my-messages.js"></script>
+</body>
+</html>
