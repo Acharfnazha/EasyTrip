@@ -942,21 +942,433 @@
 
 .liveness__camera {
   display: grid;
-  gap: 12px;
   justify-items: center;
 }
 
+/* The camera check, one step at a time (account.html): one card. Its data-phase is "guide" (the
+   cartoon shows the step), "again" (the same, when the step took too long), "action" (the camera)
+   or "done" (the step is done: a check over the camera). Its data-step (0 to 4) is the step. */
+.kyc-flow {
+  --kyc-blue: #2563eb;
+  --kyc-tint: #dbeafe;
+  --kyc-ink: #0f172a;
+  --kyc-muted: #64748b;
+  --kyc-green: #10b981;
+  --kyc-ease: cubic-bezier(.22, 1, .36, 1);
+  width: min(100%, 600px);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: 0 20px 45px -15px rgba(15, 23, 42, .1), 0 4px 12px -2px rgba(37, 99, 235, .06);
+  color: var(--kyc-ink);
+}
+
+.kyc-flow svg {
+  flex: 0 0 auto;
+}
+
+/* The top: the step number, what to do now (pill) and the five bars. */
+.kyc-flow__head {
+  padding: 18px 22px 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.kyc-flow__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.kyc-flow__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.kyc-flow__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: rgba(37, 99, 235, .1);
+  color: var(--kyc-blue);
+}
+
+.kyc-flow__icon svg,
+.kyc-flow__again svg,
+.kyc-flow__buttons svg,
+.liveness__done svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.kyc-flow__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+}
+
+.kyc-flow__tag {
+  display: block;
+  color: var(--kyc-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.kyc-flow__count {
+  display: block;
+  color: var(--kyc-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.kyc-flow__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 5px 12px;
+  border: 1px solid var(--kyc-tint);
+  border-radius: 999px;
+  background: #eff6ff;
+  color: var(--kyc-blue);
+  font-size: 12px;
+  font-weight: 600;
+  transition: color .3s ease, background-color .3s ease, border-color .3s ease;
+}
+
+.kyc-flow[data-phase="action"] .kyc-flow__pill,
+.kyc-flow[data-phase="done"] .kyc-flow__pill {
+  border-color: #a7f3d0;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.kyc-flow[data-phase="again"] .kyc-flow__pill {
+  border-color: #fde68a;
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.kyc-flow__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.kyc-flow__bars {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kyc-flow__bars li {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e8f0;
+  transition: background-color .3s ease;
+}
+
+.kyc-flow__bars li.is-current {
+  background: var(--kyc-tint);
+}
+
+.kyc-flow__bars li.is-done {
+  background: var(--kyc-green);
+}
+
+.kyc-flow__fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--kyc-blue);
+}
+
+.kyc-flow__bars li:not(.is-current) .kyc-flow__fill {
+  width: 0 !important;
+}
+
+/* The middle: the cartoon, or the camera in the same place. */
+.kyc-flow__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 18px 18px 8px;
+  background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 65%, #fff 100%);
+}
+
+.kyc-flow__again {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 8px 14px;
+  border: 1px solid #fde68a;
+  border-radius: 14px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.kyc-flow__again svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.2;
+}
+
+.kyc-flow[data-phase="again"] .kyc-flow__again {
+  display: inline-flex;
+}
+
+.kyc-flow__guide {
+  width: 100%;
+}
+
+.kyc-flow__scene {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  max-height: 260px;
+  margin: 0 auto;
+  overflow: visible;
+  user-select: none;
+}
+
+.kyc-flow__action {
+  display: none;
+  width: 100%;
+  justify-content: center;
+}
+
+.kyc-flow[data-phase="action"] .kyc-flow__guide,
+.kyc-flow[data-phase="done"] .kyc-flow__guide {
+  display: none;
+}
+
+.kyc-flow[data-phase="action"] .kyc-flow__action,
+.kyc-flow[data-phase="done"] .kyc-flow__action {
+  display: flex;
+}
+
+/* The bottom: what to do, and the buttons. */
+.kyc-flow__body {
+  padding: 14px 22px 22px;
+  text-align: center;
+}
+
+.kyc-flow__title {
+  margin: 0;
+  color: var(--kyc-ink);
+  font: 700 21px/1.3 var(--et-display);
+}
+
+.kyc-flow__desc {
+  max-width: 30rem;
+  margin: 6px auto 0;
+  color: var(--kyc-muted);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.kyc-flow__body .liveness__hint {
+  margin-top: 8px;
+}
+
+.kyc-flow__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.kyc-flow__buttons .et-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.kyc-flow__buttons .et-btn[hidden] {
+  display: none;
+}
+
+.kyc-flow__buttons svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+}
+
+@media (max-width: 30em) {
+  .kyc-flow__head { padding: 14px 16px 14px; }
+  .kyc-flow__stage { min-height: 240px; padding: 14px 10px 6px; }
+  .kyc-flow__body { padding: 12px 16px 18px; }
+  .kyc-flow__title { font-size: 18px; }
+  .kyc-flow__buttons .et-btn { width: 100%; }
+}
+
+/* ---------- The cartoon ---------- */
+/* In an SVG, transform-origin is in the drawing's units. Each step loops its movement. */
+
+.kyc-char { transform-origin: 190px 160px; }
+.kyc-head { transform-origin: 190px 145px; }
+.kyc-arm-id { transform-origin: 245px 255px; transform: rotate(34deg) translate(18px, 34px); opacity: .22; transition: opacity .4s ease; }
+.kyc-oval,
+.kyc-doc-frame,
+.kyc-arrow-left,
+.kyc-arrow-right,
+.kyc-zoom {
+  display: none;
+}
+
+.kyc-flow[data-step="0"] .kyc-oval,
+.kyc-flow[data-step="1"] .kyc-oval,
+.kyc-flow[data-step="2"] .kyc-oval,
+.kyc-flow[data-step="3"] .kyc-oval,
+.kyc-flow[data-step="1"] .kyc-arrow-left,
+.kyc-flow[data-step="2"] .kyc-arrow-right,
+.kyc-flow[data-step="3"] .kyc-zoom,
+.kyc-flow[data-step="4"] .kyc-doc-frame {
+  display: inline;
+}
+
+.kyc-flow[data-step="4"] .kyc-arm-id { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .kyc-flow[data-step="0"] .kyc-head { animation: kyc-look 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="1"] .kyc-head { animation: kyc-tilt-left 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="1"] .kyc-face { animation: kyc-shift-left 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="1"] .kyc-hair { animation: kyc-hair-left 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="2"] .kyc-head { animation: kyc-tilt-right 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="2"] .kyc-face { animation: kyc-shift-right 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="2"] .kyc-hair { animation: kyc-hair-right 2.4s ease-in-out infinite; }
+  .kyc-flow[data-step="3"] .kyc-char { animation: kyc-closer 2.6s ease-in-out infinite; }
+  .kyc-flow[data-step="4"] .kyc-arm-id { animation: kyc-raise 3s var(--kyc-ease) infinite; }
+  .kyc-scan-beam { animation: kyc-scan 2.5s ease-in-out infinite; }
+  .kyc-nudge-left { animation: kyc-nudge-left 1.4s ease-in-out infinite; }
+  .kyc-nudge-right { animation: kyc-nudge-right 1.4s ease-in-out infinite; }
+  .kyc-nudge-zoom { transform-origin: 190px 144px; animation: kyc-nudge-zoom 1.5s ease-in-out infinite; }
+  .kyc-flow__dot { animation: kyc-dot 1.4s ease-in-out infinite; }
+}
+
+/* Without motion: the cartoon shows each step's pose, still. */
+@media (prefers-reduced-motion: reduce) {
+  .kyc-flow[data-step="1"] .kyc-head { transform: rotate(-5deg); }
+  .kyc-flow[data-step="1"] .kyc-face { transform: translateX(-12px); }
+  .kyc-flow[data-step="2"] .kyc-head { transform: rotate(5deg); }
+  .kyc-flow[data-step="2"] .kyc-face { transform: translateX(12px); }
+  .kyc-flow[data-step="3"] .kyc-char { transform: scale(1.18) translateY(10px); }
+  .kyc-scan-beam { opacity: 0; }
+}
+
+@keyframes kyc-look {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.01); }
+}
+
+@keyframes kyc-tilt-left {
+  0%, 15%, 100% { transform: rotate(0); }
+  45%, 75% { transform: rotate(-5deg); }
+}
+
+@keyframes kyc-shift-left {
+  0%, 15%, 100% { transform: translateX(0); }
+  45%, 75% { transform: translateX(-12px); }
+}
+
+@keyframes kyc-hair-left {
+  0%, 15%, 100% { transform: translateX(0); }
+  45%, 75% { transform: translateX(-4px); }
+}
+
+@keyframes kyc-tilt-right {
+  0%, 15%, 100% { transform: rotate(0); }
+  45%, 75% { transform: rotate(5deg); }
+}
+
+@keyframes kyc-shift-right {
+  0%, 15%, 100% { transform: translateX(0); }
+  45%, 75% { transform: translateX(12px); }
+}
+
+@keyframes kyc-hair-right {
+  0%, 15%, 100% { transform: translateX(0); }
+  45%, 75% { transform: translateX(4px); }
+}
+
+@keyframes kyc-closer {
+  0%, 15%, 100% { transform: scale(1) translateY(0); }
+  45%, 78% { transform: scale(1.18) translateY(10px); }
+}
+
+@keyframes kyc-raise {
+  0%, 12% { transform: rotate(28deg) translate(14px, 26px); }
+  30%, 82% { transform: rotate(0) translate(0, 0); }
+  95%, 100% { transform: rotate(28deg) translate(14px, 26px); }
+}
+
+@keyframes kyc-scan {
+  0%, 100% { transform: translateY(0); opacity: .2; }
+  50% { transform: translateY(104px); opacity: .95; }
+}
+
+@keyframes kyc-nudge-left {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-6px); }
+}
+
+@keyframes kyc-nudge-right {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+@keyframes kyc-nudge-zoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes kyc-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.8); }
+}
+
+/* ---------- The camera ---------- */
 /* The picture, mirrored like a mirror, with an oval to put the face in. */
 .liveness__stage {
   position: relative;
-  width: min(100%, 520px);
+  width: min(100%, 460px);
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 18px;
-  background: #0b1630;
+  border: 2px solid var(--kyc-blue);
+  border-radius: 22px;
+  background: #0f172a;
+  box-shadow: 0 12px 30px -8px rgba(37, 99, 235, .28);
 }
 
 .liveness__video {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -965,19 +1377,133 @@
 
 .liveness__oval {
   position: absolute;
-  inset: 12% 30%;
-  border: 4px solid rgba(255, 255, 255, .85);
+  inset: 14% 28%;
+  border: 3px dashed #60a5fa;
   border-radius: 50%;
-  box-shadow: 0 0 0 9999px rgba(0, 18, 47, .38);
-  transition: border-color .2s ease;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, .42);
+  transition: inset .35s ease, border-radius .35s ease, border-color .2s ease;
 }
 
 .liveness__oval.is-matching {
-  border-color: #3ddc84;
+  border-style: solid;
+  border-color: #34d399;
 }
 
 .liveness__oval.is-lost {
-  border-color: #ffb547;
+  border-color: #fbbf24;
+}
+
+/* The last step: a wide frame for the face and the document, and a place for the document. */
+.kyc-flow[data-step="4"] .liveness__oval {
+  inset: 16% 9%;
+  border-radius: 22px;
+}
+
+.liveness__slot {
+  display: none;
+  position: absolute;
+  top: 28%;
+  right: 13%;
+  width: 28%;
+  height: 40%;
+  margin: 0;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #93c5fd;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, .16);
+  color: #dbeafe;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.kyc-flow[data-step="4"] .liveness__slot {
+  display: flex;
+}
+
+/* "The guide again in 5s", when the step takes long. */
+.liveness__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  margin: 0;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .72);
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* "Step done", for a moment, before the next step's guide. */
+.liveness__done {
+  display: none;
+  position: absolute;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, .88);
+  color: #fff;
+  font-size: 17px;
+}
+
+.liveness__done svg {
+  width: 48px;
+  height: 48px;
+  stroke-width: 2.6;
+}
+
+.kyc-flow[data-phase="done"] .liveness__done {
+  display: flex;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .liveness__done { animation: kyc-fade .25s ease; }
+  .kyc-flow__action,
+  .kyc-flow__guide { animation: kyc-fade .35s ease; }
+}
+
+@keyframes kyc-fade {
+  from { opacity: 0; transform: scale(.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* The countdown before the photo is taken by itself, and the flash when it is taken. */
+.liveness__count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  color: #fff;
+  font: 800 96px/1 var(--et-font);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, .65);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.liveness__flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.liveness__flash.is-on {
+  animation: liveness-flash .45s ease-out;
+}
+
+@keyframes liveness-flash {
+  from { opacity: .85; }
+  to { opacity: 0; }
 }
 
 /* The direction to turn, over the picture. */
@@ -1009,40 +1535,6 @@
 }
 
 /* The five steps: done ones get a check mark, the current one is highlighted. */
-.liveness__steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.liveness__steps li {
-  padding: 4px 12px;
-  border: 1px solid var(--et-line);
-  border-radius: 999px;
-  color: var(--et-muted);
-  font-size: 14px;
-}
-
-.liveness__steps li.is-current {
-  border-color: var(--et-primary);
-  color: var(--et-primary);
-  font-weight: 700;
-}
-
-.liveness__steps li.is-done {
-  border-color: #b7e4c7;
-  background: #e7f6ec;
-  color: #11603a;
-}
-
-.liveness__steps li.is-done::before {
-  content: "✓ ";
-}
-
 /* The photos to check: the selfie big, the four movements small. */
 .liveness__photos {
   display: grid;

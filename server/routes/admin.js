@@ -47,7 +47,8 @@ router.post("/users/:id/credit", creditController.changeUserCredit);
 router.patch("/users/:id", accountsController.changeRole);
 router.delete("/users/:id", accountsController.deleteAccount);
 
-// The identity verifications: the list, one document, its selfie, and the decision.
+// The identity verifications: the list, one document, its photo, its selfie, and the decision.
+router.get("/verifications/:userId/document", verificationsController.getDocumentPhoto);
 router.get("/verifications", verificationsController.listVerifications);
 router.get("/verifications/:userId", verificationsController.getVerification);
 router.get("/verifications/:userId/selfie", verificationsController.getSelfie);

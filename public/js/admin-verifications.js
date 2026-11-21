@@ -32,6 +32,9 @@
   const frames = q('[data-verify-frames]', dialog);
   const FRAMES = { straight: 'Looking straight', left: 'Turned left', right: 'Turned right', closer: 'Closer' };
   const noSelfie = q('[data-verify-no-selfie]', dialog);
+  const documentPhoto = q('[data-verify-document]', dialog);
+  const documentLink = q('[data-verify-document-link]', dialog);
+  const documentCaption = q('[data-verify-document-caption]', dialog);
   const details = q('[data-verify-details]', dialog);
   const decide = q('[data-verify-decide]', dialog);
   const noteError = form.querySelector('[data-error-for="note"]');
@@ -192,6 +195,24 @@
         item.reviewNote ? 'Note: ' + item.reviewNote : '')
     );
 
+    // The photo of the document the customer scanned first. It is deleted once the identity is
+    // verified, and documents saved before photos were kept have none.
+    if (item.hasDocumentPhoto) {
+      const url = '/api/admin/verifications/' + item.userId + '/document?t=' + Date.now();
+      documentPhoto.src = url;
+      documentPhoto.alt = 'The ' + item.documentTypeName + ' scanned by ' + item.user.name;
+      documentLink.href = url;
+      documentLink.hidden = false;
+      documentCaption.textContent = 'The scanned ' + item.documentTypeName + ' (click to see it full size)';
+    } else {
+      documentPhoto.removeAttribute('src');
+      documentLink.removeAttribute('href');
+      documentLink.hidden = true;
+      documentCaption.textContent = item.status === 'verified'
+        ? 'No photo of the ' + item.documentTypeName + ': it is deleted once the identity is verified.'
+        : 'No photo of the ' + item.documentTypeName + ': it was saved before photos were kept. Ask the customer to scan it again if needed.';
+    }
+
     // The selfie is asked for with the session cookie, like any page file. A new address each
     // time stops the browser from showing an older photo.
     if (item.hasSelfie) {
@@ -283,6 +304,8 @@
   q('[data-verify-close]', dialog).addEventListener('click', function () { dialog.close(); });
   dialog.addEventListener('close', function () {
     selfie.removeAttribute('src'); // The photos aren't kept on the page after the dialog closes.
+    documentPhoto.removeAttribute('src');
+    documentLink.removeAttribute('href');
     frames.replaceChildren();
     const button = opener && (document.body.contains(opener) ? opener : panel.querySelector('[data-user-id="' + current.userId + '"]'));
     if (button) button.focus();

@@ -178,6 +178,146 @@ export function textTokens(text) {
   return [...tokens];
 }
 
+// ---------- Filling in the form from the printed text ----------
+
+// The label words of each detail, in their plain() form. An Arabic label is also found with "ال"
+// ("the") in front ("الشهرة" = "شهرة"). "SUMAME" is how the OCR often reads "Surname".
+const LABEL_WORDS = Object.fromEntries(
+  Object.entries({
+    surname: ["SURNAME", "SURNAMES", "SUMAME", "FAMILY", "LAST", "NOM", "شهرة", "لقب", "عائلة", "كنية"],
+    givenNames: ["GIVEN", "FIRST", "FORENAME", "FORENAMES", "PRENOM", "PRENOMS", "اسم"],
+    name: ["NAME", "NAMES"],
+    birth: ["BIRTH", "NAISSANCE", "ولادة", "ميلاد"],
+    expiry: ["EXPIRY", "EXPIRES", "EXPIRATION", "VALID", "UNTIL", "VALABLE", "صالحة", "لغاية", "انتهاء"],
+    issued: ["ISSUED", "ISSUE", "DELIVRE", "DELIVRANCE", "اصدار", "إصدار", "منح"],
+    number: ["NO", "NUMBER", "NUM", "NR", "N", "رقم"],
+    nationality: ["NATIONALITY", "NATIONALITE", "جنسية"],
+    // Another person's name ("father's name", "اسم الأب") or the place of birth: never the holder's name.
+    other: ["FATHER", "MOTHER", "FATHERS", "MOTHERS", "PLACE", "LIEU", "اب", "أب", "ام", "أم", "والد", "والدة", "محل", "مكان"],
+  }).map(([kind, words]) => [kind, new Set(words.map(plain))])
+);
+// Small words around the labels, never part of a name.
+const FILLER_WORDS = new Set(["OF", "DATE", "THE", "DE", "DU", "CARD", "تاريخ", "حتى"].map(plain));
+
+// The label kinds of one word ("الشهرة" -> ["surname"]).
+function labelKinds(word) {
+  const options = [word];
+  if (word.startsWith("ال") && word.length > 3) options.push(word.slice(2));
+  return Object.keys(LABEL_WORDS).filter((kind) => options.some((option) => LABEL_WORDS[kind].has(option)));
+}
+
+// A line as its words, each with its written form (kept for the names, as printed) and its plain
+// form (to compare), and the label kinds found in the line.
+function lineInfo(line) {
+  const words = String(line).replace(/\p{Cf}/gu, "").split(/[^\p{L}\p{M}\p{N}]+/u).filter(Boolean)
+    .map((raw) => ({ raw, plain: plain(raw) })).filter((word) => word.plain);
+  for (const word of words) word.kinds = labelKinds(word.plain);
+  return { text: line, words, kinds: new Set(words.flatMap((word) => word.kinds)) };
+}
+
+// The name in a line: its words that are not labels, letters only. A bilingual line
+// ("TESTER / تجربة Surname / الشهرة") gives the name in English letters.
+function nameIn(info) {
+  const words = info.words
+    .filter((word) => word.kinds.length === 0 && !FILLER_WORDS.has(word.plain) && /^\p{L}[\p{L}\p{M}]+$/u.test(word.raw))
+    .map((word) => word.raw);
+  const latin = words.filter((word) => /^[A-Za-zÀ-ÿ'-]+$/.test(word));
+  const chosen = latin.length > 0 ? latin : words;
+  return chosen.join(" ").slice(0, 50);
+}
+
+// The document number in a line: the longest run of words made of A-Z and 0-9 with a digit in it,
+// written together ("DL 4829 1736" -> "DL48291736"). Labels are left out first.
+function numberIn(info) {
+  let best = "";
+  let run = [];
+  const close = () => {
+    const joined = run.join("");
+    if (/\d/.test(joined) && joined.length <= 20 && joined.length > best.length) best = joined;
+    run = [];
+  };
+  for (const word of info.words) {
+    // Letters alone only in a short prefix ("DL"), so a word like "LICENCE" never joins the number.
+    const fits = /^[A-Z0-9]+$/.test(word.plain) && (/\d/.test(word.plain) || word.plain.length <= 3);
+    if (word.kinds.length === 0 && fits) run.push(word.plain);
+    else close();
+  }
+  close();
+  return best;
+}
+
+// Countries found by name in the text, with their 3-letter code. Arabic names are found inside a
+// word too ("اللبنانية" has "لبنان").
+const COUNTRY_NAMES = [
+  ["LBN", ["LEBANON", "LEBANESE", "LIBAN", "LIBANAISE"], ["لبنان"]],
+  ["SYR", ["SYRIA", "SYRIAN"], ["سوري"]],
+  ["JOR", ["JORDAN", "JORDANIAN"], ["اردن"]],
+  ["IRQ", ["IRAQ", "IRAQI"], ["عراق"]],
+  ["EGY", ["EGYPT", "EGYPTIAN"], ["مصري", "مصر"]],
+  ["SAU", ["SAUDI"], ["سعودي"]],
+  ["ARE", ["EMIRATES"], ["امارات"]],
+  ["PSE", ["PALESTINE", "PALESTINIAN"], ["فلسطين"]],
+  ["FRA", ["FRANCE", "FRANCAISE"], []],
+];
+
+function countryIn(text) {
+  const words = new Set(wordsOf(text));
+  const joined = wordsOf(text).join(" ");
+  for (const [code, latin, arabic] of COUNTRY_NAMES) {
+    if (latin.some((name) => words.has(name)) || arabic.some((name) => joined.includes(plain(name)))) return code;
+  }
+  return "";
+}
+
+// The details a person would read on a document without a code, guessed from its printed text by
+// their labels ("Surname", "الشهرة", "Date of birth", "Card no."...). A detail that isn't found is
+// "": the user types it. The user checks every detail before saving, and the server then checks
+// which of them are on the photo, as for typed details.
+export function guessDetails(text, documentType) {
+  const lines = String(text).split("\n").filter((line) => line.trim() && !isCodeLine(line)).map(lineInfo);
+  const details = { surname: "", givenNames: "", documentNumber: "", issuingCountry: "", nationality: "", dateOfBirth: "", expiryDate: "" };
+
+  // The value of a label is on its own line, or on the next line when the label is alone.
+  const valueOf = (index, read) => read(lines[index]) || (lines[index + 1] && lines[index + 1].kinds.size === 0 ? read(lines[index + 1]) : "");
+  const firstDate = (info) => datesIn(info.text)[0] || ""; // day first: 12.04.1995 is 12 April
+
+  lines.forEach((info, index) => {
+    const has = (kind) => info.kinds.has(kind);
+    if (has("other") && !has("birth")) return;
+    if (has("surname") && !details.surname) details.surname = valueOf(index, nameIn);
+    else if ((has("givenNames") || (has("name") && !has("surname"))) && !has("birth") && !details.givenNames) {
+      details.givenNames = valueOf(index, nameIn);
+    }
+    if (has("birth") && !has("other") && !details.dateOfBirth) details.dateOfBirth = valueOf(index, firstDate);
+    if (has("expiry") && !has("issued") && !details.expiryDate) details.expiryDate = valueOf(index, firstDate);
+    if (has("number") && !has("birth") && !has("expiry") && !details.documentNumber) {
+      details.documentNumber = valueOf(index, numberIn);
+    }
+    if (has("nationality") && !details.nationality) {
+      const code = info.words.find((word) => word.kinds.length === 0 && /^[A-Z]{3}$/.test(word.plain));
+      details.nationality = code ? code.plain : countryIn(info.text);
+    }
+  });
+
+  // No date label: the dates themselves tell. The birth date is the oldest date of an adult, the
+  // expiry date the first one in the future (at most 30 years ahead).
+  const thisYear = new Date().getFullYear();
+  const todayText = new Date().toISOString().slice(0, 10);
+  const allDates = [...new Set(lines.flatMap((info) => datesIn(info.text)))].sort();
+  if (!details.dateOfBirth) {
+    details.dateOfBirth = allDates.find((date) => Number(date.slice(0, 4)) >= thisYear - 120 && Number(date.slice(0, 4)) <= thisYear - 18) || "";
+  }
+  if (!details.expiryDate) {
+    details.expiryDate = allDates.find((date) => date > todayText && Number(date.slice(0, 4)) <= thisYear + 30) || "";
+  }
+
+  // The country: printed on the card ("الجمهورية اللبنانية"), or the nationality for an ID card.
+  details.issuingCountry = countryIn(text) || (documentType === "id_card" ? details.nationality : "");
+  if (documentType === "id_card" && !details.nationality) details.nationality = details.issuingCountry;
+  if (documentType === "driving_licence") details.nationality = "";
+  return details;
+}
+
 // For each typed detail, the tokens that must ALL be on the photo for it to count as found.
 // The keys are the values of the found_on_photo column. One-letter words of a name are skipped,
 // because one letter is on almost any photo. A detail with no tokens can't be checked.

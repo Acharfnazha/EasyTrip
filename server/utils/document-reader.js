@@ -18,7 +18,7 @@ import path from "path";
 import { createWorker } from "tesseract.js";
 import { parse, states } from "mrz";
 import rootDir from "./path.js";
-import { labelCount, printedLines, textTokens } from "./printed-text.js";
+import { guessDetails, labelCount, printedLines, textTokens } from "./printed-text.js";
 
 // The OCR models are installed with npm (@tesseract.js-data/eng and /ara), so the server never
 // downloads anything while it reads a document.
@@ -342,8 +342,9 @@ function namesFromPrintedText(nameField, lines) {
 // documentType is what the user chose: "passport", "id_card" or "driving_licence".
 // Returns one of:
 //   { status: "read", documentType, details, checks, warnings }   read from the code
-//   { status: "typed", tokens, warnings }   no code: the user types the details, and the tokens
-//                                           (see printed-text.js) are what the photo shows
+//   { status: "typed", tokens, details, warnings }   no code: the details found in the printed
+//                                           text fill in the form, the user types the rest, and the
+//                                           tokens (see printed-text.js) are what the photo shows
 //   { status: "no-code" }                   a passport whose code can't be read
 //   { status: "unsupported", what }         a code, but of another document (a visa, ...)
 //   { status: "wrong-type", documentType }  the code shows another type than the one chosen
@@ -416,5 +417,7 @@ export async function readDocument(image, documentType) {
         "the side with the code lets the server read the details for you."
     );
   }
-  return { status: "typed", tokens, warnings };
+  // The details found by their labels fill in the form; the user types the rest.
+  const details = guessDetails(printed.text, documentType);
+  return { status: "typed", tokens, details, warnings };
 }

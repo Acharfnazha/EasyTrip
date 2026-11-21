@@ -9,6 +9,7 @@ import { checkVerificationFilters, checkVerificationDecision } from "../validato
 import { hasErrors, readPositiveInt, today } from "../validators/common.js";
 import { DOCUMENT_TYPES } from "../validators/id-document.js";
 import { selfiePath, deleteSelfie, LIVENESS_STEPS } from "../utils/selfie.js";
+import { documentPhotoPath, deleteDocumentPhoto } from "../utils/document-photo.js";
 import * as notices from "../utils/notices.js";
 
 // A document as the admin page receives it. The admin needs the whole document number, to
@@ -32,6 +33,7 @@ function verificationJson(row) {
     checkDigitsValid: row.check_digits_valid === null ? null : Boolean(row.check_digits_valid),
     foundOnPhoto: row.found_on_photo === null ? null : row.found_on_photo.split(",").filter(Boolean),
     status: row.status,
+    hasDocumentPhoto: Boolean(row.document_file),
     hasSelfie: Boolean(row.selfie_file),
     // The movements of the camera check that have a photo: [] when the selfie was uploaded.
     livenessSteps: row.selfie_file && row.liveness_steps ? row.liveness_steps.split(",") : [],
@@ -96,6 +98,23 @@ export async function getSelfie(req, res) {
   res.sendFile(file);
 }
 
+// GET /api/admin/verifications/:userId/document: the photo of the document the user scanned, for
+// the admin's <img>. It is never cached, and never sent to anyone but an admin.
+export async function getDocumentPhoto(req, res) {
+  const userId = readUserId(req, res);
+  if (!userId) return;
+  const row = await IdDocument.findOneForAdmin(userId);
+  if (!row || !row.document_file) {
+    return res.status(404).json({ error: "There is no photo of this document (it is deleted once the identity is verified)." });
+  }
+  const file = documentPhotoPath(row.document_file);
+  if (!fs.existsSync(file)) {
+    return res.status(404).json({ error: "The document photo's file is missing. Ask the customer to scan the document again." });
+  }
+  res.set("Cache-Control", "no-store");
+  res.sendFile(file);
+}
+
 // POST /api/admin/verifications/:userId  (JSON: decision = "approve" or "reject", note)
 export async function decideVerification(req, res) {
   const userId = readUserId(req, res);
@@ -119,6 +138,9 @@ export async function decideVerification(req, res) {
     return res.status(409).json({ error: "Another admin decided this a moment ago. Reload the list." });
   }
   deleteSelfie(row.selfie_file); // The decision is made, so the photo is no longer kept.
+  // A verified document's photo is no longer needed either. After a rejection it is kept: the
+  // user can send a new selfie for the same document.
+  if (status === "verified") deleteDocumentPhoto(row.document_file);
 
   notices.verificationDecided(row, status, data.note);
   const name = (row.first_name + " " + row.last_name).trim();

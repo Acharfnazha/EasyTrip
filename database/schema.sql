@@ -288,8 +288,11 @@ CREATE TABLE inquiry_replies (
 -- (a passport, an ID card or a driving licence)
 -- One row per user (a new save replaces the old one). Deleting the user
 -- deletes it (CASCADE).
--- The PHOTO is never stored: the server reads it in memory, and only the
--- details below are saved.
+-- The PHOTO of the document is saved in private/documents/ (outside public/, so
+-- only an admin can see it through the API); document_file is its name. It lets
+-- the admin compare the document with the details and the selfie. It is deleted,
+-- and set to NULL, once the identity is verified (after a rejection it is kept,
+-- for the next selfie). Scanning another document replaces it.
 -- read_method says where the details came from:
 --   machine_code: read from the document's machine-readable code (passports,
 --                 most ID cards). Then:
@@ -332,6 +335,7 @@ CREATE TABLE id_documents (
   check_digits_valid BOOLEAN      NULL,
   found_on_photo     SET('surname', 'given_names', 'document_number', 'date_of_birth', 'expiry_date') NULL,
   status             ENUM('unverified', 'pending', 'verified', 'rejected') NOT NULL DEFAULT 'unverified',
+  document_file      VARCHAR(100) NULL,
   selfie_file        VARCHAR(100) NULL,
   liveness_steps     SET('straight', 'left', 'right', 'closer') NULL,
   submitted_at       DATETIME     NULL,

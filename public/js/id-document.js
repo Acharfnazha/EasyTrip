@@ -258,6 +258,25 @@
     ];
   }
 
+  // A document without a code: the details found in its printed text are filled in, the others are
+  // left empty for the user to type.
+  function typedChecks(result) {
+    const shown = FIELDS.filter(function (name) {
+      return !(name === 'nationality' && result.documentType === 'driving_licence');
+    });
+    const filled = shown.filter(function (name) { return result.details[name]; }).length;
+    if (filled === 0) {
+      return [listItem('No machine-readable code, and no details could be read: type them exactly as they ' +
+        'are printed on your ' + result.documentTypeName + '.', 'warning')];
+    }
+    const items = [listItem(filled + ' of ' + shown.length + ' details were read from the text printed on your ' +
+      result.documentTypeName + '. Check each one against the ' + result.documentTypeName + '.', 'ok')];
+    if (filled < shown.length) {
+      items.push(listItem('Type the empty fields exactly as they are printed.', 'warning'));
+    }
+    return items;
+  }
+
   // The same date limits as the server (validators/id-document.js): the holder is 18 to 120 years
   // old, and the document expires between today and 30 years from now. With min and max, the
   // calendar opens on possible dates only (for the birth date, around 18 years ago, not today).
@@ -292,10 +311,7 @@
     setNoExpiry(false);
     setDateLimits();
 
-    checksList.replaceChildren(...(typed
-      ? [listItem('No machine-readable code: type the details exactly as they are printed on your ' +
-          result.documentTypeName + '.', 'warning')]
-      : codeChecks(result)));
+    checksList.replaceChildren(...(typed ? typedChecks(result) : codeChecks(result)));
     warningsList.replaceChildren(...result.warnings.map(function (text) { return listItem(text, 'warning'); }));
     warningsList.hidden = result.warnings.length === 0;
     reviewNotice.textContent = result.notice;

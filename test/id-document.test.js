@@ -10,7 +10,7 @@ import fs from "fs";
 import path from "path";
 import { readDocument, closeDocumentReader } from "../server/utils/document-reader.js";
 import {
-  datesIn, detailTokens, labelCount, plain, printedLines, textTokens, westernDigits, wordsOf,
+  datesIn, detailTokens, guessDetails, labelCount, plain, printedLines, textTokens, westernDigits, wordsOf,
 } from "../server/utils/printed-text.js";
 import { checkDocumentDetails, readDocumentType, yearsFromToday } from "../server/validators/id-document.js";
 
@@ -115,6 +115,60 @@ test("lets the user type the details of an ID card without a code", async () => 
   for (const token of ["TESTER", "SAMPLE", "ROSE", "582190473", "D1995-04-12", "D2031-08-30"]) {
     assert.ok(result.tokens.includes(token), `expected ${token} on the photo`);
   }
+});
+
+// ---------- Filling in the form from the printed text ----------
+
+test("fills in the details of an ID card without a code from its printed text", async () => {
+  const result = await read("id-card-front-no-code.png", "id_card");
+  assert.deepEqual(result.details, {
+    ...ROSE, documentNumber: "582190473", issuingCountry: "XXA", nationality: "XXA",
+  });
+});
+
+test("fills in a driving licence, in English and in Arabic and English", async () => {
+  for (const file of ["driving-licence.png", "driving-licence-arabic-english.png"]) {
+    const result = await read(file, "driving_licence");
+    assert.equal(result.details.surname, "TESTER", file);
+    assert.equal(result.details.documentNumber, "DL48291736", file);
+    assert.equal(result.details.dateOfBirth, "1995-04-12", file);
+    assert.equal(result.details.expiryDate, "2031-08-30", file); // not the "Issued" date
+    assert.equal(result.details.nationality, "", file); // a licence doesn't say it
+  }
+});
+
+test("fills in a Lebanese ID card printed in Arabic, and leaves out the parents' names", () => {
+  const text = [
+    "الجمهورية اللبنانية",
+    "بطاقة هوية",
+    "الشهرة: تجربة",
+    "الاسم: وردة",
+    "اسم الأب: سامي",
+    "اسم الأم: ليلى",
+    "محل الولادة: بيروت",
+    "تاريخ الولادة: 1995/04/12",
+    "رقم البطاقة: 0001 2345 6789",
+  ].join("\n");
+  assert.deepEqual(guessDetails(text, "id_card"), {
+    surname: "تجربة", givenNames: "وردة", documentNumber: "000123456789",
+    issuingCountry: "LBN", nationality: "LBN", dateOfBirth: "1995-04-12", expiryDate: "",
+  });
+});
+
+test("finds a value printed on the line after its label, and dates without labels", () => {
+  const text = "REPUBLIC OF LEBANON\nSurname\nNAZHA\nGiven names\nACHRAF\n12/04/1995\n30/08/2031";
+  const details = guessDetails(text, "id_card");
+  assert.equal(details.surname, "NAZHA");
+  assert.equal(details.givenNames, "ACHRAF");
+  assert.equal(details.issuingCountry, "LBN");
+  assert.equal(details.dateOfBirth, "1995-04-12"); // the date of an adult
+  assert.equal(details.expiryDate, "2031-08-30"); // the date in the future
+});
+
+test("leaves every detail empty when nothing can be read", () => {
+  assert.deepEqual(guessDetails("", "id_card"), {
+    surname: "", givenNames: "", documentNumber: "", issuingCountry: "", nationality: "", dateOfBirth: "", expiryDate: "",
+  });
 });
 
 test("says a 'driving licence' with a passport's code is the wrong type", async () => {

@@ -11,7 +11,7 @@ const COLUMNS = `
   DATE_FORMAT(d.date_of_birth, '%Y-%m-%d') AS date_of_birth,
   DATE_FORMAT(d.expiry_date, '%Y-%m-%d') AS expiry_date,
   d.read_method, d.same_as_read, d.check_digits_valid, d.found_on_photo,
-  d.status, d.selfie_file, d.liveness_steps, d.submitted_at, d.reviewed_at, d.review_note, d.updated_at`;
+  d.status, d.document_file, d.selfie_file, d.liveness_steps, d.submitted_at, d.reviewed_at, d.review_note, d.updated_at`;
 
 // The user's saved document, or undefined.
 export async function findByUserId(userId) {
@@ -24,20 +24,22 @@ export async function findByUserId(userId) {
 // "AS new" names the new row, so the UPDATE part can use its values (MySQL 8.0.19 and newer).
 // checks: { readMethod, sameAsRead, checkDigitsValid, foundOnPhoto } (see the table's comments).
 // New details have not been reviewed, so the review starts again: status "unverified", and no
-// selfie (the caller deletes the old selfie's file).
-export async function save(userId, documentType, details, checks) {
+// selfie (the caller deletes the old selfie's file and the old document photo).
+// documentFile: the name of the document's photo in private/documents/, or null.
+export async function save(userId, documentType, details, checks, documentFile) {
   await db.execute(
     `INSERT INTO id_documents
        (user_id, document_type, surname, given_names, document_number, issuing_country, nationality,
-        date_of_birth, expiry_date, read_method, same_as_read, check_digits_valid, found_on_photo)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS new
+        date_of_birth, expiry_date, read_method, same_as_read, check_digits_valid, found_on_photo,
+        document_file)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS new
      ON DUPLICATE KEY UPDATE
        document_type = new.document_type, surname = new.surname, given_names = new.given_names,
        document_number = new.document_number, issuing_country = new.issuing_country,
        nationality = new.nationality, date_of_birth = new.date_of_birth,
        expiry_date = new.expiry_date, read_method = new.read_method,
        same_as_read = new.same_as_read, check_digits_valid = new.check_digits_valid,
-       found_on_photo = new.found_on_photo,
+       found_on_photo = new.found_on_photo, document_file = new.document_file,
        status = 'unverified', selfie_file = NULL, liveness_steps = NULL, submitted_at = NULL,
        reviewed_by = NULL, reviewed_at = NULL, review_note = NULL`,
     [
@@ -45,6 +47,7 @@ export async function save(userId, documentType, details, checks) {
       details.issuingCountry, details.nationality || null, details.dateOfBirth, details.expiryDate || null,
       checks.readMethod, checks.sameAsRead, checks.checkDigitsValid,
       checks.foundOnPhoto === null ? null : checks.foundOnPhoto.join(","),
+      documentFile || null,
     ]
   );
 }
@@ -71,15 +74,18 @@ export async function submitSelfie(userId, selfieFile, livenessSteps) {
 }
 
 // An admin approves ("verified") or refuses ("rejected") a pending document. The selfie is no
-// longer needed, so its name is cleared (the caller deletes the file). Only a pending document
-// can be decided: two admins deciding at the same moment can't both change it.
-// Returns true when it was changed.
+// longer needed, so its name is cleared (the caller deletes the file). The document's photo is
+// cleared too once it is verified; after a rejection it is kept, because the user can send a new
+// selfie for the same document. Only a pending document can be decided: two admins deciding at
+// the same moment can't both change it. Returns true when it was changed.
 export async function decide(userId, status, adminId, note) {
   const [result] = await db.execute(
     `UPDATE id_documents
-     SET status = ?, selfie_file = NULL, liveness_steps = NULL, reviewed_by = ?, reviewed_at = NOW(), review_note = ?
+     SET status = ?, selfie_file = NULL, liveness_steps = NULL,
+         document_file = IF(? = 'verified', NULL, document_file),
+         reviewed_by = ?, reviewed_at = NOW(), review_note = ?
      WHERE user_id = ? AND status = 'pending'`,
-    [status, adminId, note || null, userId]
+    [status, status, adminId, note || null, userId]
   );
   return result.affectedRows > 0;
 }

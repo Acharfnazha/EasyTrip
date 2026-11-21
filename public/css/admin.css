@@ -596,9 +596,24 @@
   margin-top: 14px;
 }
 
+/* The scanned document: a click opens it full size, to read its small print. */
+.verify-review__document a {
+  display: block;
+  cursor: zoom-in;
+}
+
+.verify-review__document figcaption {
+  margin-top: 6px;
+}
+
+/* Side by side on a wide screen: the document and the selfie, then the details under them. */
 @media (min-width: 46em) {
   .verify-review {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .verify-review__details {
+    grid-column: 1 / -1;
   }
 }
 

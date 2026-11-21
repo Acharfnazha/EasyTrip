@@ -9,7 +9,9 @@
 //   the details, and the server checks which of them appear in the text printed on the photo.
 //
 // Privacy rules in this file:
-// - The photo is only in memory (multer memoryStorage) and is dropped right after the scan.
+// - The photo is checked in memory, then kept in private/documents/ (never in public/), so an
+//   admin can compare it with the selfie. Only an admin can see it, and it is deleted once the
+//   identity is verified (see utils/document-photo.js).
 // - Document details are never written to the log: errors are logged with a general message.
 // - The session never holds document details or the photo's text, only fingerprints (see below).
 import crypto from "crypto";
@@ -21,6 +23,7 @@ import { detailTokens } from "../utils/printed-text.js";
 import { DOCUMENT_TYPES, checkDocumentDetails, readDocumentType, today } from "../validators/id-document.js";
 import { hasErrors } from "../validators/common.js";
 import { saveSelfie, deleteSelfie, LIVENESS_STEPS } from "../utils/selfie.js";
+import { saveScanPhoto, keepScanPhoto, deleteDocumentPhoto, deleteOldScanPhotos } from "../utils/document-photo.js";
 import * as notices from "../utils/notices.js";
 
 const SCAN_VALID_MINUTES = 30; // A scan must be saved within 30 minutes.
@@ -37,9 +40,10 @@ const NOT_PROOF =
 const NOTICES = {
   machine_code: "These details were read from the document's machine-readable code. " + NOT_PROOF,
   typed:
-    "This document has no machine-readable code that could be read, so type the details exactly as " +
-    "they are printed on it. When you save, the server checks which of them appear in the text it " +
-    "read on the photo. " + NOT_PROOF,
+    "This document has no machine-readable code, so the details were filled in from the text printed " +
+    "on it, where it could be read. Check every detail against the document and type what is missing " +
+    "or wrong. When you save, the server checks which of them appear in the text it read on the " +
+    "photo. " + NOT_PROOF,
 };
 // With saved details:
 const SAVED_NOTICES = {
@@ -168,6 +172,17 @@ export async function scanDocument(req, res) {
     });
   }
 
+  // The photo is kept (in private/documents/, not public), so an admin can compare it with the
+  // details and the selfie. A scan replaces the last scan that wasn't saved.
+  if (req.session.documentScan) deleteDocumentPhoto(req.session.documentScan.photoFile);
+  deleteOldScanPhotos();
+  let photoFile = null;
+  try {
+    photoFile = await saveScanPhoto(image, req.file.mimetype);
+  } catch (error) {
+    throw safeError("photo save", error);
+  }
+
   // The session keeps what is needed at saving time, but no details and no words of the photo.
   const userId = req.user.user_id;
   let details;
@@ -178,14 +193,18 @@ export async function scanDocument(req, res) {
       readMethod: "machine_code",
       fingerprint: detailsFingerprint(userId, documentType, checkDocumentDetails(details, documentType).data),
       checkDigitsValid: result.checks.checkDigitsValid,
+      photoFile: photoFile,
       scannedAt: Date.now(),
     };
   } else {
-    details = { surname: "", givenNames: "", documentNumber: "", issuingCountry: "", nationality: "", dateOfBirth: "", expiryDate: "" };
+    // What was found in the printed text: only a suggestion that the user checks. The session still
+    // holds no details, and saving checks them against the photo as for typed details.
+    details = result.details;
     req.session.documentScan = {
       documentType: documentType,
       readMethod: "typed",
       photoTokens: result.tokens.slice(0, MAX_PHOTO_TOKENS).map((token) => tokenFingerprint(userId, token)),
+      photoFile: photoFile,
       scannedAt: Date.now(),
     };
   }
@@ -233,14 +252,21 @@ export async function saveDocument(req, res) {
     checks = { readMethod: "typed", sameAsRead: null, checkDigitsValid: null, foundOnPhoto: found };
   }
 
-  // New details start the review again, so an old selfie is no longer needed.
+  // New details start the review again, so an old selfie and the old document's photo are no
+  // longer needed. The scan's photo becomes the document's photo.
   const before = await IdDocument.findByUserId(userId);
+  let documentFile = null;
   try {
-    await IdDocument.save(userId, scan.documentType, data, checks);
+    documentFile = await keepScanPhoto(scan.photoFile);
+    await IdDocument.save(userId, scan.documentType, data, checks, documentFile);
   } catch (error) {
+    deleteDocumentPhoto(documentFile);
     throw safeError("save", error);
   }
-  if (before) deleteSelfie(before.selfie_file);
+  if (before) {
+    deleteSelfie(before.selfie_file);
+    if (before.document_file !== documentFile) deleteDocumentPhoto(before.document_file);
+  }
   delete req.session.documentScan; // One scan, one save.
 
   const row = await IdDocument.findByUserId(userId);
@@ -261,11 +287,15 @@ export async function getDocument(req, res) {
 export async function deleteDocument(req, res) {
   const before = await IdDocument.findByUserId(req.user.user_id);
   const deleted = await IdDocument.deleteByUserId(req.user.user_id);
-  if (before) deleteSelfie(before.selfie_file);
+  if (before) {
+    deleteSelfie(before.selfie_file);
+    deleteDocumentPhoto(before.document_file);
+  }
+  if (req.session.documentScan) deleteDocumentPhoto(req.session.documentScan.photoFile);
+  delete req.session.documentScan;
   if (!deleted) {
     return res.status(404).json({ error: "There is no saved identity document." });
   }
-  delete req.session.documentScan;
   res.json({ message: "Your identity document details were deleted." });
 }
 

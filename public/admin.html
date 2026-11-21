@@ -864,6 +864,13 @@
         <p class="auth-status" role="status" tabindex="-1" data-verify-dialog-status hidden></p>
 
         <div class="verify-review">
+          <!-- The document the customer scanned first, to compare with the details and the selfie. -->
+          <figure class="verify-review__photo verify-review__document">
+            <a data-verify-document-link target="_blank" rel="noopener" hidden>
+              <img alt="" data-verify-document />
+            </a>
+            <figcaption class="admin-card__text" data-verify-document-caption>The scanned document</figcaption>
+          </figure>
           <figure class="verify-review__photo">
             <img alt="" data-verify-selfie hidden />
             <figcaption class="admin-card__text" data-verify-no-selfie hidden>No selfie to show. It is deleted once a decision is made.</figcaption>

@@ -71,7 +71,7 @@ course's separation of concerns and MVC lessons. Each layer only talks to the la
 | `middleware/is-auth.js` | `isAuth` (logged in) and `isAdmin` (admin role) |
 | `middleware/limit-attempts.js` | The limits on failed register and login attempts, on contact messages, and on document scans |
 | `middleware/security-headers.js` | The security headers sent with every answer (Content-Security-Policy and three others) |
-| `middleware/upload-image.js` | Reads a form with an image (multer), and checks the image's type, size and first bytes. A stay's photo is saved; a document photo stays in memory only |
+| `middleware/upload-image.js` | Reads a form with an image (multer), and checks the image's type, size and first bytes. A stay's photo is saved in public/; a document photo is checked in memory, then kept in private/documents/ |
 | `controllers/auth.js` | Register, log in (password, then the emailed code), log out, "who is logged in" |
 | `controllers/google.js` | "Continue with Google": sends the browser to Google and reads the answer |
 | `controllers/admin.js` | The admin dashboard: the totals, the charts' figures, and the database viewer |
@@ -107,6 +107,7 @@ course's separation of concerns and MVC lessons. Each layer only talks to the la
 | `utils/printed-text.js` | Turns printed text and typed details into words, numbers and dates that can be compared |
 | `utils/money.js` | Writes an amount for a message: "$560" or "$1,000.50" |
 | `utils/selfie.js` | Saves, finds and deletes the verification selfies, in `private/selfies/` (never in `public/`) |
+| `utils/document-photo.js` | Keeps the photo of the scanned document for the admin, in `private/documents/` (never in `public/`) |
 | `utils/fares.js` | The sample fares of the tickets, and the price of a whole ticket |
 | `utils/mailer.js` | Sends the emails from the Gmail account in `.env` (nodemailer): the login code, and the notices in the background |
 | `utils/notices.js` | Writes the emails about bookings, tickets and credit; writing and sending are separate, so the tests read them without sending |
@@ -221,6 +222,7 @@ All data is sent as JSON.
 | `POST /api/id-document/selfie` | Logged in | The selfie holding the saved document (multipart: `selfie`), and the camera check's photos (`straight`, `left`, `right`, `closer`: all four or none); the document waits for an admin | `200`, `400`, `401`, `409` already verified, `429` |
 | `GET /api/admin/verifications` | Admin only | The saved documents, the waiting ones first (`?status=&q=&page=&limit=`) | `200`, `400`, `401`, `403` |
 | `GET /api/admin/verifications/:userId` | Admin only | One document, with the whole number | `200`, `400`, `401`, `403`, `404` |
+| `GET /api/admin/verifications/:userId/document` | Admin only | The photo of the document the customer scanned (deleted once the identity is verified); never cached | `200`, `400`, `401`, `403`, `404` |
 | `GET /api/admin/verifications/:userId/selfie` | Admin only | The selfie itself, or with `?frame=straight` (`left`, `right`, `closer`) one movement photo; never cached | `200`, `400`, `401`, `403`, `404` |
 | `POST /api/admin/verifications/:userId` | Admin only | Approve or reject (JSON: `decision`, `note`, needed to reject); the selfie is then deleted | `200`, `400`, `401`, `403`, `404`, `409` |
 | `PATCH /api/admin/users/:id` | Admin only | Changes the role (JSON: `role`) | `200`, `400`, `401`, `403`, `404`, `409` your own account |
@@ -419,8 +421,9 @@ POST /api/id-document/scan    (documentType + the photo in "document")
   isAuth                      only a logged-in user
   limitDocumentScans          10 scans every 15 minutes per account (OCR takes the processor)
   uploadDocumentImage         multer keeps the photo IN MEMORY (5 MB at most, JPG/PNG/WebP,
-                              first bytes checked); it is never written to the disk
-  scanDocument                utils/document-reader.js reads it, then the photo is dropped
+                              first bytes checked)
+  scanDocument                utils/document-reader.js reads it, then utils/document-photo.js keeps
+                              it in private/documents/ for the admin ("scan-<random>" until saved)
                               passport / ID card -> the code: name, number, countries, dates,
                                                     check digits, expired or not, names checked
                               driving licence    -> the printed text (kept as fingerprints only)
@@ -460,8 +463,11 @@ verified: that needs a person (an admin review, a later part) and, for the face,
 
 ### Privacy
 
-- The photo stays in the server's memory during the scan and is then dropped. It is never saved,
-  never logged, and never sent anywhere else.
+- The photo is checked in the server's memory, then kept in `private/documents/` (never in `public/`, and
+  never committed: `private/` is in .gitignore). Only an admin sees it, through
+  `GET /api/admin/verifications/:userId/document`, to compare it with the details and the selfie. It is
+  deleted once the identity is verified, when another document is scanned, and when the user deletes
+  their document. A scan that is never saved is deleted after an hour. It is never logged.
 - Document details are never written to the server's log: errors in this part are logged as
   "ID document scan failed (error code)" only.
 - The session (saved in MySQL) never holds the details or the photo's words. For a code, it keeps a
@@ -843,7 +849,7 @@ cookies and sessions lesson.
 | A file name like `../../server.js` | The server makes every file name itself (time + random text + extension) and never uses the visitor's name |
 | Very big files | 2 MB at most, and one file per request |
 | Losing customers' bookings | A stay with bookings can't be deleted (foreign key with `RESTRICT`) |
-| Leaking document photos | Kept in memory only and dropped after the scan; never saved or logged |
+| Leaking document photos | Kept in private/documents/ (not served by express.static, not committed); only an admin can see them; deleted once the identity is verified; never logged |
 | Leaking document details | Not in the log; the session only holds fingerprints (HMAC), never the details or the photo's words; only the owner can read them, with the number masked |
 | Overloading the server with scans | 10 scans every 15 minutes per account, 5 MB per photo, one photo and one text field per request |
 | A scan presented as proof of identity | Every answer says it is not proof, and saved details are "not verified" |
