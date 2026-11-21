@@ -22,6 +22,7 @@
   const text = q('[data-verify-text]');
   const message = q('[data-verify-message]');
   const box = q('[data-verify-form]');
+  const approved = q('[data-verify-approved]');
   const intro = q('[data-live-intro]');
   const camera = q('[data-live-camera]');
   const video = q('[data-live-video]');
@@ -103,10 +104,24 @@
     uploadBox.hidden = part === 'camera';
   }
 
+  // The 'Identity verified' card: what was checked, and when.
+  function showApproved(doc) {
+    const name = doc.documentTypeName || 'document';
+    q('[data-approved-text]').textContent = 'Our team checked your photos and your ' + name + '. ' +
+      'Your account is verified: you can now book stays and buy tickets.';
+    q('[data-approved-check-label]').textContent = doc.livenessChecked ? 'Camera check' : 'Selfie';
+    q('[data-approved-doc-label]').textContent = name.charAt(0).toUpperCase() + name.slice(1);
+    q('[data-approved-date]').textContent = doc.reviewedAt ? 'Verified on ' + formatDate(doc.reviewedAt) : 'Verified';
+  }
+
   // Shows the verification for the saved document, or for no document (doc is null).
   function show(doc) {
     stopCamera();
     const status = doc ? doc.status : 'none';
+    // Approved: the celebration card takes the place of the badge and the text.
+    approved.hidden = status !== 'verified';
+    badge.hidden = status === 'verified';
+    text.hidden = status === 'verified';
     badge.textContent = BADGES[status];
     badge.className = 'verify-status verify-status--' + status;
     uploadForm.reset();
@@ -124,6 +139,7 @@
       return;
     }
     if (status === 'verified') {
+      showApproved(doc);
       text.textContent = 'Our team checked your photos and your ' + doc.documentTypeName + ': you can book stays and buy tickets.' +
         (doc.reviewedAt ? ' Verified on ' + formatDate(doc.reviewedAt) + '.' : '');
       box.hidden = true;

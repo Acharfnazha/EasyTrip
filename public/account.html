@@ -391,6 +391,149 @@
           <p class="account-card__text" data-verify-text></p>
           <p class="auth-status" role="status" tabindex="-1" data-verify-message hidden></p>
 
+          <!-- Shown when our team approved the identity (js/verification.js): a short celebration,
+               what was checked, and the way to book. The animation plays once each time it shows. -->
+          <div class="kyc-ok" data-verify-approved hidden>
+            <div class="kyc-ok__head">
+              <span class="kyc-ok__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+              </span>
+              <div>
+                <span class="kyc-ok__tag">Account verification</span>
+                <span class="kyc-ok__sub">Identity verified · bookings open</span>
+              </div>
+            </div>
+
+            <div class="kyc-ok__stage">
+              <svg class="kyc-ok__scene" viewBox="0 0 380 265" role="img" aria-label="A smiling person holding an approved ID card, next to a shield with a check mark">
+                <defs>
+                  <radialGradient id="kyc-ok-glow" cx="50%" cy="52%" r="48%">
+                    <stop offset="0%" stop-color="#DBEAFE" stop-opacity="0.95"/>
+                    <stop offset="68%" stop-color="#EFF6FF" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="kyc-ok-shirt" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#2563EB"/>
+                    <stop offset="100%" stop-color="#1E3A8A"/>
+                  </linearGradient>
+                  <linearGradient id="kyc-ok-shield" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#2563EB"/>
+                    <stop offset="55%" stop-color="#0EA5E9"/>
+                    <stop offset="100%" stop-color="#10B981"/>
+                  </linearGradient>
+                  <linearGradient id="kyc-ok-card" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFFFFF"/>
+                    <stop offset="100%" stop-color="#F1F5F9"/>
+                  </linearGradient>
+                  <clipPath id="kyc-ok-clip"><rect x="12" y="4" width="356" height="258" rx="24"/></clipPath>
+                </defs>
+
+                <circle cx="190" cy="142" r="116" fill="url(#kyc-ok-glow)"/>
+                <circle class="kyc-ok__ring kyc-ok__ring--1" cx="190" cy="142" r="92" fill="none" stroke="#3B82F6" stroke-width="1.5"/>
+                <circle class="kyc-ok__ring kyc-ok__ring--2" cx="190" cy="142" r="92" fill="none" stroke="#10B981" stroke-width="1.5"/>
+
+                <!-- Confetti: each piece flies out from the middle -->
+                <g transform="translate(190, 128)">
+                  <rect class="kyc-ok__bit kyc-ok__bit--1" x="-4" y="-4" width="8" height="5" rx="2" fill="#2563EB"/>
+                  <circle class="kyc-ok__bit kyc-ok__bit--2" cx="0" cy="0" r="4" fill="#10B981"/>
+                  <rect class="kyc-ok__bit kyc-ok__bit--3" x="-5" y="-3" width="10" height="4.5" rx="2" fill="#3B82F6"/>
+                  <rect class="kyc-ok__bit kyc-ok__bit--4" x="-4" y="-4" width="8" height="5" rx="2" fill="#F59E0B"/>
+                  <circle class="kyc-ok__bit kyc-ok__bit--5" cx="0" cy="0" r="3.8" fill="#60A5FA"/>
+                  <rect class="kyc-ok__bit kyc-ok__bit--6" x="-4" y="-3" width="9" height="4.5" rx="2" fill="#10B981"/>
+                  <circle class="kyc-ok__bit kyc-ok__bit--7" cx="0" cy="0" r="3.5" fill="#1E3A8A"/>
+                  <rect class="kyc-ok__bit kyc-ok__bit--8" x="-4" y="-3" width="8" height="4.5" rx="2" fill="#38BDF8"/>
+                </g>
+
+                <g class="kyc-ok__spark kyc-ok__spark--1"><path d="M86 66 L88.5 73.5 L96 76 L88.5 78.5 L86 86 L83.5 78.5 L76 76 L83.5 73.5 Z" fill="#3B82F6"/></g>
+                <g class="kyc-ok__spark kyc-ok__spark--2"><path d="M298 62 L300.5 69.5 L308 72 L300.5 74.5 L298 82 L295.5 74.5 L288 72 L295.5 69.5 Z" fill="#10B981"/></g>
+                <g class="kyc-ok__spark kyc-ok__spark--3"><path d="M314 168 L316 174 L322 176 L316 178 L314 184 L312 178 L306 176 L312 174 Z" fill="#60A5FA"/></g>
+
+                <g clip-path="url(#kyc-ok-clip)">
+                  <g class="kyc-ok__hero">
+                    <path d="M118 272 C118 225, 146 207, 190 207 C234 207, 262 225, 262 272 Z" fill="url(#kyc-ok-shirt)"/>
+                    <path d="M172 207 L190 225 L208 207" fill="none" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="178" y="179" width="24" height="32" rx="10" fill="#F1C29B"/>
+                    <path d="M178 187 Q190 195 202 187 L202 179 L178 179 Z" fill="#DDA67B" opacity="0.55"/>
+                    <path d="M148 137 C145 99, 166 83, 190 83 C214 83, 235 99, 232 137 C232 151, 226 161, 222 163 L158 163 C154 161, 148 151, 148 137 Z" fill="#1E293B"/>
+                    <circle cx="151" cy="141" r="8" fill="#E8B287"/>
+                    <circle cx="229" cy="141" r="8" fill="#E8B287"/>
+                    <rect x="155" y="99" width="70" height="84" rx="34" fill="#F6C9A4"/>
+                    <path d="M153 127 C152 100, 170 85, 194 86 C216 87, 230 102, 227 125 C221 111, 207 106, 191 108 C174 110, 161 115, 153 127 Z" fill="#1E293B"/>
+                    <path d="M168 127 Q175 123 181 127" fill="none" stroke="#334155" stroke-width="2.4" stroke-linecap="round"/>
+                    <path d="M199 127 Q205 123 212 127" fill="none" stroke="#334155" stroke-width="2.4" stroke-linecap="round"/>
+                    <circle cx="175" cy="137" r="3.5" fill="#0F172A"/>
+                    <circle cx="176" cy="136" r="1.15" fill="#FFFFFF"/>
+                    <circle cx="205" cy="137" r="3.5" fill="#0F172A"/>
+                    <circle cx="206" cy="136" r="1.15" fill="#FFFFFF"/>
+                    <ellipse cx="167" cy="148" rx="5.2" ry="2.8" fill="#F43F5E" opacity="0.22"/>
+                    <ellipse cx="213" cy="148" rx="5.2" ry="2.8" fill="#F43F5E" opacity="0.22"/>
+                    <path d="M190 139 L188 148 L192 149" fill="none" stroke="#D49A6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M179 157 Q190 168 201 157" fill="none" stroke="#9A3412" stroke-width="2.6" stroke-linecap="round"/>
+
+                    <!-- The approved ID card, with a green check -->
+                    <g class="kyc-ok__card">
+                      <path d="M248 262 L266 192" stroke="#1E3A8A" stroke-width="22" stroke-linecap="round"/>
+                      <path d="M266 192 L271 174" stroke="#F1C29B" stroke-width="16" stroke-linecap="round"/>
+                      <g transform="translate(238, 114)">
+                        <rect x="2" y="4" width="68" height="48" rx="8" fill="#0F172A" opacity="0.12"/>
+                        <rect x="0" y="0" width="68" height="48" rx="8" fill="url(#kyc-ok-card)" stroke="#10B981" stroke-width="1.8"/>
+                        <path d="M1 8 C1 4.2 4.2 1 8 1 L60 1 C63.8 1 67 4.2 67 8 L67 11 L1 11 Z" fill="#2563EB"/>
+                        <rect x="6" y="16" width="18" height="22" rx="3.5" fill="#DBEAFE" stroke="#BFDBFE" stroke-width="1"/>
+                        <circle cx="15" cy="23" r="4" fill="#3B82F6"/>
+                        <path d="M9 36 C9 31, 21 31, 21 36" fill="#3B82F6"/>
+                        <rect x="29" y="17" width="25" height="3.2" rx="1.6" fill="#475569"/>
+                        <rect x="29" y="23.5" width="31" height="2.6" rx="1.3" fill="#94A3B8"/>
+                        <rect x="29" y="29" width="20" height="2.6" rx="1.3" fill="#94A3B8"/>
+                        <rect x="29" y="35" width="11" height="6" rx="1.5" fill="#FBBF24" opacity="0.9"/>
+                        <circle cx="62" cy="6" r="10" fill="#10B981" stroke="#FFFFFF" stroke-width="2.2"/>
+                        <path d="M58 6 L60.8 8.8 L66.5 3.2" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </g>
+                      <rect x="258" y="156" width="9" height="15" rx="4.5" fill="#F6C9A4" stroke="#E2A87C" stroke-width="1"/>
+                      <rect x="268" y="157" width="9" height="14" rx="4.5" fill="#F6C9A4" stroke="#E2A87C" stroke-width="1"/>
+                      <rect x="278" y="158" width="8" height="13" rx="4" fill="#F6C9A4" stroke="#E2A87C" stroke-width="1"/>
+                    </g>
+
+                    <!-- The shield, with its check drawn in -->
+                    <g class="kyc-ok__shield">
+                      <circle cx="112" cy="136" r="36" fill="#10B981" fill-opacity="0.12"/>
+                      <circle cx="112" cy="136" r="29" fill="#FFFFFF" stroke="#DBEAFE" stroke-width="2"/>
+                      <path d="M112 113 L130 120.5 V134.5 C130 146.5 122.2 156.5 112 160 C101.8 156.5 94 146.5 94 134.5 V120.5 L112 113 Z" fill="url(#kyc-ok-shield)"/>
+                      <path class="kyc-ok__check" d="M104.5 136.5 L109.8 141.8 L120.5 130.5" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <div class="kyc-ok__body">
+              <p class="kyc-ok__pill">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
+                <span>Approved by our team</span>
+              </p>
+              <h3 class="kyc-ok__title">Identity verified. Congratulations!</h3>
+              <p class="kyc-ok__desc" data-approved-text></p>
+
+              <ul class="kyc-ok__grid" aria-label="What was checked">
+                <li><span class="kyc-ok__label" data-approved-check-label>Camera check</span><span class="kyc-ok__val"><span class="kyc-ok__dot" aria-hidden="true"></span>Approved</span></li>
+                <li><span class="kyc-ok__label" data-approved-doc-label>Document</span><span class="kyc-ok__val"><span class="kyc-ok__dot" aria-hidden="true"></span>Approved</span></li>
+                <li><span class="kyc-ok__label">Bookings</span><span class="kyc-ok__val"><span class="kyc-ok__dot" aria-hidden="true"></span>Open</span></li>
+              </ul>
+
+              <div class="kyc-ok__actions">
+                <a class="et-btn et-btn--primary" href="/hotels-chalets.html">
+                  <span>Book a stay</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                </a>
+                <a class="et-btn et-btn--outline" href="/tickets.html">Buy a ticket</a>
+              </div>
+            </div>
+
+            <p class="kyc-ok__foot">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span data-approved-date>Verified</span>
+            </p>
+          </div>
+
           <!-- The camera check (js/verification.js and js/liveness-pose.mjs). face-api finds the
                face in the camera's picture, in the browser; the page asks for four movements,
                keeps one photo of each, then a photo holding the document. Nothing is sent until

@@ -1600,6 +1600,289 @@
   margin-top: 12px;
 }
 
+/* My account: "Identity verified" (account.html, js/verification.js). Shown once our team
+   approved the identity; the animation plays each time it appears. */
+.kyc-ok[hidden] {
+  display: none;
+}
+
+.kyc-ok {
+  --ok-blue: #2563eb;
+  --ok-green: #10b981;
+  --ok-green-dark: #047857;
+  --ok-ink: #0f172a;
+  --ok-muted: #64748b;
+  --ok-ease: cubic-bezier(.22, 1, .36, 1);
+  --ok-pop: cubic-bezier(.34, 1.56, .64, 1);
+  width: min(100%, 580px);
+  margin: 18px auto 0;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: 0 22px 50px -14px rgba(15, 23, 42, .09), 0 4px 16px -2px rgba(37, 99, 235, .06);
+  color: var(--ok-ink);
+}
+
+.kyc-ok svg {
+  flex: 0 0 auto;
+}
+
+.kyc-ok__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.kyc-ok__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: #ecfdf5;
+  color: var(--ok-green-dark);
+}
+
+.kyc-ok__icon svg,
+.kyc-ok__pill svg,
+.kyc-ok__actions svg,
+.kyc-ok__foot svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.kyc-ok__icon svg { width: 18px; height: 18px; stroke-width: 2.2; }
+
+.kyc-ok__tag {
+  display: block;
+  color: var(--ok-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.kyc-ok__sub {
+  display: block;
+  color: var(--ok-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.kyc-ok__stage {
+  padding: 22px 18px 6px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #eff6ff 0%, #f0f9ff 55%, #fff 100%);
+}
+
+.kyc-ok__scene {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  height: auto;
+  max-height: 270px;
+  margin: 0 auto;
+  overflow: visible;
+  user-select: none;
+}
+
+.kyc-ok__body {
+  padding: 12px 24px 22px;
+  text-align: center;
+}
+
+.kyc-ok__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 5px 13px;
+  border: 1px solid #a7f3d0;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: var(--ok-green-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.kyc-ok__pill svg { width: 14px; height: 14px; stroke-width: 2.6; }
+
+.kyc-ok__title {
+  margin: 0;
+  color: var(--ok-ink);
+  font: 800 clamp(20px, 3.6vw, 25px)/1.25 var(--et-display);
+  letter-spacing: -.01em;
+}
+
+.kyc-ok__desc {
+  max-width: 28rem;
+  margin: 9px auto 0;
+  color: var(--ok-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.kyc-ok__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.kyc-ok__grid li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 11px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.kyc-ok__label {
+  color: var(--ok-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kyc-ok__val {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.kyc-ok__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok-green);
+}
+
+.kyc-ok__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.kyc-ok__actions .et-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.kyc-ok__actions svg { width: 18px; height: 18px; stroke-width: 2.2; }
+
+.kyc-ok__foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 12px 22px;
+  border-top: 1px solid #f1f5f9;
+  background: #f8fafc;
+  color: var(--ok-muted);
+  font-size: 12.5px;
+}
+
+.kyc-ok__foot svg { width: 14px; height: 14px; stroke: var(--ok-green); stroke-width: 2.2; }
+
+@media (max-width: 34em) {
+  .kyc-ok__head { padding: 14px 16px; }
+  .kyc-ok__body { padding: 10px 16px 20px; }
+  .kyc-ok__grid { grid-template-columns: 1fr; gap: 8px; }
+  .kyc-ok__grid li { flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 14px; }
+  .kyc-ok__actions .et-btn { width: 100%; }
+}
+
+/* The animation. In an SVG, transform-origin is in the drawing's units. */
+.kyc-ok__ring--1,
+.kyc-ok__ring--2 { transform-origin: 190px 142px; }
+.kyc-ok__hero { transform-origin: 190px 175px; }
+.kyc-ok__card { transform-origin: 268px 145px; }
+.kyc-ok__shield { transform-origin: 112px 136px; }
+.kyc-ok__spark--1 { transform-origin: 86px 76px; }
+.kyc-ok__spark--2 { transform-origin: 298px 72px; }
+.kyc-ok__spark--3 { transform-origin: 314px 176px; }
+.kyc-ok__bit { opacity: 0; }
+.kyc-ok__ring { opacity: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .kyc-ok { animation: kyc-ok-in .55s var(--ok-ease); }
+  .kyc-ok__ring--1 { animation: kyc-ok-ring 2.8s var(--ok-ease) infinite; }
+  .kyc-ok__ring--2 { animation: kyc-ok-ring 2.8s var(--ok-ease) .9s infinite; }
+  .kyc-ok__hero { animation: kyc-ok-hero .7s var(--ok-pop) both; }
+  .kyc-ok__card { animation: kyc-ok-float 3.4s ease-in-out infinite; }
+  .kyc-ok__shield { animation: kyc-ok-shield .75s var(--ok-pop) .25s both; }
+  .kyc-ok__check { stroke-dasharray: 36; stroke-dashoffset: 36; animation: kyc-ok-draw .55s var(--ok-ease) .65s forwards; }
+  .kyc-ok__spark--1 { animation: kyc-ok-twinkle 2.2s ease-in-out infinite; }
+  .kyc-ok__spark--2 { animation: kyc-ok-twinkle 2.2s ease-in-out .7s infinite; }
+  .kyc-ok__spark--3 { animation: kyc-ok-twinkle 2.2s ease-in-out 1.3s infinite; }
+  .kyc-ok__bit { animation: kyc-ok-burst 3.6s cubic-bezier(.16, 1, .3, 1) forwards; }
+  .kyc-ok__bit--1 { animation-delay: .15s; --tx: -88px; --ty: -68px; --rot: -145deg; }
+  .kyc-ok__bit--2 { animation-delay: .18s; --tx: 92px; --ty: -72px; --rot: 160deg; }
+  .kyc-ok__bit--3 { animation-delay: .22s; --tx: -112px; --ty: -24px; --rot: -210deg; }
+  .kyc-ok__bit--4 { animation-delay: .2s; --tx: 114px; --ty: -20px; --rot: 195deg; }
+  .kyc-ok__bit--5 { animation-delay: .25s; --tx: -62px; --ty: -96px; --rot: 120deg; }
+  .kyc-ok__bit--6 { animation-delay: .24s; --tx: 66px; --ty: -94px; --rot: -130deg; }
+  .kyc-ok__bit--7 { animation-delay: .28s; --tx: -124px; --ty: 28px; --rot: 95deg; }
+  .kyc-ok__bit--8 { animation-delay: .26s; --tx: 124px; --ty: 30px; --rot: -110deg; }
+}
+
+@keyframes kyc-ok-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kyc-ok-ring {
+  0% { transform: scale(.85); opacity: .75; }
+  100% { transform: scale(1.32); opacity: 0; }
+}
+
+@keyframes kyc-ok-hero {
+  0% { opacity: 0; transform: scale(.86) translateY(14px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes kyc-ok-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-4px) rotate(1.5deg); }
+}
+
+@keyframes kyc-ok-shield {
+  0% { opacity: 0; transform: scale(.2) rotate(-14deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes kyc-ok-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes kyc-ok-twinkle {
+  0%, 100% { transform: scale(.75) rotate(0); opacity: .55; }
+  50% { transform: scale(1.2) rotate(18deg); opacity: 1; }
+}
+
+@keyframes kyc-ok-burst {
+  0% { opacity: 0; transform: translate(0, 0) scale(.3) rotate(0); }
+  18% { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1.05) rotate(var(--rot)); }
+  75% { opacity: .9; transform: translate(var(--tx), calc(var(--ty) + 18px)) scale(1) rotate(calc(var(--rot) + 40deg)); }
+  100% { opacity: 0; transform: translate(var(--tx), calc(var(--ty) + 34px)) scale(.85) rotate(calc(var(--rot) + 70deg)); }
+}
+
 /* My account: the document's photo with the camera, on a phone (js/document-camera.js) */
 
 .doc-cam [hidden],
